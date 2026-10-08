@@ -24,6 +24,10 @@
   --chat-cliente: #D9FDD3;
   --chat-agente: #FFFFFF;
 
+  /* Botón flotante de WhatsApp (color oficial) */
+  --color-whatsapp: #25D366;
+  --color-whatsapp-icono: #FFFFFF;
+
   /* Productos dibujados dentro del chat */
   --producto-blanco: #FFFFFF;
   --producto-celeste: #A8D3EE;
@@ -1718,15 +1722,26 @@ footer[id] {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: var(--color-primario);
-  color: var(--color-secundario);
-  box-shadow: var(--sombra), 0 6px 16px -4px var(--color-secundario);
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  background: var(--color-whatsapp);
+  color: var(--color-texto-claro);
+  box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.35);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* Anillo del pulso (se anima solo si no se pidió reducir el movimiento) */
+.whatsapp-flotante::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 50%;
+  background: var(--color-whatsapp);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .whatsapp-flotante:hover {
-  background: var(--color-primario-oscuro);
-  color: var(--color-texto-claro);
+  box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.45);
 }
 
 .whatsapp-flotante:focus-visible {
@@ -1736,13 +1751,26 @@ footer[id] {
 }
 
 .whatsapp-flotante svg {
-  width: 30px;
-  height: 30px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  width: 32px;
+  height: 32px;
+  fill: var(--color-whatsapp-icono);
+}
+
+.icono-whatsapp {
+  fill: currentColor;
+  stroke: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .whatsapp-flotante::before {
+    animation: pulso-whatsapp 4s ease-out infinite;
+  }
+}
+
+@keyframes pulso-whatsapp {
+  0% { transform: scale(1); opacity: 0.55; }
+  40% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
 }
 
 /* ---------- Animaciones al hacer scroll ---------- */

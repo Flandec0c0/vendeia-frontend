@@ -366,7 +366,7 @@ footer[id] {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  padding: calc(var(--alto-nav) + 1.75rem) 0 3rem;
+  padding: calc(var(--alto-nav) + 1rem) 0 3rem;
   color: var(--color-texto-claro);
   background:
     radial-gradient(ellipse at 100% 0%, var(--color-primario-oscuro) 0, transparent 60%),
@@ -403,7 +403,7 @@ footer[id] {
 
 .hero__grid {
   display: grid;
-  gap: 2.5rem;
+  gap: 1.25rem;
 }
 
 .hero__etiqueta {
@@ -509,7 +509,8 @@ footer[id] {
   position: relative;
   display: flex;
   justify-content: center;
-  padding: 1.5rem 0;
+  padding: 0.75rem 0;
+  order: -1; /* en celular el celular va primero y el texto debajo */
 }
 
 /* Burbujas flotantes alrededor del celular (solo celular y tablet) */
@@ -550,9 +551,9 @@ footer[id] {
 .telefono {
   margin: 0;
   width: 100%;
-  max-width: 272px;
+  max-width: 256px;
   padding: 10px;
-  font-size: 0.875rem;
+  font-size: 0.84rem;
   background: var(--color-secundario);
   border: 1px solid rgba(247, 245, 239, 0.14);
   border-radius: 36px;
@@ -576,7 +577,7 @@ footer[id] {
 .telefono__pantalla {
   display: flex;
   flex-direction: column;
-  height: 500px;
+  height: 390px;
   background: var(--color-fondo-alterno);
   border-radius: 27px;
   overflow: hidden;
@@ -1895,6 +1896,7 @@ footer[id] {
   }
 
   .hero__visual {
+    order: 0;
     padding: 0;
   }
 

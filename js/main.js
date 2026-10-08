@@ -70,6 +70,193 @@
     });
   }
 
+  /* ---------- Conversación del celular en bucle ---------- */
+  function iniciarChatEnBucle() {
+    var pantalla = document.querySelector('.telefono__pantalla');
+    if (!pantalla || reducirMovimiento) {
+      return;
+    }
+
+    var telefono = pantalla.closest('.telefono');
+    var portada = pantalla.closest('.hero');
+    var visor = pantalla.querySelector('.chat__mensajes');
+    var pista = pantalla.querySelector('.chat__pista');
+    var estado = pantalla.querySelector('.chat__estado');
+    var escribiendo = pantalla.querySelector('.chat__escribiendo');
+    var burbujas = Array.prototype.slice.call(pista.querySelectorAll('.burbuja'));
+    if (!visor || !pista || !escribiendo || !burbujas.length) {
+      return;
+    }
+
+    var PAUSA_FINAL = 4000;
+    var DURACION_SALIDA = 700;
+
+    // Temporizador que se puede pausar y reanudar sin perder el tiempo restante.
+    var siguientePaso = null;
+    var temporizador = null;
+    var restante = 0;
+    var inicio = 0;
+    var activo = false;
+    var enPantalla = false;
+    var portadaEnPantalla = false;
+
+    function arrancarTemporizador() {
+      inicio = Date.now();
+      temporizador = window.setTimeout(function () {
+        var paso = siguientePaso;
+        temporizador = null;
+        siguientePaso = null;
+        paso();
+      }, restante);
+    }
+
+    function esperar(ms, paso) {
+      siguientePaso = paso;
+      restante = ms;
+      if (activo) {
+        arrancarTemporizador();
+      }
+    }
+
+    function pausar() {
+      activo = false;
+      pantalla.classList.add('pausado');
+      if (temporizador) {
+        window.clearTimeout(temporizador);
+        temporizador = null;
+        restante = Math.max(0, restante - (Date.now() - inicio));
+      }
+    }
+
+    function reanudar() {
+      activo = true;
+      pantalla.classList.remove('pausado');
+      if (siguientePaso && !temporizador) {
+        arrancarTemporizador();
+      }
+    }
+
+    function actualizarActividad() {
+      var pestanaVisible = !document.hidden;
+      var debeCorrer = enPantalla && pestanaVisible;
+      if (portada) {
+        // Las burbujas flotantes y las formas del banner se pausan aparte.
+        portada.classList.toggle('pausado', !(portadaEnPantalla && pestanaVisible));
+      }
+      if (debeCorrer && !activo) {
+        reanudar();
+      } else if (!debeCorrer && activo) {
+        pausar();
+      }
+    }
+
+    // Desplaza la pista hacia arriba (solo transform) para que el último
+    // mensaje quede a la vista, como en WhatsApp.
+    function desplazarAlFinal() {
+      var exceso = pista.offsetHeight - visor.clientHeight;
+      pista.style.transform = 'translateY(' + -Math.max(0, exceso) + 'px)';
+    }
+
+    function tieneTarjetas(burbuja) {
+      return !!burbuja.querySelector('.producto, .pago');
+    }
+
+    function tiempoDeLectura(burbuja) {
+      var largo = burbuja.textContent.replace(/\s+/g, ' ').length;
+      var ms = 1100 + Math.min(largo * 16, 2200);
+      return tieneTarjetas(burbuja) ? ms + 1200 : ms;
+    }
+
+    function tiempoEscribiendo(burbuja) {
+      var largo = burbuja.textContent.replace(/\s+/g, ' ').length;
+      return 1100 + Math.min(largo * 6, 900);
+    }
+
+    function mostrarEscribiendo(visible) {
+      escribiendo.classList.toggle('mostrado', visible);
+      if (estado) {
+        estado.textContent = visible ? 'escribiendo…' : 'en línea';
+      }
+      desplazarAlFinal();
+    }
+
+    function mostrarMensaje(indice) {
+      if (indice >= burbujas.length) {
+        esperar(PAUSA_FINAL, desvanecer);
+        return;
+      }
+
+      var burbuja = burbujas[indice];
+      var publicar = function () {
+        mostrarEscribiendo(false);
+        burbuja.classList.add('mostrado');
+        desplazarAlFinal();
+        esperar(tiempoDeLectura(burbuja), function () {
+          mostrarMensaje(indice + 1);
+        });
+      };
+
+      if (burbuja.classList.contains('burbuja--agente')) {
+        mostrarEscribiendo(true);
+        esperar(tiempoEscribiendo(burbuja), publicar);
+      } else {
+        publicar();
+      }
+    }
+
+    function desvanecer() {
+      pista.classList.add('saliendo');
+      esperar(DURACION_SALIDA, function () {
+        burbujas.forEach(function (burbuja) {
+          burbuja.classList.remove('mostrado');
+        });
+        mostrarEscribiendo(false);
+        esperar(500, function () {
+          pista.classList.remove('saliendo');
+          esperar(700, function () {
+            mostrarMensaje(0);
+          });
+        });
+      });
+    }
+
+    pantalla.classList.add('chat--animado');
+    pantalla.classList.add('pausado');
+    if (portada) {
+      portada.classList.add('pausado');
+    }
+    desplazarAlFinal();
+    esperar(800, function () {
+      mostrarMensaje(0);
+    });
+
+    window.addEventListener('resize', desplazarAlFinal);
+    document.addEventListener('visibilitychange', actualizarActividad);
+
+    if ('IntersectionObserver' in window) {
+      var observadorChat = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (entrada) {
+          if (entrada.target === telefono) {
+            enPantalla = entrada.isIntersecting;
+          } else {
+            portadaEnPantalla = entrada.isIntersecting;
+          }
+        });
+        actualizarActividad();
+      }, { threshold: 0.15 });
+      observadorChat.observe(telefono);
+      if (portada) {
+        observadorChat.observe(portada);
+      }
+    } else {
+      enPantalla = true;
+      portadaEnPantalla = true;
+      actualizarActividad();
+    }
+  }
+
+  iniciarChatEnBucle();
+
   /* ---------- localStorage (siempre protegido) ---------- */
   function leerSolicitudes() {
     try {

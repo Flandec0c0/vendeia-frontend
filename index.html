@@ -13,7 +13,7 @@
   <meta property="og:title" content="VENDE-IA | Agente de IA que vende por WhatsApp">
   <meta property="og:description" content="Tu tienda vende por WhatsApp las 24 horas. Un agente de IA que asesora, ofrece lo que hay en stock, cobra con QR y coordina el envío. Prueba gratis 15 días.">
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F2E22'/%3E%3Cpath d='M16 6a10 10 0 0 0-8.7 14.9L6 26l5.3-1.3A10 10 0 1 0 16 6z' fill='%231FA855'/%3E%3Cpath d='M11 13l5 7 5-7' fill='none' stroke='%23F7F5EF' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F2E22'/%3E%3Cg transform='translate(1.6 1.6) scale(.9)'%3E%3Cpath d='M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z' fill='%231FA855'/%3E%3Cpath d='M7 19l4-4 3 3 6-6M16 12h4v4' fill='none' stroke='%230F2E22' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z' fill='%231FA855'/%3E%3C/g%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,8 +28,9 @@
     <div class="contenedor nav__barra">
       <a class="logo" href="#inicio" aria-label="VENDE-IA, ir al inicio">
         <svg class="logo__icono" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-          <path class="logo__burbuja" d="M16 4a12 12 0 0 0-10.4 18L4 28l6.3-1.6A12 12 0 1 0 16 4z"/>
-          <path class="logo__v" d="M10.5 12.5l5.5 8 5.5-8"/>
+          <path class="logo__burbuja" d="M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z"/>
+          <path class="logo__trazo" d="M7 19l4-4 3 3 6-6M16 12h4v4"/>
+          <path class="logo__chispa" d="M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z"/>
         </svg>
         <span class="logo__texto">VENDE-IA</span>
       </a>
@@ -58,7 +59,8 @@
     <section class="hero" id="inicio" aria-labelledby="hero-titulo">
       <div class="contenedor hero__grid">
         <div class="hero__texto">
-          <h1 id="hero-titulo">Tu tienda vende por WhatsApp, incluso mientras duermes</h1>
+          <p class="hero__etiqueta" aria-hidden="true"><span class="hero__punto"></span>Tu agente está atendiendo ahora</p>
+          <h1 id="hero-titulo">Tu tienda vende por WhatsApp, <span class="hero__resaltado">incluso mientras duermes</span></h1>
           <p class="hero__subtitulo">VENDE-IA es un agente de inteligencia artificial que atiende a tus clientes por WhatsApp como un vendedor de verdad: los asesora, les ofrece solo lo que tienes en stock, cobra con QR y coordina el envío.</p>
           <div class="hero__botones">
             <a class="boton boton--primario boton--grande" href="#prueba">Prueba gratis 15 días</a>
@@ -81,11 +83,20 @@
         </div>
 
         <div class="hero__visual">
-          <figure class="telefono" role="img" aria-label="Celular con una conversación de WhatsApp: un cliente busca una camisa para una boda y VENDE-IA le recomienda dos camisas disponibles en talla M, una blanca a 180 Bs y una celeste a 210 Bs, y le sugiere una corbata azul marino.">
+          <ul class="hero__chips lista-limpia" aria-hidden="true">
+            <li class="chip chip--1">¿Tienes talla M? 👕</li>
+            <li class="chip chip--2 chip--verde">Pago con QR recibido ✅</li>
+            <li class="chip chip--3">Envío coordinado 🚚</li>
+            <li class="chip chip--4 chip--oscuro">Atendiendo a las 3:00 a. m. 🌙</li>
+            <li class="chip chip--5 chip--verde">Solo lo que hay en stock 📦</li>
+            <li class="chip chip--6">¡Hola de nuevo, Juan! 👋</li>
+          </ul>
+
+          <figure class="telefono" role="img" aria-label="Celular con una conversación de WhatsApp: un cliente busca una camisa para una boda; VENDE-IA le muestra dos camisas disponibles en talla M, una blanca slim fit a 180 Bs y una celeste de lino a 210 Bs, y le sugiere una corbata azul marino. El cliente elige la blanca, paga 180 Bs con un código QR dentro del chat y el agente le ofrece envío a domicilio o recojo en tienda.">
             <div class="telefono__pantalla" aria-hidden="true">
               <div class="chat__cabecera">
                 <span class="chat__avatar">
-                  <svg viewBox="0 0 32 32" focusable="false"><path class="logo__v" d="M10.5 12.5l5.5 8 5.5-8"/></svg>
+                  <svg viewBox="0 0 32 32" focusable="false"><path class="chat__avatar-v" d="M10.5 12.5l5.5 8 5.5-8"/></svg>
                 </span>
                 <span class="chat__info">
                   <span class="chat__nombre">Tu tienda</span>
@@ -93,10 +104,104 @@
                 </span>
               </div>
               <div class="chat__mensajes">
-                <p class="burbuja burbuja--cliente">Hola, estoy buscando una camisa para una boda que tengo el sábado</p>
-                <p class="burbuja burbuja--agente">¡Hola, Juan! Qué lindo, una boda. ¿Buscas algo clásico, como blanco o celeste? La última vez llevaste talla M, ¿seguimos con esa?</p>
-                <p class="burbuja burbuja--cliente">Sí, algo clásico en M</p>
-                <p class="burbuja burbuja--agente">Tengo estas dos disponibles en talla M: una blanca slim fit a 180 Bs y una celeste de lino a 210 Bs. La blanca combina muy bien con esta corbata azul marino. ¿Te agrego alguna al carrito?</p>
+                <div class="chat__pista">
+                  <div class="burbuja burbuja--cliente">
+                    <p>Hola, estoy buscando una camisa para una boda que tengo el sábado 👔</p>
+                    <span class="burbuja__meta">23:41</span>
+                  </div>
+
+                  <div class="burbuja burbuja--agente">
+                    <p>¡Hola, Juan! 👋 Qué lindo, una boda 🎉 ¿Buscas algo clásico, como blanco o celeste? La última vez llevaste talla M, ¿seguimos con esa?</p>
+                    <span class="burbuja__meta">23:41 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false"><path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8"/></svg></span>
+                  </div>
+
+                  <div class="burbuja burbuja--cliente">
+                    <p>Sí, algo clásico en M 👍</p>
+                    <span class="burbuja__meta">23:42</span>
+                  </div>
+
+                  <div class="burbuja burbuja--agente burbuja--ancha">
+                    <p>Tengo estas dos disponibles en talla M 👇</p>
+                    <div class="productos">
+                      <div class="producto producto--blanca">
+                        <span class="producto__imagen">
+                          <svg viewBox="0 0 64 64" focusable="false">
+                            <path class="camisa__cuerpo" d="M23 8l-9 3.5L4 21l6.5 9.5 5.5-3.5V58h32V27l5.5 3.5L60 21l-10-9.5L41 8c-2 4-5.5 6-9 6s-7-2-9-6z"/>
+                            <path class="camisa__detalle" d="M23 8l4.5 11L32 14l4.5 5L41 8M32 14v44M16 27v-5M48 27v-5"/>
+                            <circle class="camisa__boton" cx="34.5" cy="26" r="1.3"/>
+                            <circle class="camisa__boton" cx="34.5" cy="35" r="1.3"/>
+                            <circle class="camisa__boton" cx="34.5" cy="44" r="1.3"/>
+                          </svg>
+                        </span>
+                        <span class="producto__nombre">Camisa blanca slim fit</span>
+                        <span class="producto__precio">180 Bs</span>
+                        <span class="producto__talla">Talla M disponible</span>
+                        <span class="producto__boton">Agregar al carrito 🛒</span>
+                      </div>
+                      <div class="producto producto--celeste">
+                        <span class="producto__imagen">
+                          <svg viewBox="0 0 64 64" focusable="false">
+                            <path class="camisa__cuerpo" d="M23 8l-9 3.5L4 21l6.5 9.5 5.5-3.5V58h32V27l5.5 3.5L60 21l-10-9.5L41 8c-2 4-5.5 6-9 6s-7-2-9-6z"/>
+                            <path class="camisa__detalle" d="M23 8l4.5 11L32 14l4.5 5L41 8M32 14v44M16 27v-5M48 27v-5"/>
+                            <circle class="camisa__boton" cx="34.5" cy="26" r="1.3"/>
+                            <circle class="camisa__boton" cx="34.5" cy="35" r="1.3"/>
+                            <circle class="camisa__boton" cx="34.5" cy="44" r="1.3"/>
+                          </svg>
+                        </span>
+                        <span class="producto__nombre">Camisa celeste de lino</span>
+                        <span class="producto__precio">210 Bs</span>
+                        <span class="producto__talla">Talla M disponible</span>
+                        <span class="producto__boton">Agregar al carrito 🛒</span>
+                      </div>
+                    </div>
+                    <span class="burbuja__meta">23:42 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false"><path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8"/></svg></span>
+                  </div>
+
+                  <div class="burbuja burbuja--agente">
+                    <p>La blanca combina muy bien con esta corbata azul marino ✨ ¿Te agrego alguna al carrito?</p>
+                    <div class="producto producto--fila producto--marino">
+                      <span class="producto__imagen">
+                        <svg viewBox="0 0 64 64" focusable="false">
+                          <path class="corbata__nudo" d="M25 6h14l-3.5 9h-7z"/>
+                          <path class="corbata__hoja" d="M28.5 15h7l5 33-8.5 11-8.5-11z"/>
+                          <path class="corbata__raya" d="M27 27l11-5M26 37l13-6M25 47l15-6"/>
+                        </svg>
+                      </span>
+                      <span class="producto__datos">
+                        <span class="producto__nombre">Corbata azul marino</span>
+                        <span class="producto__precio">70 Bs</span>
+                      </span>
+                    </div>
+                    <span class="burbuja__meta">23:42 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false"><path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8"/></svg></span>
+                  </div>
+
+                  <div class="burbuja burbuja--cliente">
+                    <p>¡La blanca! 😍</p>
+                    <span class="burbuja__meta">23:43</span>
+                  </div>
+
+                  <div class="burbuja burbuja--agente">
+                    <p>¡Excelente elección! 🙌 Te separé la camisa blanca slim fit en talla M. Escanea este QR para pagar 👇</p>
+                    <div class="pago">
+                      <span class="pago__titulo">Pago con QR</span>
+                      <svg class="pago__qr" viewBox="-1 -1 23 23" focusable="false">
+                        <rect class="pago__qr-fondo" x="-1" y="-1" width="23" height="23" rx="1.5"/>
+                        <path fill-rule="evenodd" d="M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2zM14 0h7v7h-7zM15 1v5h5V1zM16 2h3v3h-3zM0 14h7v7H0zM1 15v5h5v-5zM2 16h3v3H2z"/>
+                        <path d="M9 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM12 3h1v1h-1zM8 5h1v1h-1zM10 5h1v1h-1zM9 6h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM1 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM9 8h1v1h-1zM11 8h1v1h-1zM14 8h1v1h-1zM15 8h1v1h-1zM19 8h1v1h-1zM0 9h1v1h-1zM3 9h1v1h-1zM4 9h1v1h-1zM6 9h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM13 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM11 10h1v1h-1zM13 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM17 10h1v1h-1zM19 10h1v1h-1zM0 11h1v1h-1zM1 11h1v1h-1zM7 11h1v1h-1zM9 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM12 11h1v1h-1zM13 11h1v1h-1zM14 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM1 12h1v1h-1zM2 12h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM8 12h1v1h-1zM11 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM19 12h1v1h-1zM10 13h1v1h-1zM11 13h1v1h-1zM12 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM17 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM12 14h1v1h-1zM14 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM9 15h1v1h-1zM11 15h1v1h-1zM16 15h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM14 16h1v1h-1zM15 16h1v1h-1zM17 16h1v1h-1zM19 16h1v1h-1zM8 17h1v1h-1zM11 17h1v1h-1zM14 17h1v1h-1zM15 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM18 17h1v1h-1zM19 17h1v1h-1zM20 17h1v1h-1zM8 18h1v1h-1zM10 18h1v1h-1zM11 18h1v1h-1zM13 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM19 19h1v1h-1zM20 19h1v1h-1zM9 20h1v1h-1zM10 20h1v1h-1zM11 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1z"/>
+                      </svg>
+                      <span class="pago__detalle">Camisa blanca slim fit · Talla M</span>
+                      <span class="pago__total">Total: <strong>180 Bs</strong></span>
+                    </div>
+                    <span class="burbuja__meta">23:43 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false"><path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8"/></svg></span>
+                  </div>
+
+                  <div class="burbuja burbuja--agente">
+                    <p>¡Pago recibido! ✅ ¿Te la enviamos a domicilio o pasas a recogerla? 🚚</p>
+                    <span class="burbuja__meta">23:44 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false"><path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8"/></svg></span>
+                  </div>
+
+                  <div class="chat__escribiendo"><span></span><span></span><span></span></div>
+                </div>
               </div>
               <div class="chat__entrada">
                 <span class="chat__campo">Mensaje</span>
@@ -545,8 +650,9 @@
       <div class="pie__marca">
         <a class="logo logo--claro" href="#inicio" aria-label="VENDE-IA, ir al inicio">
           <svg class="logo__icono" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-            <path class="logo__burbuja" d="M16 4a12 12 0 0 0-10.4 18L4 28l6.3-1.6A12 12 0 1 0 16 4z"/>
-            <path class="logo__v" d="M10.5 12.5l5.5 8 5.5-8"/>
+            <path class="logo__burbuja" d="M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z"/>
+            <path class="logo__trazo" d="M7 19l4-4 3 3 6-6M16 12h4v4"/>
+            <path class="logo__chispa" d="M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z"/>
           </svg>
           <span class="logo__texto">VENDE-IA</span>
         </a>

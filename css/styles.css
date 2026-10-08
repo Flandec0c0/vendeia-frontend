@@ -24,6 +24,11 @@
   --chat-cliente: #D9FDD3;
   --chat-agente: #FFFFFF;
 
+  /* Productos dibujados dentro del chat */
+  --producto-blanco: #FFFFFF;
+  --producto-celeste: #A8D3EE;
+  --producto-marino: #1F2E57;
+
   /* Tipografía */
   --fuente-titulos: 'Poppins', sans-serif;
   --fuente-texto: 'Inter', sans-serif;
@@ -243,12 +248,16 @@ footer[id] {
   fill: var(--color-primario);
 }
 
-.logo__v {
+.logo__trazo {
   fill: none;
   stroke: var(--color-secundario);
-  stroke-width: 3;
+  stroke-width: 2.6;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.logo__chispa {
+  fill: var(--color-primario);
 }
 
 .logo__texto {
@@ -351,25 +360,94 @@ footer[id] {
 }
 
 /* ---------- Portada ---------- */
+/* En celular y tablet la portada es un banner oscuro con formas orgánicas
+   y burbujas flotantes. En escritorio (960px+) vuelve al diseño claro. */
 .hero {
-  padding: calc(var(--alto-nav) + 2.5rem) 0 3.5rem;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: calc(var(--alto-nav) + 1.75rem) 0 3rem;
+  color: var(--color-texto-claro);
   background:
-    radial-gradient(circle at 85% 20%, var(--color-primario-claro) 0, transparent 55%),
-    var(--color-fondo);
+    radial-gradient(ellipse at 100% 0%, var(--color-primario-oscuro) 0, transparent 60%),
+    linear-gradient(165deg, var(--color-secundario) 0%, var(--color-secundario) 55%, var(--color-primario-oscuro) 130%);
+}
+
+/* Formas orgánicas del banner */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+  pointer-events: none;
+}
+
+.hero::before {
+  top: -7rem;
+  right: -9rem;
+  width: 22rem;
+  height: 22rem;
+  background: radial-gradient(circle at 35% 35%, var(--color-primario) 0, transparent 70%);
+  opacity: 0.45;
+}
+
+.hero::after {
+  bottom: 6rem;
+  left: -11rem;
+  width: 24rem;
+  height: 24rem;
+  background: radial-gradient(circle at 60% 50%, var(--color-primario) 0, transparent 68%);
+  opacity: 0.3;
 }
 
 .hero__grid {
   display: grid;
-  gap: 3rem;
+  gap: 2.5rem;
+}
+
+.hero__etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-texto-claro);
+  background: rgba(247, 245, 239, 0.1);
+  border: 1px solid rgba(247, 245, 239, 0.18);
+  border-radius: 999px;
+}
+
+.hero__punto {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primario);
+}
+
+.hero__punto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-primario);
 }
 
 .hero__texto h1 {
-  color: var(--color-secundario);
+  color: var(--color-texto-claro);
+}
+
+.hero__resaltado {
+  color: var(--color-primario);
 }
 
 .hero__subtitulo {
   font-size: 1.1rem;
-  color: var(--color-texto-suave);
+  color: var(--color-texto-claro);
+  opacity: 0.9;
   max-width: 38rem;
 }
 
@@ -380,6 +458,20 @@ footer[id] {
   margin: 1.75rem 0 1.25rem;
 }
 
+.hero .boton--secundario {
+  color: var(--color-texto-claro);
+  border-color: var(--color-texto-claro);
+}
+
+.hero .boton--secundario:hover {
+  background: var(--color-texto-claro);
+  color: var(--color-secundario);
+}
+
+.hero :focus-visible {
+  outline-color: var(--color-primario);
+}
+
 .hero__confianza {
   display: flex;
   flex-wrap: wrap;
@@ -388,7 +480,7 @@ footer[id] {
   margin: 0;
   padding: 0;
   font-size: 0.95rem;
-  color: var(--color-texto-suave);
+  color: var(--color-texto-claro);
 }
 
 .hero__confianza li {
@@ -409,19 +501,61 @@ footer[id] {
   stroke-linejoin: round;
 }
 
-.hero__visual {
-  display: flex;
-  justify-content: center;
+.hero .icono-mini {
+  stroke: var(--color-primario);
 }
 
-/* Celular dibujado con CSS */
+.hero__visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+/* Burbujas flotantes alrededor del celular (solo celular y tablet) */
+.hero__chips li {
+  position: absolute;
+  z-index: 3;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: var(--color-secundario);
+  background: var(--color-fondo);
+  border-radius: 14px 14px 14px 4px;
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.45);
+}
+
+.hero__chips .chip--verde {
+  background: var(--chat-cliente);
+  border-radius: 14px 14px 4px 14px;
+}
+
+.hero__chips .chip--oscuro {
+  color: var(--color-texto-claro);
+  background: var(--color-secundario);
+  border: 1px solid var(--color-primario);
+}
+
+.chip--1 { top: 0.25rem; left: max(0px, calc(50% - 190px)); }
+.chip--2 { top: 17%; right: max(0px, calc(50% - 200px)); }
+.chip--3 { top: 37%; left: max(0px, calc(50% - 200px)); }
+.chip--4 { top: 54%; right: max(0px, calc(50% - 205px)); }
+.chip--5 { top: 73%; left: max(0px, calc(50% - 195px)); }
+.chip--6 { bottom: 0.5rem; right: max(0px, calc(50% - 185px)); }
+
+/* Celular dibujado con CSS. Todo lo de adentro se mide en em,
+   así basta con cambiar el font-size para achicarlo en celular. */
 .telefono {
   margin: 0;
   width: 100%;
-  max-width: 320px;
-  padding: 12px;
+  max-width: 272px;
+  padding: 10px;
+  font-size: 0.875rem;
   background: var(--color-secundario);
-  border-radius: 40px;
+  border: 1px solid rgba(247, 245, 239, 0.14);
+  border-radius: 36px;
   box-shadow: var(--sombra), 0 30px 60px -20px var(--color-secundario);
   position: relative;
 }
@@ -429,9 +563,9 @@ footer[id] {
 .telefono::before {
   content: "";
   position: absolute;
-  top: 20px;
+  top: 18px;
   left: 50%;
-  width: 70px;
+  width: 64px;
   height: 6px;
   transform: translateX(-50%);
   background: var(--color-texto);
@@ -442,17 +576,17 @@ footer[id] {
 .telefono__pantalla {
   display: flex;
   flex-direction: column;
-  min-height: 560px;
+  height: 500px;
   background: var(--color-fondo-alterno);
-  border-radius: 30px;
+  border-radius: 27px;
   overflow: hidden;
 }
 
 .chat__cabecera {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 2rem 1rem 0.75rem;
+  gap: 0.6em;
+  padding: 2em 1em 0.75em;
   background: var(--color-primario-oscuro);
   color: var(--color-texto-claro);
 }
@@ -460,15 +594,24 @@ footer[id] {
 .chat__avatar {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  flex-shrink: 0;
+  width: 2.25em;
+  height: 2.25em;
   border-radius: 50%;
   background: var(--color-primario);
 }
 
 .chat__avatar svg {
-  width: 26px;
-  height: 26px;
+  width: 1.6em;
+  height: 1.6em;
+}
+
+.chat__avatar-v {
+  fill: none;
+  stroke: var(--color-secundario);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .chat__info {
@@ -480,32 +623,45 @@ footer[id] {
 .chat__nombre {
   font-family: var(--fuente-titulos);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.95em;
 }
 
 .chat__estado {
-  font-size: 0.75rem;
+  font-size: 0.75em;
   opacity: 0.85;
 }
 
+/* Visor del chat: altura fija. Sin animación se puede desplazar a mano;
+   con animación, la pista se mueve con transform (como en WhatsApp). */
 .chat__mensajes {
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.chat__pista {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  padding: 1rem 0.75rem;
+  gap: 0.55em;
+  padding: 1em 0.75em;
 }
 
 .burbuja {
   position: relative;
   max-width: 85%;
   margin: 0;
-  padding: 0.55rem 0.75rem;
-  font-size: 0.85rem;
+  padding: 0.5em 0.7em 0.4em;
+  font-size: 0.85em;
   line-height: 1.45;
   color: var(--color-texto);
   border-radius: 12px;
   box-shadow: 0 1px 1px var(--color-borde);
+}
+
+.burbuja p {
+  display: inline;
+  margin: 0;
 }
 
 .burbuja--cliente {
@@ -520,36 +676,356 @@ footer[id] {
   border-top-left-radius: 4px;
 }
 
+.burbuja--ancha {
+  max-width: 94%;
+}
+
+/* Hora y doble check, flotando abajo a la derecha como en WhatsApp */
+.burbuja__meta {
+  float: right;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  margin: 0.55em 0 -0.15em 0.75em;
+  font-size: 0.72em;
+  line-height: 1;
+  color: var(--color-texto-suave);
+}
+
+.burbuja__check {
+  width: 1.45em;
+  height: 1em;
+  fill: none;
+  stroke: var(--color-primario);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Indicador "escribiendo..." */
+.chat__escribiendo {
+  display: none;
+  align-self: flex-start;
+  gap: 0.3em;
+  padding: 0.75em 0.9em;
+  background: var(--chat-agente);
+  border-radius: 12px;
+  border-top-left-radius: 4px;
+  box-shadow: 0 1px 1px var(--color-borde);
+}
+
+.chat__escribiendo.mostrado {
+  display: inline-flex;
+}
+
+.chat__escribiendo span {
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: 50%;
+  background: var(--color-texto-suave);
+  opacity: 0.5;
+}
+
+/* Tarjetas de producto dentro del chat */
+.productos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4em;
+  margin: 0.45em 0 0.1em;
+}
+
+.producto {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.86em;
+  line-height: 1.25;
+  background: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  border-radius: 0.8em;
+  overflow: hidden;
+}
+
+.producto__imagen {
+  display: grid;
+  place-items: center;
+  height: 5.2em;
+  background: var(--color-fondo-alterno);
+}
+
+.producto--celeste .producto__imagen {
+  background: var(--color-primario-claro);
+}
+
+.producto__imagen svg {
+  width: auto;
+  height: 82%;
+}
+
+.camisa__cuerpo {
+  stroke: var(--color-texto-suave);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.producto--blanca .camisa__cuerpo { fill: var(--producto-blanco); }
+.producto--celeste .camisa__cuerpo { fill: var(--producto-celeste); }
+
+.camisa__detalle {
+  fill: none;
+  stroke: var(--color-texto-suave);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+
+.camisa__boton {
+  fill: var(--color-texto-suave);
+}
+
+.producto__nombre {
+  padding: 0.5em 0.55em 0.15em;
+  font-weight: 600;
+  color: var(--color-secundario);
+}
+
+.producto__precio {
+  padding: 0 0.55em;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 1.2em;
+  color: var(--color-primario-oscuro);
+}
+
+.producto__talla {
+  padding: 0.1em 0.65em 0;
+  font-size: 0.85em;
+  color: var(--color-texto-suave);
+}
+
+.producto__boton {
+  margin: 0.5em 0.45em 0.5em;
+  padding: 0.4em 0.2em;
+  font-size: 0.86em;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--color-secundario);
+  background: var(--color-primario);
+  border-radius: 999px;
+}
+
+.producto--fila {
+  flex-direction: row;
+  align-items: center;
+  margin: 0.45em 0 0.1em;
+}
+
+.producto--fila .producto__imagen {
+  flex-shrink: 0;
+  width: 3.6em;
+  height: 3.6em;
+  background: var(--color-primario-claro);
+}
+
+.producto__datos {
+  display: flex;
+  flex-direction: column;
+  padding-right: 0.6em;
+}
+
+.producto__datos .producto__nombre {
+  padding: 0 0.6em;
+}
+
+.producto__datos .producto__precio {
+  padding: 0 0.5em;
+  font-size: 1.1em;
+}
+
+.corbata__nudo,
+.corbata__hoja {
+  fill: var(--producto-marino);
+}
+
+.corbata__raya {
+  fill: none;
+  stroke: var(--producto-celeste);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+
+/* Tarjeta de pago con QR (decorativo) */
+.pago {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.45em 0 0.1em;
+  padding: 0.6em 0.6em 0.7em;
+  text-align: center;
+  background: var(--color-primario-claro);
+  border-radius: 0.8em;
+}
+
+.pago__titulo {
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  font-size: 0.85em;
+  color: var(--color-secundario);
+}
+
+.pago__qr {
+  width: 6.2em;
+  height: 6.2em;
+  margin: 0.4em 0;
+  fill: var(--color-secundario);
+}
+
+.pago__qr-fondo {
+  fill: var(--color-fondo);
+}
+
+.pago__detalle {
+  font-size: 0.78em;
+  color: var(--color-texto-suave);
+}
+
+.pago__total {
+  font-size: 0.95em;
+  color: var(--color-secundario);
+}
+
+.pago__total strong {
+  font-family: var(--fuente-titulos);
+  font-size: 1.15em;
+  color: var(--color-primario-oscuro);
+}
+
 .chat__entrada {
-  padding: 0.6rem 0.75rem 0.9rem;
+  padding: 0.6em 0.75em 0.9em;
 }
 
 .chat__campo {
   display: block;
-  padding: 0.55rem 1rem;
-  font-size: 0.85rem;
+  padding: 0.55em 1em;
+  font-size: 0.85em;
   color: var(--color-texto-suave);
   background: var(--chat-agente);
   border-radius: 999px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .burbuja {
-    opacity: 0;
-    transform: translateY(12px) scale(0.97);
-    animation: aparecer-burbuja 0.5s ease-out forwards;
-  }
-
-  .burbuja:nth-child(1) { animation-delay: 0.5s; }
-  .burbuja:nth-child(2) { animation-delay: 1.7s; }
-  .burbuja:nth-child(3) { animation-delay: 3.1s; }
-  .burbuja:nth-child(4) { animation-delay: 4.3s; }
+/* ---- Conversación en bucle (la activa main.js) ---- */
+.chat--animado .chat__mensajes {
+  overflow: hidden;
 }
 
+.chat--animado .chat__pista {
+  transition: transform 0.5s ease, opacity 0.6s ease;
+}
+
+.chat--animado .chat__pista.saliendo {
+  opacity: 0;
+}
+
+.chat--animado .burbuja {
+  display: none;
+}
+
+.chat--animado .burbuja.mostrado {
+  display: block;
+  animation: aparecer-burbuja 0.4s ease-out both;
+}
+
+.chat--animado .chat__escribiendo.mostrado {
+  animation: aparecer-burbuja 0.3s ease-out both;
+}
+
+.chat--animado .chat__escribiendo span {
+  animation: punto-escribiendo 1.2s ease-in-out infinite;
+}
+
+.chat--animado .chat__escribiendo span:nth-child(2) { animation-delay: 0.15s; }
+.chat--animado .chat__escribiendo span:nth-child(3) { animation-delay: 0.3s; }
+
 @keyframes aparecer-burbuja {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes punto-escribiendo {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+  30% { transform: translateY(-0.25em); opacity: 1; }
+}
+
+/* ---- Movimiento del banner (solo si el usuario no pidió reducirlo) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero::before {
+    animation: forma-organica 26s linear infinite;
+  }
+
+  .hero::after {
+    animation: forma-organica 32s linear infinite reverse;
+  }
+
+  .hero__punto::after {
+    animation: latido 2s ease-out infinite;
+  }
+
+  .hero__chips li {
+    opacity: 0;
+    animation: flotar-chip 12s ease-in-out infinite;
+  }
+
+  .hero__chips .chip--1 { animation-delay: -1s; }
+  .hero__chips .chip--2 { animation-delay: -3s; }
+  .hero__chips .chip--3 { animation-delay: -5s; }
+  .hero__chips .chip--4 { animation-delay: -7s; }
+  .hero__chips .chip--5 { animation-delay: -9s; }
+  .hero__chips .chip--6 { animation-delay: -11s; }
+
+  /* Pausa todo cuando la portada no está en pantalla o la pestaña está oculta */
+  .hero.pausado::before,
+  .hero.pausado::after,
+  .hero.pausado .hero__punto::after,
+  .hero.pausado .hero__chips li,
+  .chat--animado.pausado .chat__escribiendo span {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes forma-organica {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.12); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes latido {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes flotar-chip {
+  0% { opacity: 0; transform: translateY(10px) scale(0.92); }
+  6% { opacity: 1; transform: translateY(0) scale(1); }
+  24% { transform: translateY(-7px); }
+  42% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0; transform: translateY(-10px) scale(0.96); }
+  100% { opacity: 0; transform: translateY(-10px) scale(0.96); }
+}
+
+/* Con movimiento reducido las burbujas quedan quietas; se ocultan las del
+   medio para no tapar la conversación. */
+@media (prefers-reduced-motion: reduce) {
+  .hero__chips .chip--3,
+  .hero__chips .chip--4 {
+    display: none;
   }
 }
 
@@ -1363,14 +1839,81 @@ footer[id] {
     border-bottom-color: var(--color-primario);
   }
 
+  /* En escritorio la portada vuelve al diseño claro original */
   .hero {
+    overflow: visible;
     padding: calc(var(--alto-nav) + 4.5rem) 0 5.5rem;
+    color: var(--color-texto);
+    background:
+      radial-gradient(circle at 85% 20%, var(--color-primario-claro) 0, transparent 55%),
+      var(--color-fondo);
+  }
+
+  .hero::before,
+  .hero::after,
+  .hero__etiqueta,
+  .hero__chips {
+    display: none;
   }
 
   .hero__grid {
     grid-template-columns: 1.15fr 0.85fr;
     align-items: center;
     gap: 4rem;
+  }
+
+  .hero__texto h1 {
+    color: var(--color-secundario);
+  }
+
+  .hero__resaltado {
+    color: inherit;
+  }
+
+  .hero__subtitulo,
+  .hero__confianza {
+    color: var(--color-texto-suave);
+    opacity: 1;
+  }
+
+  .hero .icono-mini {
+    stroke: var(--color-primario-oscuro);
+  }
+
+  .hero .boton--secundario {
+    color: var(--color-secundario);
+    border-color: var(--color-secundario);
+  }
+
+  .hero .boton--secundario:hover {
+    background: var(--color-secundario);
+    color: var(--color-texto-claro);
+  }
+
+  .hero :focus-visible {
+    outline-color: var(--color-primario-oscuro);
+  }
+
+  .hero__visual {
+    padding: 0;
+  }
+
+  .telefono {
+    max-width: 320px;
+    padding: 12px;
+    font-size: 1rem;
+    border: 0;
+    border-radius: 40px;
+  }
+
+  .telefono::before {
+    top: 20px;
+    width: 70px;
+  }
+
+  .telefono__pantalla {
+    height: 560px;
+    border-radius: 30px;
   }
 
   .seccion {

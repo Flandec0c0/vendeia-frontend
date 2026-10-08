@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VENDE-IA | Agente de IA que vende por WhatsApp</title>
-  <meta name="description" content="Tu tienda vende por WhatsApp las 24 horas. Un agente de IA que asesora, ofrece lo que hay en stock, cobra con QR y coordina el envío. Prueba gratis 15 días.">
+  <meta name="description"
+    content="Tu tienda vende por WhatsApp las 24 horas. Un agente de IA que asesora, ofrece lo que hay en stock, cobra con QR y coordina el envío. Prueba gratis 15 días.">
   <meta name="theme-color" content="#1FA855">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_BO">
   <meta property="og:site_name" content="VENDE-IA">
   <meta property="og:title" content="VENDE-IA | Agente de IA que vende por WhatsApp">
-  <meta property="og:description" content="Tu tienda vende por WhatsApp las 24 horas. Un agente de IA que asesora, ofrece lo que hay en stock, cobra con QR y coordina el envío. Prueba gratis 15 días.">
+  <meta property="og:description"
+    content="Tu tienda vende por WhatsApp las 24 horas. Un agente de IA que asesora, ofrece lo que hay en stock, cobra con QR y coordina el envío. Prueba gratis 15 días.">
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F2E22'/%3E%3Cg transform='translate(1.6 1.6) scale(.9)'%3E%3Cpath d='M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z' fill='%231FA855'/%3E%3Cpath d='M7 19l4-4 3 3 6-6M16 12h4v4' fill='none' stroke='%230F2E22' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z' fill='%231FA855'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F2E22'/%3E%3Cg transform='translate(1.6 1.6) scale(.9)'%3E%3Cpath d='M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z' fill='%231FA855'/%3E%3Cpath d='M7 19l4-4 3 3 6-6M16 12h4v4' fill='none' stroke='%230F2E22' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z' fill='%231FA855'/%3E%3C/g%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
 
@@ -28,9 +35,10 @@
     <div class="contenedor nav__barra">
       <a class="logo" href="#inicio" aria-label="VENDE-IA, ir al inicio">
         <svg class="logo__icono" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-          <path class="logo__burbuja" d="M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z"/>
-          <path class="logo__trazo" d="M7 19l4-4 3 3 6-6M16 12h4v4"/>
-          <path class="logo__chispa" d="M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z"/>
+          <path class="logo__burbuja"
+            d="M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z" />
+          <path class="logo__trazo" d="M7 19l4-4 3 3 6-6M16 12h4v4" />
+          <path class="logo__chispa" d="M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z" />
         </svg>
         <span class="logo__texto">VENDE-IA</span>
       </a>
@@ -59,24 +67,34 @@
     <section class="hero" id="inicio" aria-labelledby="hero-titulo">
       <div class="contenedor hero__grid">
         <div class="hero__texto">
-          <p class="hero__etiqueta" aria-hidden="true"><span class="hero__punto"></span>Tu agente está atendiendo ahora</p>
-          <h1 id="hero-titulo">Tu tienda vende por WhatsApp, <span class="hero__resaltado">incluso mientras duermes</span></h1>
-          <p class="hero__subtitulo">VENDE-IA es un agente de inteligencia artificial que atiende a tus clientes por WhatsApp como un vendedor de verdad: los asesora, les ofrece solo lo que tienes en stock, cobra con QR y coordina el envío.</p>
+          <p class="hero__etiqueta" aria-hidden="true"><span class="hero__punto"></span>Tu agente está atendiendo ahora
+          </p>
+          <h1 id="hero-titulo">Tu tienda vende por WhatsApp, <span class="hero__resaltado">incluso mientras
+              duermes</span></h1>
+          <p class="hero__subtitulo">VENDE-IA es un agente de inteligencia artificial que atiende a tus clientes por
+            WhatsApp como un vendedor de verdad: los asesora, les ofrece solo lo que tienes en stock, cobra con QR y
+            coordina el envío.</p>
           <div class="hero__botones">
             <a class="boton boton--primario boton--grande" href="#prueba">Prueba gratis 15 días</a>
             <a class="boton boton--secundario boton--grande" href="#como-funciona">Ver cómo funciona</a>
           </div>
           <ul class="hero__confianza">
             <li>
-              <svg class="icono-mini" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+              <svg class="icono-mini" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12.5l4.5 4.5L19 7.5" />
+              </svg>
               Funcionando en 24 horas
             </li>
             <li>
-              <svg class="icono-mini" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+              <svg class="icono-mini" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12.5l4.5 4.5L19 7.5" />
+              </svg>
               Sin necesidad de tienda online
             </li>
             <li>
-              <svg class="icono-mini" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+              <svg class="icono-mini" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12.5l4.5 4.5L19 7.5" />
+              </svg>
               Cobro con QR
             </li>
           </ul>
@@ -92,11 +110,14 @@
             <li class="chip chip--6">¡Hola de nuevo, Juan! 👋</li>
           </ul>
 
-          <figure class="telefono" role="img" aria-label="Celular con una conversación de WhatsApp: un cliente busca una camisa para una boda; VENDE-IA le muestra dos camisas disponibles en talla M, una blanca slim fit a 180 Bs y una celeste de lino a 210 Bs, y le sugiere una corbata azul marino. El cliente elige la blanca, paga 180 Bs con un código QR dentro del chat y el agente le ofrece envío a domicilio o recojo en tienda.">
+          <figure class="telefono" role="img"
+            aria-label="Celular con una conversación de WhatsApp: un cliente busca una camisa para una boda; VENDE-IA le muestra dos camisas disponibles en talla M, una blanca slim fit a 180 Bs y una celeste de lino a 210 Bs, y le sugiere una corbata azul marino. El cliente elige la blanca, paga 180 Bs con un código QR dentro del chat y el agente le ofrece envío a domicilio o recojo en tienda.">
             <div class="telefono__pantalla" aria-hidden="true">
               <div class="chat__cabecera">
                 <span class="chat__avatar">
-                  <svg viewBox="0 0 32 32" focusable="false"><path class="chat__avatar-v" d="M10.5 12.5l5.5 8 5.5-8"/></svg>
+                  <svg viewBox="0 0 32 32" focusable="false">
+                    <path class="chat__avatar-v" d="M10.5 12.5l5.5 8 5.5-8" />
+                  </svg>
                 </span>
                 <span class="chat__info">
                   <span class="chat__nombre">Tu tienda</span>
@@ -111,8 +132,11 @@
                   </div>
 
                   <div class="burbuja burbuja--agente">
-                    <p>¡Hola, Juan! 👋 Qué lindo, una boda 🎉 ¿Buscas algo clásico, como blanco o celeste? La última vez llevaste talla M, ¿seguimos con esa?</p>
-                    <span class="burbuja__meta">23:41 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false"><path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8"/></svg></span>
+                    <p>¡Hola, Juan! 👋 Qué lindo, una boda 🎉 ¿Buscas algo clásico, como blanco o celeste? La última vez
+                      llevaste talla M, ¿seguimos con esa?</p>
+                    <span class="burbuja__meta">23:41 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false">
+                        <path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8" />
+                      </svg></span>
                   </div>
 
                   <div class="burbuja burbuja--cliente">
@@ -126,11 +150,13 @@
                       <div class="producto producto--blanca">
                         <span class="producto__imagen">
                           <svg viewBox="0 0 64 64" focusable="false">
-                            <path class="camisa__cuerpo" d="M23 8l-9 3.5L4 21l6.5 9.5 5.5-3.5V58h32V27l5.5 3.5L60 21l-10-9.5L41 8c-2 4-5.5 6-9 6s-7-2-9-6z"/>
-                            <path class="camisa__detalle" d="M23 8l4.5 11L32 14l4.5 5L41 8M32 14v44M16 27v-5M48 27v-5"/>
-                            <circle class="camisa__boton" cx="34.5" cy="26" r="1.3"/>
-                            <circle class="camisa__boton" cx="34.5" cy="35" r="1.3"/>
-                            <circle class="camisa__boton" cx="34.5" cy="44" r="1.3"/>
+                            <path class="camisa__cuerpo"
+                              d="M23 8l-9 3.5L4 21l6.5 9.5 5.5-3.5V58h32V27l5.5 3.5L60 21l-10-9.5L41 8c-2 4-5.5 6-9 6s-7-2-9-6z" />
+                            <path class="camisa__detalle"
+                              d="M23 8l4.5 11L32 14l4.5 5L41 8M32 14v44M16 27v-5M48 27v-5" />
+                            <circle class="camisa__boton" cx="34.5" cy="26" r="1.3" />
+                            <circle class="camisa__boton" cx="34.5" cy="35" r="1.3" />
+                            <circle class="camisa__boton" cx="34.5" cy="44" r="1.3" />
                           </svg>
                         </span>
                         <span class="producto__nombre">Camisa blanca slim fit</span>
@@ -141,11 +167,13 @@
                       <div class="producto producto--celeste">
                         <span class="producto__imagen">
                           <svg viewBox="0 0 64 64" focusable="false">
-                            <path class="camisa__cuerpo" d="M23 8l-9 3.5L4 21l6.5 9.5 5.5-3.5V58h32V27l5.5 3.5L60 21l-10-9.5L41 8c-2 4-5.5 6-9 6s-7-2-9-6z"/>
-                            <path class="camisa__detalle" d="M23 8l4.5 11L32 14l4.5 5L41 8M32 14v44M16 27v-5M48 27v-5"/>
-                            <circle class="camisa__boton" cx="34.5" cy="26" r="1.3"/>
-                            <circle class="camisa__boton" cx="34.5" cy="35" r="1.3"/>
-                            <circle class="camisa__boton" cx="34.5" cy="44" r="1.3"/>
+                            <path class="camisa__cuerpo"
+                              d="M23 8l-9 3.5L4 21l6.5 9.5 5.5-3.5V58h32V27l5.5 3.5L60 21l-10-9.5L41 8c-2 4-5.5 6-9 6s-7-2-9-6z" />
+                            <path class="camisa__detalle"
+                              d="M23 8l4.5 11L32 14l4.5 5L41 8M32 14v44M16 27v-5M48 27v-5" />
+                            <circle class="camisa__boton" cx="34.5" cy="26" r="1.3" />
+                            <circle class="camisa__boton" cx="34.5" cy="35" r="1.3" />
+                            <circle class="camisa__boton" cx="34.5" cy="44" r="1.3" />
                           </svg>
                         </span>
                         <span class="producto__nombre">Camisa celeste de lino</span>
@@ -154,7 +182,9 @@
                         <span class="producto__boton">Agregar al carrito 🛒</span>
                       </div>
                     </div>
-                    <span class="burbuja__meta">23:42 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false"><path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8"/></svg></span>
+                    <span class="burbuja__meta">23:42 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false">
+                        <path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8" />
+                      </svg></span>
                   </div>
 
                   <div class="burbuja burbuja--agente">
@@ -162,9 +192,9 @@
                     <div class="producto producto--fila producto--marino">
                       <span class="producto__imagen">
                         <svg viewBox="0 0 64 64" focusable="false">
-                          <path class="corbata__nudo" d="M25 6h14l-3.5 9h-7z"/>
-                          <path class="corbata__hoja" d="M28.5 15h7l5 33-8.5 11-8.5-11z"/>
-                          <path class="corbata__raya" d="M27 27l11-5M26 37l13-6M25 47l15-6"/>
+                          <path class="corbata__nudo" d="M25 6h14l-3.5 9h-7z" />
+                          <path class="corbata__hoja" d="M28.5 15h7l5 33-8.5 11-8.5-11z" />
+                          <path class="corbata__raya" d="M27 27l11-5M26 37l13-6M25 47l15-6" />
                         </svg>
                       </span>
                       <span class="producto__datos">
@@ -172,7 +202,9 @@
                         <span class="producto__precio">70 Bs</span>
                       </span>
                     </div>
-                    <span class="burbuja__meta">23:42 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false"><path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8"/></svg></span>
+                    <span class="burbuja__meta">23:42 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false">
+                        <path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8" />
+                      </svg></span>
                   </div>
 
                   <div class="burbuja burbuja--cliente">
@@ -181,23 +213,30 @@
                   </div>
 
                   <div class="burbuja burbuja--agente">
-                    <p>¡Excelente elección! 🙌 Te separé la camisa blanca slim fit en talla M. Escanea este QR para pagar 👇</p>
+                    <p>¡Excelente elección! 🙌 Te separé la camisa blanca slim fit en talla M. Escanea este QR para
+                      pagar 👇</p>
                     <div class="pago">
                       <span class="pago__titulo">Pago con QR</span>
                       <svg class="pago__qr" viewBox="-1 -1 23 23" focusable="false">
-                        <rect class="pago__qr-fondo" x="-1" y="-1" width="23" height="23" rx="1.5"/>
-                        <path fill-rule="evenodd" d="M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2zM14 0h7v7h-7zM15 1v5h5V1zM16 2h3v3h-3zM0 14h7v7H0zM1 15v5h5v-5zM2 16h3v3H2z"/>
-                        <path d="M9 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM12 3h1v1h-1zM8 5h1v1h-1zM10 5h1v1h-1zM9 6h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM1 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM9 8h1v1h-1zM11 8h1v1h-1zM14 8h1v1h-1zM15 8h1v1h-1zM19 8h1v1h-1zM0 9h1v1h-1zM3 9h1v1h-1zM4 9h1v1h-1zM6 9h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM13 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM11 10h1v1h-1zM13 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM17 10h1v1h-1zM19 10h1v1h-1zM0 11h1v1h-1zM1 11h1v1h-1zM7 11h1v1h-1zM9 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM12 11h1v1h-1zM13 11h1v1h-1zM14 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM1 12h1v1h-1zM2 12h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM8 12h1v1h-1zM11 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM19 12h1v1h-1zM10 13h1v1h-1zM11 13h1v1h-1zM12 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM17 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM12 14h1v1h-1zM14 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM9 15h1v1h-1zM11 15h1v1h-1zM16 15h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM14 16h1v1h-1zM15 16h1v1h-1zM17 16h1v1h-1zM19 16h1v1h-1zM8 17h1v1h-1zM11 17h1v1h-1zM14 17h1v1h-1zM15 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM18 17h1v1h-1zM19 17h1v1h-1zM20 17h1v1h-1zM8 18h1v1h-1zM10 18h1v1h-1zM11 18h1v1h-1zM13 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM19 19h1v1h-1zM20 19h1v1h-1zM9 20h1v1h-1zM10 20h1v1h-1zM11 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1z"/>
+                        <rect class="pago__qr-fondo" x="-1" y="-1" width="23" height="23" rx="1.5" />
+                        <path fill-rule="evenodd"
+                          d="M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2zM14 0h7v7h-7zM15 1v5h5V1zM16 2h3v3h-3zM0 14h7v7H0zM1 15v5h5v-5zM2 16h3v3H2z" />
+                        <path
+                          d="M9 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM12 3h1v1h-1zM8 5h1v1h-1zM10 5h1v1h-1zM9 6h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM1 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM9 8h1v1h-1zM11 8h1v1h-1zM14 8h1v1h-1zM15 8h1v1h-1zM19 8h1v1h-1zM0 9h1v1h-1zM3 9h1v1h-1zM4 9h1v1h-1zM6 9h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM13 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM11 10h1v1h-1zM13 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM17 10h1v1h-1zM19 10h1v1h-1zM0 11h1v1h-1zM1 11h1v1h-1zM7 11h1v1h-1zM9 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM12 11h1v1h-1zM13 11h1v1h-1zM14 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM1 12h1v1h-1zM2 12h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM8 12h1v1h-1zM11 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM19 12h1v1h-1zM10 13h1v1h-1zM11 13h1v1h-1zM12 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM17 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM12 14h1v1h-1zM14 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM9 15h1v1h-1zM11 15h1v1h-1zM16 15h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM14 16h1v1h-1zM15 16h1v1h-1zM17 16h1v1h-1zM19 16h1v1h-1zM8 17h1v1h-1zM11 17h1v1h-1zM14 17h1v1h-1zM15 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM18 17h1v1h-1zM19 17h1v1h-1zM20 17h1v1h-1zM8 18h1v1h-1zM10 18h1v1h-1zM11 18h1v1h-1zM13 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM19 19h1v1h-1zM20 19h1v1h-1zM9 20h1v1h-1zM10 20h1v1h-1zM11 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1z" />
                       </svg>
                       <span class="pago__detalle">Camisa blanca slim fit · Talla M</span>
                       <span class="pago__total">Total: <strong>180 Bs</strong></span>
                     </div>
-                    <span class="burbuja__meta">23:43 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false"><path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8"/></svg></span>
+                    <span class="burbuja__meta">23:43 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false">
+                        <path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8" />
+                      </svg></span>
                   </div>
 
                   <div class="burbuja burbuja--agente">
                     <p>¡Pago recibido! ✅ ¿Te la enviamos a domicilio o pasas a recogerla? 🚚</p>
-                    <span class="burbuja__meta">23:44 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false"><path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8"/></svg></span>
+                    <span class="burbuja__meta">23:44 <svg class="burbuja__check" viewBox="0 0 16 11" focusable="false">
+                        <path d="M1.2 5.8l2.7 2.8L9.8 1.8M7.3 8.3l.3.3 5.9-6.8" />
+                      </svg></span>
                   </div>
 
                   <div class="chat__escribiendo"><span></span><span></span><span></span></div>
@@ -222,24 +261,35 @@
         <div class="grid grid--3">
           <article class="tarjeta revelar">
             <span class="tarjeta__icono">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" />
+              </svg>
             </span>
             <h3>Mensajes sin respuesta</h3>
-            <p>Las consultas que llegan de noche o mientras atiendes en el local se responden tarde, y el cliente compra en otro lado.</p>
+            <p>Las consultas que llegan de noche o mientras atiendes en el local se responden tarde, y el cliente compra
+              en otro lado.</p>
           </article>
           <article class="tarjeta revelar">
             <span class="tarjeta__icono">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z" />
+                <path d="M3 7.5l9 4.5 9-4.5M12 12v9" />
+              </svg>
             </span>
             <h3>Stock a ciegas</h3>
             <p>Ofreces un producto que ya se vendió o pierdes tiempo revisando qué te queda.</p>
           </article>
           <article class="tarjeta revelar">
             <span class="tarjeta__icono">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" />
+                <path d="M9 8h6M9 12h6M9 16h3" />
+              </svg>
             </span>
             <h3>Ventas que no se registran</h3>
-            <p>Cobras por transferencia, coordinas envíos uno por uno y al final del día no sabes cuánto vendiste por WhatsApp.</p>
+            <p>Cobras por transferencia, coordinas envíos uno por uno y al final del día no sabes cuánto vendiste por
+              WhatsApp.</p>
           </article>
         </div>
       </div>
@@ -249,7 +299,9 @@
     <section class="seccion seccion--oscura" id="solucion" aria-labelledby="solucion-titulo">
       <div class="contenedor seccion__cabecera seccion__cabecera--ancha revelar">
         <h2 id="solucion-titulo">Un vendedor más en tu equipo, disponible las 24 horas</h2>
-        <p>VENDE-IA se conecta al WhatsApp de tu tienda y conversa con tus clientes de forma natural. Conoce tu catálogo, tu stock y a cada cliente, y completa la venta de principio a fin sin que tengas que tocar el celular.</p>
+        <p>VENDE-IA se conecta al WhatsApp de tu tienda y conversa con tus clientes de forma natural. Conoce tu
+          catálogo, tu stock y a cada cliente, y completa la venta de principio a fin sin que tengas que tocar el
+          celular.</p>
       </div>
     </section>
 
@@ -263,12 +315,14 @@
           <li class="paso revelar">
             <span class="paso__numero" aria-hidden="true">1</span>
             <h3>Carga tus productos</h3>
-            <p>Súbelos a mano, con nuestra plantilla de Excel, con un archivo CSV o conecta tu sistema o tienda online.</p>
+            <p>Súbelos a mano, con nuestra plantilla de Excel, con un archivo CSV o conecta tu sistema o tienda online.
+            </p>
           </li>
           <li class="paso revelar">
             <span class="paso__numero" aria-hidden="true">2</span>
             <h3>Configura tu agente</h3>
-            <p>Elige su nombre, su tono, tu horario de atención, tus políticas de cambio y tus métodos de pago y envío.</p>
+            <p>Elige su nombre, su tono, tu horario de atención, tus políticas de cambio y tus métodos de pago y envío.
+            </p>
           </li>
           <li class="paso revelar">
             <span class="paso__numero" aria-hidden="true">3</span>
@@ -278,7 +332,8 @@
           <li class="paso revelar">
             <span class="paso__numero" aria-hidden="true">4</span>
             <h3>Vende y controla todo</h3>
-            <p>El agente atiende, cobra y coordina los envíos, y tú ves cada venta y cada conversación desde tu panel.</p>
+            <p>El agente atiende, cobra y coordina los envíos, y tú ves cada venta y cada conversación desde tu panel.
+            </p>
           </li>
         </ol>
       </div>
@@ -289,32 +344,75 @@
       <div class="contenedor">
         <div class="seccion__cabecera revelar">
           <h2 id="experiencia-titulo">Tus clientes solo escriben. VENDE-IA hace el resto.</h2>
-          <p>Tus clientes no descargan ninguna app ni navegan menús. Escriben por WhatsApp como si hablaran con una persona, y el agente:</p>
+          <p>Tus clientes no descargan ninguna app ni navegan menús. Escriben por WhatsApp como si hablaran con una
+            persona, y el agente:</p>
         </div>
         <ul class="grid grid--3 lista-limpia">
           <li class="item revelar">
-            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20.5l1.3-4.8A8 8 0 1 1 21 12z"/><path d="M9 10.5h6M9 13.5h4"/></svg></span>
-            <div><h3>Asesora</h3><p>Pregunta por la ocasión, la talla, el estilo y el presupuesto antes de recomendar.</p></div>
+            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M21 12a8 8 0 0 1-11.5 7.2L4 20.5l1.3-4.8A8 8 0 1 1 21 12z" />
+                <path d="M9 10.5h6M9 13.5h4" />
+              </svg></span>
+            <div>
+              <h3>Asesora</h3>
+              <p>Pregunta por la ocasión, la talla, el estilo y el presupuesto antes de recomendar.</p>
+            </div>
           </li>
           <li class="item revelar">
-            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg></span>
-            <div><h3>Ofrece lo que hay</h3><p>Muestra fotos y precios solo de productos disponibles en tu stock.</p></div>
+            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <circle cx="9" cy="10" r="1.6" />
+                <path d="M21 16l-5-5-8 8" />
+              </svg></span>
+            <div>
+              <h3>Ofrece lo que hay</h3>
+              <p>Muestra fotos y precios solo de productos disponibles en tu stock.</p>
+            </div>
           </li>
           <li class="item revelar">
-            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/><path d="M17 3v6M14 6h6"/></svg></span>
-            <div><h3>Sugiere combinaciones</h3><p>Recomienda productos que combinan para aumentar el valor de cada venta.</p></div>
+            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="3" y="3" width="8" height="8" rx="2" />
+                <rect x="13" y="13" width="8" height="8" rx="2" />
+                <path d="M17 3v6M14 6h6" />
+              </svg></span>
+            <div>
+              <h3>Sugiere combinaciones</h3>
+              <p>Recomienda productos que combinan para aumentar el valor de cada venta.</p>
+            </div>
           </li>
           <li class="item revelar">
-            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM18 18h3v3h-3zM14 20h1M20 14h1"/></svg></span>
-            <div><h3>Cobra</h3><p>Genera el pago con QR o tarjeta dentro del mismo chat.</p></div>
+            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+                <path d="M14 14h3v3h-3zM18 18h3v3h-3zM14 20h1M20 14h1" />
+              </svg></span>
+            <div>
+              <h3>Cobra</h3>
+              <p>Genera el pago con QR o tarjeta dentro del mismo chat.</p>
+            </div>
           </li>
           <li class="item revelar">
-            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 6h12v10H2zM14 9h4l4 4v3h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>
-            <div><h3>Coordina la entrega</h3><p>Ofrece envío a domicilio o recojo en tienda.</p></div>
+            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M2 6h12v10H2zM14 9h4l4 4v3h-8" />
+                <circle cx="6" cy="18" r="2" />
+                <circle cx="18" cy="18" r="2" />
+              </svg></span>
+            <div>
+              <h3>Coordina la entrega</h3>
+              <p>Ofrece envío a domicilio o recojo en tienda.</p>
+            </div>
           </li>
           <li class="item revelar">
-            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
-            <div><h3>Recuerda</h3><p>Reconoce al cliente en su próxima compra, lo saluda por su nombre y recuerda sus pedidos y preferencias.</p></div>
+            <span class="item__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 21a8 8 0 0 1 16 0" />
+              </svg></span>
+            <div>
+              <h3>Recuerda</h3>
+              <p>Reconoce al cliente en su próxima compra, lo saluda por su nombre y recuerda sus pedidos y
+                preferencias.</p>
+            </div>
           </li>
         </ul>
       </div>
@@ -328,37 +426,64 @@
         </div>
         <div class="grid grid--funciones">
           <article class="tarjeta tarjeta--suave revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z" />
+                <path d="M3 7.5l9 4.5 9-4.5M12 12v9" />
+              </svg></span>
             <h3>Catálogo y stock</h3>
             <p>Gestiona productos, variantes de talla y color, precios e inventario en tiempo real.</p>
           </article>
           <article class="tarjeta tarjeta--suave revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2.5"/><path d="M5.5 16.5a3.5 3.5 0 0 1 7 0M15 9h3M15 13h3"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <circle cx="9" cy="10" r="2.5" />
+                <path d="M5.5 16.5a3.5 3.5 0 0 1 7 0M15 9h3M15 13h3" />
+              </svg></span>
             <h3>CRM de clientes</h3>
             <p>La ficha de cada cliente con su nombre, historial de compras, talla y preferencias.</p>
           </article>
           <article class="tarjeta tarjeta--suave revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0" />
+                <circle cx="16" cy="6" r="2" />
+                <circle cx="10" cy="12" r="2" />
+                <circle cx="18" cy="18" r="2" />
+              </svg></span>
             <h3>Configuración del agente</h3>
             <p>Define su personalidad, horario, políticas, preguntas frecuentes y los descuentos que puede ofrecer.</p>
           </article>
           <article class="tarjeta tarjeta--suave revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg></span>
             <h3>Conversaciones en vivo</h3>
             <p>Mira lo que conversa el agente y toma el control del chat cuando quieras.</p>
           </article>
           <article class="tarjeta tarjeta--suave revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 6h12v10H2zM14 9h4l4 4v3h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M2 6h12v10H2zM14 9h4l4 4v3h-8" />
+                <circle cx="6" cy="18" r="2" />
+                <circle cx="18" cy="18" r="2" />
+              </svg></span>
             <h3>Pedidos y envíos</h3>
             <p>Sigue cada pedido: pagado, en preparación, enviado o entregado.</p>
           </article>
           <article class="tarjeta tarjeta--suave revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+              </svg></span>
             <h3>Reportes</h3>
             <p>Ventas del día, productos más vendidos, clientes frecuentes y ventas cerradas por el agente.</p>
           </article>
           <article class="tarjeta tarjeta--suave revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.7-.8 1.7-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.7 1.7-1.7H16a5 5 0 0 0 5-5c0-4-4-7.2-9-7.2z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7" r="1.2"/><circle cx="15" cy="7.5" r="1.2"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path
+                  d="M12 3a9 9 0 1 0 0 18c1.1 0 1.7-.8 1.7-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.7 1.7-1.7H16a5 5 0 0 0 5-5c0-4-4-7.2-9-7.2z" />
+                <circle cx="7.5" cy="11" r="1.2" />
+                <circle cx="10.5" cy="7" r="1.2" />
+                <circle cx="15" cy="7.5" r="1.2" />
+              </svg></span>
             <h3>Tu marca</h3>
             <p>Agrega tu logo y tus colores para que la experiencia sea 100 % tuya.</p>
           </article>
@@ -373,12 +498,30 @@
           <h2 id="beneficios-titulo">Lo que gana tu negocio</h2>
         </div>
         <ul class="beneficios lista-limpia">
-          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Vendes las 24 horas, sin perder clientes por responder tarde.</span></li>
-          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Ahorras tiempo, porque tu equipo se dedica a atender el local y preparar pedidos.</span></li>
-          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>No vendes lo que no tienes, porque el agente trabaja con tu stock real.</span></li>
-          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Conoces a tus clientes y los haces volver.</span></li>
-          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Tienes el control, con cada venta registrada y visible en tu panel.</span></li>
-          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Sin contratar más personal: VENDE-IA trabaja como un vendedor más.</span></li>
+          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false">
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg><span>Vendes las 24 horas, sin perder clientes por responder tarde.</span></li>
+          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false">
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg><span>Ahorras tiempo, porque tu equipo se dedica a atender el local y preparar pedidos.</span></li>
+          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false">
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg><span>No vendes lo que no tienes, porque el agente trabaja con tu stock real.</span></li>
+          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false">
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg><span>Conoces a tus clientes y los haces volver.</span></li>
+          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false">
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg><span>Tienes el control, con cada venta registrada y visible en tu panel.</span></li>
+          <li class="beneficio revelar"><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false">
+              <path d="M5 12.5l4.5 4.5L19 7.5" />
+            </svg><span>Sin contratar más personal: VENDE-IA trabaja como un vendedor más.</span></li>
         </ul>
       </div>
     </section>
@@ -388,31 +531,50 @@
       <div class="contenedor">
         <div class="seccion__cabecera revelar">
           <h2 id="para-quien-titulo">Hecho para tiendas que venden por WhatsApp</h2>
-          <p>Ideal para pequeñas y medianas empresas que reciben pedidos por WhatsApp todos los días, con o sin tienda online.</p>
+          <p>Ideal para pequeñas y medianas empresas que reciben pedidos por WhatsApp todos los días, con o sin tienda
+            online.</p>
         </div>
         <ul class="rubros lista-limpia">
           <li class="rubro revelar">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 3l4 2 4-2 5 4-3 3-2-1v12H8V9l-2 1-3-3z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M8 3l4 2 4-2 5 4-3 3-2-1v12H8V9l-2 1-3-3z" />
+            </svg>
             <span>Ropa y moda</span>
           </li>
           <li class="rubro revelar">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18V8h5l2 4 5 2c3 1 6 2 6 4v1H3z"/><path d="M3 15h18"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 18V8h5l2 4 5 2c3 1 6 2 6 4v1H3z" />
+              <path d="M3 15h18" />
+            </svg>
             <span>Calzado</span>
           </li>
           <li class="rubro revelar">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="7" y="2" width="10" height="20" rx="2" />
+              <path d="M11 18h2" />
+            </svg>
             <span>Tecnología y celulares</span>
           </li>
           <li class="rubro revelar">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="10" width="6" height="11" rx="1"/><path d="M10 10V6l4-3v7"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="9" y="10" width="6" height="11" rx="1" />
+              <path d="M10 10V6l4-3v7" />
+            </svg>
             <span>Cosméticos y belleza</span>
           </li>
           <li class="rubro revelar">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="14" r="6"/><path d="M12 11v3l2 1M9 4h6l-1 4h-4z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="14" r="6" />
+              <path d="M12 11v3l2 1M9 4h6l-1 4h-4z" />
+            </svg>
             <span>Accesorios</span>
           </li>
           <li class="rubro revelar">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 11l9-7 9 7" />
+              <path d="M5 10v10h14V10" />
+              <path d="M10 20v-6h4v6" />
+            </svg>
             <span>Artículos para el hogar</span>
           </li>
         </ul>
@@ -441,43 +603,51 @@
                 <th scope="row">Atiende las 24 horas</th>
                 <td><span class="marca marca--no" aria-hidden="true">✗</span><span class="solo-lectores">No</span></td>
                 <td><span class="marca marca--si" aria-hidden="true">✓</span><span class="solo-lectores">Sí</span></td>
-                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span class="solo-lectores">Sí</span></td>
+                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span
+                    class="solo-lectores">Sí</span></td>
               </tr>
               <tr>
                 <th scope="row">Conversa de forma natural</th>
                 <td><span class="marca marca--si" aria-hidden="true">✓</span><span class="solo-lectores">Sí</span></td>
                 <td><span class="marca marca--no" aria-hidden="true">✗</span><span class="solo-lectores">No</span></td>
-                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span class="solo-lectores">Sí</span></td>
+                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span
+                    class="solo-lectores">Sí</span></td>
               </tr>
               <tr>
                 <th scope="row">Ofrece solo lo que hay en stock</th>
                 <td><span class="marca marca--aveces">A veces</span></td>
                 <td><span class="marca marca--no" aria-hidden="true">✗</span><span class="solo-lectores">No</span></td>
-                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span class="solo-lectores">Sí</span></td>
+                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span
+                    class="solo-lectores">Sí</span></td>
               </tr>
               <tr>
                 <th scope="row">Cobra dentro del chat</th>
                 <td><span class="marca marca--no" aria-hidden="true">✗</span><span class="solo-lectores">No</span></td>
                 <td><span class="marca marca--no" aria-hidden="true">✗</span><span class="solo-lectores">No</span></td>
-                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span class="solo-lectores">Sí</span></td>
+                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span
+                    class="solo-lectores">Sí</span></td>
               </tr>
               <tr>
                 <th scope="row">Recuerda a cada cliente</th>
                 <td><span class="marca marca--aveces">A veces</span></td>
                 <td><span class="marca marca--no" aria-hidden="true">✗</span><span class="solo-lectores">No</span></td>
-                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span class="solo-lectores">Sí</span></td>
+                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span
+                    class="solo-lectores">Sí</span></td>
               </tr>
               <tr>
                 <th scope="row">Funciona sin tienda online</th>
                 <td><span class="marca marca--si" aria-hidden="true">✓</span><span class="solo-lectores">Sí</span></td>
                 <td><span class="marca marca--si" aria-hidden="true">✓</span><span class="solo-lectores">Sí</span></td>
-                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span class="solo-lectores">Sí</span></td>
+                <td class="tabla__destacada"><span class="marca marca--si" aria-hidden="true">✓</span><span
+                    class="solo-lectores">Sí</span></td>
               </tr>
             </tbody>
           </table>
         </div>
         <p class="tabla__pista" aria-hidden="true">Desliza para ver la tabla completa →</p>
-        <p class="nota-centrada revelar">Otros agentes de IA exigen tener una tienda en Shopify y cobran en dólares. VENDE-IA funciona con tu catálogo en Excel, cobra con QR en bolivianos y está pensado para los negocios de Bolivia.</p>
+        <p class="nota-centrada revelar">Otros agentes de IA exigen tener una tienda en Shopify y cobran en dólares.
+          VENDE-IA funciona con tu catálogo en Excel, cobra con QR en bolivianos y está pensado para los negocios de
+          Bolivia.</p>
       </div>
     </section>
 
@@ -489,22 +659,33 @@
         </div>
         <div class="grid grid--4">
           <article class="tarjeta revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 20h4L19 9l-4-4L4 16z" />
+                <path d="M13 7l4 4" />
+              </svg></span>
             <h3>Manual</h3>
             <p>Producto por producto desde el panel.</p>
           </article>
           <article class="tarjeta revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M3 9h18M3 15h18M9 3v18" />
+              </svg></span>
             <h3>Plantilla de Excel</h3>
             <p>Descárgala, llénala y súbela.</p>
           </article>
           <article class="tarjeta revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M12 11v6M9 14l3 3 3-3"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M14 3H6v18h12V7z" />
+                <path d="M14 3v4h4M12 11v6M9 14l3 3 3-3" />
+              </svg></span>
             <h3>Archivo CSV</h3>
             <p>Importa tu catálogo desde otro sistema.</p>
           </article>
           <article class="tarjeta revelar">
-            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg></span>
+            <span class="tarjeta__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4" />
+              </svg></span>
             <h3>Integración</h3>
             <p>Conecta tu tienda online o tu sistema de inventario y todo se sincroniza solo.</p>
           </article>
@@ -528,15 +709,26 @@
           </div>
           <p class="plan__incluye-titulo">Incluye:</p>
           <ul class="plan__incluye lista-limpia">
-            <li><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Agente de IA en WhatsApp</li>
-            <li><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Panel de gestión</li>
-            <li><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>CRM</li>
-            <li><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Catálogo y stock</li>
-            <li><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pedidos y reportes</li>
+            <li><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12.5l4.5 4.5L19 7.5" />
+              </svg>Agente de IA en WhatsApp</li>
+            <li><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12.5l4.5 4.5L19 7.5" />
+              </svg>Panel de gestión</li>
+            <li><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12.5l4.5 4.5L19 7.5" />
+              </svg>CRM</li>
+            <li><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12.5l4.5 4.5L19 7.5" />
+              </svg>Catálogo y stock</li>
+            <li><svg class="icono-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12.5l4.5 4.5L19 7.5" />
+              </svg>Pedidos y reportes</li>
           </ul>
           <a class="boton boton--primario boton--grande boton--bloque" href="#prueba">Empezar mi prueba gratis</a>
         </div>
-        <p class="nota-centrada revelar">Nuestro modelo combina una suscripción accesible con una pequeña comisión por venta: si tú vendes más, nosotros también. Ganamos juntos.</p>
+        <p class="nota-centrada revelar">Nuestro modelo combina una suscripción accesible con una pequeña comisión por
+          venta: si tú vendes más, nosotros también. Ganamos juntos.</p>
       </div>
     </section>
 
@@ -549,27 +741,33 @@
         <div class="faq revelar">
           <details>
             <summary>¿Necesito tener una tienda online?</summary>
-            <p>No. Puedes cargar tus productos a mano, con Excel o con CSV. Si ya tienes una tienda online o un sistema, también puedes conectarlo.</p>
+            <p>No. Puedes cargar tus productos a mano, con Excel o con CSV. Si ya tienes una tienda online o un sistema,
+              también puedes conectarlo.</p>
           </details>
           <details>
             <summary>¿Cuánto tarda en estar funcionando?</summary>
-            <p>En 24 horas, una vez que cargues tus productos y configures tu agente, VENDE-IA está listo para atender a tus clientes.</p>
+            <p>En 24 horas, una vez que cargues tus productos y configures tu agente, VENDE-IA está listo para atender a
+              tus clientes.</p>
           </details>
           <details>
             <summary>¿Cómo funciona la prueba gratis?</summary>
-            <p>Tienes 15 días para usar VENDE-IA con todas sus funciones, sin pagar suscripción. Así puedes comprobar cuántas ventas cierra el agente antes de decidir.</p>
+            <p>Tienes 15 días para usar VENDE-IA con todas sus funciones, sin pagar suscripción. Así puedes comprobar
+              cuántas ventas cierra el agente antes de decidir.</p>
           </details>
           <details>
             <summary>¿El agente puede vender algo que no tengo?</summary>
-            <p>No. El agente consulta tu stock en tiempo real y solo ofrece productos disponibles. Cuando se confirma un pago, el stock se descuenta automáticamente.</p>
+            <p>No. El agente consulta tu stock en tiempo real y solo ofrece productos disponibles. Cuando se confirma un
+              pago, el stock se descuenta automáticamente.</p>
           </details>
           <details>
             <summary>¿Mis clientes van a notar que es una IA?</summary>
-            <p>El agente conversa de forma natural y cercana, con el tono que tú definas. Además, puedes tomar el control de cualquier conversación cuando quieras.</p>
+            <p>El agente conversa de forma natural y cercana, con el tono que tú definas. Además, puedes tomar el
+              control de cualquier conversación cuando quieras.</p>
           </details>
           <details>
             <summary>¿Qué pasa si el agente no sabe responder algo?</summary>
-            <p>Te avisa para que respondas tú y puedes agregar esa respuesta a su configuración para que la próxima vez la sepa.</p>
+            <p>Te avisa para que respondas tú y puedes agregar esa respuesta a su configuración para que la próxima vez
+              la sepa.</p>
           </details>
           <details>
             <summary>¿Cómo se cobra a mis clientes?</summary>
@@ -577,7 +775,8 @@
           </details>
           <details>
             <summary>¿Cómo se calcula la comisión?</summary>
-            <p>Cobramos el 2 % solo sobre las ventas que cierra el agente. Las ventas que haces tú en el local o por tu cuenta no pagan comisión.</p>
+            <p>Cobramos el 2 % solo sobre las ventas que cierra el agente. Las ventas que haces tú en el local o por tu
+              cuenta no pagan comisión.</p>
           </details>
           <details>
             <summary>¿Puedo usar mi número de WhatsApp actual?</summary>
@@ -592,7 +791,8 @@
       <div class="contenedor cta__grid">
         <div class="cta__texto revelar">
           <h2 id="prueba-titulo">Deja de perder ventas por WhatsApp</h2>
-          <p>Prueba VENDE-IA gratis durante 15 días y mira cómo atiende a tus clientes con tus propios productos. Lo tienes funcionando en 24 horas.</p>
+          <p>Prueba VENDE-IA gratis durante 15 días y mira cómo atiende a tus clientes con tus propios productos. Lo
+            tienes funcionando en 24 horas.</p>
         </div>
 
         <div class="formulario-caja revelar">
@@ -604,7 +804,8 @@
             </div>
             <div class="campo">
               <label for="tienda">Nombre de tu tienda</label>
-              <input type="text" id="tienda" name="tienda" autocomplete="organization" required aria-describedby="tienda-error">
+              <input type="text" id="tienda" name="tienda" autocomplete="organization" required
+                aria-describedby="tienda-error">
               <p class="campo__error" id="tienda-error"></p>
             </div>
             <div class="campo">
@@ -625,18 +826,24 @@
               <label for="whatsapp">Número de WhatsApp</label>
               <div class="campo__prefijo">
                 <span aria-hidden="true">+591</span>
-                <input type="tel" id="whatsapp" name="whatsapp" inputmode="numeric" autocomplete="tel-national" placeholder="7XXXXXXX" maxlength="11" required aria-describedby="whatsapp-ayuda whatsapp-error">
+                <input type="tel" id="whatsapp" name="whatsapp" inputmode="numeric" autocomplete="tel-national"
+                  placeholder="7XXXXXXX" maxlength="11" required aria-describedby="whatsapp-ayuda whatsapp-error">
               </div>
               <p class="campo__ayuda" id="whatsapp-ayuda">8 dígitos, empieza con 6 o 7.</p>
               <p class="campo__error" id="whatsapp-error"></p>
             </div>
-            <button class="boton boton--primario boton--grande boton--bloque" type="submit">Empezar mi prueba gratis</button>
+            <button class="boton boton--primario boton--grande boton--bloque" type="submit">Empezar mi prueba
+              gratis</button>
             <div class="formulario__mensaje" id="formulario-mensaje" role="status" aria-live="polite"></div>
           </form>
 
           <p class="cta__alternativa">¿Prefieres hablar con nosotros?</p>
-          <a class="boton boton--whatsapp boton--bloque" href="https://wa.me/59178112704" target="_blank" rel="noopener noreferrer">
-            <svg class="icono-boton icono-whatsapp" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <a class="boton boton--whatsapp boton--bloque" href="https://wa.me/59178112704" target="_blank"
+            rel="noopener noreferrer">
+            <svg class="icono-boton icono-whatsapp" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+            </svg>
             Escríbenos por WhatsApp
           </a>
         </div>
@@ -650,9 +857,10 @@
       <div class="pie__marca">
         <a class="logo logo--claro" href="#inicio" aria-label="VENDE-IA, ir al inicio">
           <svg class="logo__icono" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-            <path class="logo__burbuja" d="M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z"/>
-            <path class="logo__trazo" d="M7 19l4-4 3 3 6-6M16 12h4v4"/>
-            <path class="logo__chispa" d="M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z"/>
+            <path class="logo__burbuja"
+              d="M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z" />
+            <path class="logo__trazo" d="M7 19l4-4 3 3 6-6M16 12h4v4" />
+            <path class="logo__chispa" d="M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z" />
           </svg>
           <span class="logo__texto">VENDE-IA</span>
         </a>
@@ -663,7 +871,8 @@
         <h2 class="pie__titulo">Contacto</h2>
         <ul class="lista-limpia pie__lista">
           <li><a href="mailto:plozatorrez@gmail.com">plozatorrez@gmail.com</a></li>
-          <li><a href="https://wa.me/59178112704" target="_blank" rel="noopener noreferrer">WhatsApp +591 78112704</a></li>
+          <li><a href="https://wa.me/59178112704" target="_blank" rel="noopener noreferrer">WhatsApp +591 78112704</a>
+          </li>
           <li>Santa Cruz, Bolivia</li>
         </ul>
       </div>
@@ -671,9 +880,12 @@
       <div>
         <h2 class="pie__titulo">Redes sociales</h2>
         <ul class="lista-limpia pie__lista">
-          <li><a href="https://www.instagram.com/vende.ia" target="_blank" rel="noopener noreferrer">Instagram @vende.ia</a></li>
-          <li><a href="https://www.facebook.com/VendeIA" target="_blank" rel="noopener noreferrer">Facebook /VendeIA</a></li>
-          <li><a href="https://www.tiktok.com/@vende.ia" target="_blank" rel="noopener noreferrer">TikTok @vende.ia</a></li>
+          <li><a href="https://www.instagram.com/vende.ia" target="_blank" rel="noopener noreferrer">Instagram
+              @vende.ia</a></li>
+          <li><a href="https://www.facebook.com/VendeIA" target="_blank" rel="noopener noreferrer">Facebook /VendeIA</a>
+          </li>
+          <li><a href="https://www.tiktok.com/@vende.ia" target="_blank" rel="noopener noreferrer">TikTok @vende.ia</a>
+          </li>
         </ul>
       </div>
 
@@ -690,10 +902,15 @@
     </div>
   </footer>
 
-  <a class="whatsapp-flotante" href="https://wa.me/59178112704" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp (se abre en una pestaña nueva)">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  <a class="whatsapp-flotante" href="https://wa.me/59178112704" target="_blank" rel="noopener noreferrer"
+    aria-label="Escríbenos por WhatsApp (se abre en una pestaña nueva)">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+    </svg>
   </a>
 
   <script src="js/main.js"></script>
 </body>
+
 </html>

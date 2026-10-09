@@ -28,6 +28,24 @@
   --color-whatsapp: #25D366;
   --color-whatsapp-icono: #FFFFFF;
 
+  /* Business Model Canvas: fondo pastel + color fuerte del ícono */
+  --canvas-azul: #E4ECFA;
+  --canvas-azul-fuerte: #2E5AAC;
+  --canvas-celeste: #DDF1F6;
+  --canvas-celeste-fuerte: #1B6F8A;
+  --canvas-verde: #E3F5EA;
+  --canvas-verde-fuerte: #157A3D;
+  --canvas-rosa: #FBE5ED;
+  --canvas-rosa-fuerte: #B03A66;
+  --canvas-lila: #EEE7F8;
+  --canvas-lila-fuerte: #6A47B0;
+  --canvas-amarillo: #FBF2D3;
+  --canvas-amarillo-fuerte: #85650A;
+  --canvas-durazno: #FDE9DC;
+  --canvas-durazno-fuerte: #A8531B;
+  --canvas-rojo: #FBE3E1;
+  --canvas-rojo-fuerte: #B3261E;
+
   /* Productos dibujados dentro del chat */
   --producto-blanco: #FFFFFF;
   --producto-celeste: #A8D3EE;
@@ -269,6 +287,7 @@ footer[id] {
   font-weight: 700;
   font-size: 1.25rem;
   letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .logo--claro {
@@ -361,6 +380,12 @@ footer[id] {
 
 .nav__enlaces a:hover {
   color: var(--color-primario-oscuro);
+}
+
+/* Página actual (por ejemplo, "Modelo de negocio" en canvas.html) */
+.nav__enlaces a[aria-current="page"] {
+  color: var(--color-primario-oscuro);
+  font-weight: 600;
 }
 
 /* ---------- Portada ---------- */
@@ -1773,6 +1798,122 @@ footer[id] {
   100% { transform: scale(1.6); opacity: 0; }
 }
 
+/* ---------- Business Model Canvas (canvas.html) ---------- */
+.contenedor--canvas {
+  max-width: 1320px;
+}
+
+.canvas-cabecera {
+  padding: calc(var(--alto-nav) + 2.5rem) 0 0.5rem;
+  background:
+    radial-gradient(circle at 85% 0%, var(--color-primario-claro) 0, transparent 55%),
+    var(--color-fondo);
+}
+
+.canvas-cabecera h1 {
+  color: var(--color-secundario);
+}
+
+.canvas-cabecera__subtitulo {
+  font-size: 1.15rem;
+  color: var(--color-texto-suave);
+}
+
+.canvas-cabecera__etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.canvas-cabecera__etiquetas li {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.9rem;
+  color: var(--color-secundario);
+  background: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  border-radius: 999px;
+}
+
+.canvas-cabecera__etiquetas span {
+  white-space: nowrap;
+}
+
+.canvas-seccion {
+  padding-top: 2rem;
+}
+
+.canvas {
+  display: grid;
+  gap: 1rem;
+}
+
+.bloque {
+  --bloque-fondo: var(--canvas-verde);
+  --bloque-fuerte: var(--canvas-verde-fuerte);
+  padding: 1.25rem;
+  background: var(--bloque-fondo);
+  border: 1px solid transparent;
+  border-radius: var(--radio-borde);
+}
+
+.bloque--azul { --bloque-fondo: var(--canvas-azul); --bloque-fuerte: var(--canvas-azul-fuerte); }
+.bloque--celeste { --bloque-fondo: var(--canvas-celeste); --bloque-fuerte: var(--canvas-celeste-fuerte); }
+.bloque--verde { --bloque-fondo: var(--canvas-verde); --bloque-fuerte: var(--canvas-verde-fuerte); }
+.bloque--rosa { --bloque-fondo: var(--canvas-rosa); --bloque-fuerte: var(--canvas-rosa-fuerte); }
+.bloque--lila { --bloque-fondo: var(--canvas-lila); --bloque-fuerte: var(--canvas-lila-fuerte); }
+.bloque--amarillo { --bloque-fondo: var(--canvas-amarillo); --bloque-fuerte: var(--canvas-amarillo-fuerte); }
+.bloque--durazno { --bloque-fondo: var(--canvas-durazno); --bloque-fuerte: var(--canvas-durazno-fuerte); }
+.bloque--rojo { --bloque-fondo: var(--canvas-rojo); --bloque-fuerte: var(--canvas-rojo-fuerte); }
+
+/* La propuesta de valor es el centro del canvas */
+.bloque--propuesta {
+  border: 2px solid var(--color-primario);
+  box-shadow: var(--sombra);
+}
+
+.bloque__cabecera {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.75rem;
+}
+
+.bloque__icono {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--bloque-fuerte);
+  color: var(--color-texto-claro);
+}
+
+.bloque__icono svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bloque h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-secundario);
+}
+
+.bloque p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--color-texto);
+  hyphens: auto;
+}
+
 /* ---------- Animaciones al hacer scroll ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .js-animado .revelar {
@@ -1796,6 +1937,10 @@ footer[id] {
    Tablet
    ========================================================= */
 @media (min-width: 640px) {
+  .canvas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .hero__botones {
     flex-direction: row;
     flex-wrap: wrap;
@@ -1838,6 +1983,10 @@ footer[id] {
     padding: 0 2rem;
   }
 
+  .nav__barra {
+    gap: 1.5rem;
+  }
+
   .nav__toggle {
     display: none;
   }
@@ -1847,7 +1996,7 @@ footer[id] {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem; /* compacto hasta 1200px, ver abajo */
     padding: 0;
     background: transparent;
     border: 0;
@@ -1856,17 +2005,65 @@ footer[id] {
 
   .nav__enlaces {
     display: flex;
-    gap: 1.75rem;
+    gap: 0.85rem;
   }
 
   .nav__enlaces a {
     padding: 0.5rem 0;
     border-bottom: 2px solid transparent;
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+
+  .nav__cta {
+    flex-shrink: 0;
+    padding: 0.6rem 1.1rem;
+    white-space: nowrap;
   }
 
   .nav__enlaces a:hover {
     border-bottom-color: var(--color-primario);
   }
+
+  .nav__enlaces a[aria-current="page"] {
+    border-bottom-color: var(--color-primario);
+  }
+
+  /* Canvas real: 5 columnas arriba y 2 abajo (10 pistas para partir al medio) */
+  .canvas {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    grid-template-areas:
+      "ali ali act act pro pro rel rel seg seg"
+      "ali ali rec rec inn inn can can com com"
+      "ali ali rec rec pmv pmv can can com com"
+      "cos cos cos cos cos ing ing ing ing ing";
+    gap: 0.75rem;
+  }
+
+  .bloque {
+    padding: 1.1rem;
+  }
+
+  .bloque h2 {
+    font-size: 1rem;
+  }
+
+  .bloque p {
+    font-size: 0.875rem;
+  }
+
+  .bloque--alianzas { grid-area: ali; }
+  .bloque--actividades { grid-area: act; }
+  .bloque--recursos { grid-area: rec; }
+  .bloque--propuesta { grid-area: pro; }
+  .bloque--innovacion { grid-area: inn; }
+  .bloque--pmv { grid-area: pmv; }
+  .bloque--relacion { grid-area: rel; }
+  .bloque--canales { grid-area: can; }
+  .bloque--segmento { grid-area: seg; }
+  .bloque--competidores { grid-area: com; }
+  .bloque--costos { grid-area: cos; }
+  .bloque--ingresos { grid-area: ing; }
 
   /* En escritorio la portada vuelve al diseño claro original */
   .hero {
@@ -1996,5 +2193,24 @@ footer[id] {
   .whatsapp-flotante {
     right: 1.5rem;
     bottom: 1.5rem;
+  }
+}
+
+/* Pantallas anchas: el menú recupera su espaciado completo */
+@media (min-width: 1200px) {
+  .nav__menu {
+    gap: 2rem;
+  }
+
+  .nav__enlaces {
+    gap: 1.75rem;
+  }
+
+  .nav__enlaces a {
+    font-size: 1rem;
+  }
+
+  .nav__cta {
+    padding: 0.7rem 1.4rem;
   }
 }

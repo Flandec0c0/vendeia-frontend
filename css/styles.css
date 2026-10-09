@@ -28,6 +28,11 @@
   --color-whatsapp: #25D366;
   --color-whatsapp-icono: #FFFFFF;
 
+  /* Botones destacados del menú */
+  --color-boton-texto: #FFFFFF;
+  --sombra-verde: rgba(21, 122, 61, 0.45);
+  --sombra-verde-fuerte: rgba(21, 122, 61, 0.6);
+
   /* Business Model Canvas: fondo pastel + color fuerte del ícono */
   --canvas-azul: #E4ECFA;
   --canvas-azul-fuerte: #2E5AAC;
@@ -256,6 +261,7 @@ footer[id] {
 .logo {
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
   gap: 0.5rem;
   text-decoration: none;
   color: var(--color-secundario);
@@ -382,10 +388,169 @@ footer[id] {
   color: var(--color-primario-oscuro);
 }
 
-/* Página actual (por ejemplo, "Modelo de negocio" en canvas.html) */
-.nav__enlaces a[aria-current="page"] {
-  color: var(--color-primario-oscuro);
-  font-weight: 600;
+/* ---------- Botones destacados del menú ---------- */
+/* Los fondos y sombras de hover se animan con una capa ::before (opacity)
+   para mover solo transform y opacity. */
+.nav__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nav__boton {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 48px;
+  padding: 0.6rem 1.25rem;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 999px;
+  transition: transform 0.2s ease;
+}
+
+.nav__boton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.nav__boton-icono {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.nav__boton:focus-visible {
+  outline: 3px solid var(--color-secundario);
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
+/* "Prueba gratis": el botón principal. El degradado va de un verde
+   medio a --color-primario-oscuro para que el texto blanco en negrita
+   tenga contraste suficiente (4,5:1 o más) en toda la zona del texto. */
+.nav__boton--prueba {
+  order: -1; /* en el menú del celular va primero */
+  color: var(--color-boton-texto);
+  background: var(--color-primario-oscuro);
+  background: linear-gradient(180deg,
+      color-mix(in srgb, var(--color-primario) 40%, var(--color-primario-oscuro)) 0%,
+      var(--color-primario-oscuro) 100%);
+  box-shadow: 0 6px 16px -6px var(--sombra-verde);
+}
+
+.nav__boton--prueba .nav__boton-icono {
+  fill: currentColor;
+}
+
+.nav__boton--prueba::before {
+  box-shadow: 0 14px 28px -8px var(--sombra-verde-fuerte);
+}
+
+.nav__boton--prueba:hover::before {
+  opacity: 1;
+}
+
+/* Brillo que cruza el botón */
+.nav__brillo {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nav__brillo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(105deg, transparent 0%,
+      color-mix(in srgb, var(--color-boton-texto) 40%, transparent) 50%, transparent 100%);
+  transform: translateX(-120%);
+  opacity: 0;
+}
+
+/* "Modelo de negocio": secundario, se rellena de verde al pasar el cursor
+   y queda rellenado en canvas.html (página actual). */
+.nav__boton--canvas {
+  color: var(--color-secundario);
+  background: var(--color-primario-claro);
+  border: 2px solid var(--color-primario);
+}
+
+.nav__boton--canvas .nav__boton-icono {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.nav__boton--canvas::before {
+  inset: -2px;
+  background: var(--color-primario);
+}
+
+.nav__boton--canvas:hover::before,
+.nav__boton--canvas[aria-current="page"]::before {
+  opacity: 1;
+}
+
+/* "Prueba gratis" compacto en la barra del celular: sin ícono para no
+   apretar el logo, y solo desde 360px de ancho. */
+.nav__boton--compacto {
+  display: none;
+  min-height: 40px;
+  order: 0;
+  margin-left: auto;
+  margin-right: 0.25rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+.nav__boton--compacto .nav__boton-icono {
+  display: none;
+}
+
+@media (min-width: 360px) {
+  .nav__boton--compacto {
+    display: inline-flex;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nav__boton:hover {
+    transform: translateY(-2px);
+  }
+
+  .nav__boton:active {
+    transform: translateY(1px) scale(0.98);
+  }
+
+  .nav__brillo::before {
+    animation: brillo-boton 5s ease-in-out 1.5s infinite;
+  }
+}
+
+@keyframes brillo-boton {
+  0% { transform: translateX(-120%); opacity: 0; }
+  4% { opacity: 1; }
+  22% { transform: translateX(260%); opacity: 1; }
+  26%, 100% { transform: translateX(260%); opacity: 0; }
 }
 
 /* ---------- Portada ---------- */
@@ -1984,7 +2149,7 @@ footer[id] {
   }
 
   .nav__barra {
-    gap: 1.5rem;
+    gap: 1rem; /* 1.5rem desde 1200px */
   }
 
   .nav__toggle {
@@ -1996,7 +2161,7 @@ footer[id] {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1rem; /* compacto hasta 1200px, ver abajo */
+    gap: 0.75rem; /* compacto hasta 1200px, ver abajo */
     padding: 0;
     background: transparent;
     border: 0;
@@ -2005,27 +2170,43 @@ footer[id] {
 
   .nav__enlaces {
     display: flex;
-    gap: 0.85rem;
+    gap: 0.7rem;
   }
 
   .nav__enlaces a {
     padding: 0.5rem 0;
     border-bottom: 2px solid transparent;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     white-space: nowrap;
   }
 
-  .nav__cta {
+  .nav__boton--compacto {
+    display: none;
+  }
+
+  .nav__acciones {
+    flex-direction: row;
+    align-items: center;
     flex-shrink: 0;
-    padding: 0.6rem 1.1rem;
-    white-space: nowrap;
+    gap: 0.5rem;
+  }
+
+  .nav__boton {
+    min-height: 42px;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .nav__boton-icono {
+    width: 15px;
+    height: 15px;
+  }
+
+  .nav__boton--prueba {
+    order: 0;
   }
 
   .nav__enlaces a:hover {
-    border-bottom-color: var(--color-primario);
-  }
-
-  .nav__enlaces a[aria-current="page"] {
     border-bottom-color: var(--color-primario);
   }
 
@@ -2198,19 +2379,29 @@ footer[id] {
 
 /* Pantallas anchas: el menú recupera su espaciado completo */
 @media (min-width: 1200px) {
+  .nav__barra {
+    gap: 1.5rem;
+  }
+
   .nav__menu {
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
   .nav__enlaces {
-    gap: 1.75rem;
+    gap: 1.5rem;
   }
 
   .nav__enlaces a {
     font-size: 1rem;
   }
 
-  .nav__cta {
-    padding: 0.7rem 1.4rem;
+  .nav__boton {
+    padding: 0.55rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .nav__boton-icono {
+    width: 16px;
+    height: 16px;
   }
 }

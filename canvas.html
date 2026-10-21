@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Business Model Canvas | VENDE-IA</title>
   <meta name="description"
-    content="Modelo de negocio de VENDE-IA: propuesta de valor, clientes, canales, ingresos y costos del agente de IA que vende por WhatsApp para las tiendas de Santa Cruz, Bolivia.">
+    content="Business Model Canvas de VENDE-IA: propuesta de valor, segmento de clientes, canales, socios, costos y fuentes de ingreso del agente de IA que vende por WhatsApp en Santa Cruz, Bolivia.">
   <meta name="theme-color" content="#1FA855">
 
   <meta property="og:type" content="website">
@@ -24,7 +24,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=21cd3ac0">
+  <link rel="stylesheet" href="css/styles.css?v=03d5fb92">
 </head>
 
 <body>
@@ -90,146 +90,156 @@
 
     <!-- Encabezado -->
     <section class="canvas-cabecera" aria-labelledby="canvas-titulo">
-      <div class="contenedor contenedor--canvas">
-        <h1 id="canvas-titulo">Canvas – Business Model</h1>
-        <p class="canvas-cabecera__subtitulo">VENDE-IA · Agente de IA que vende por WhatsApp</p>
-        <ul class="canvas-cabecera__etiquetas lista-limpia">
-          <li><strong>Diseñado para:</strong> <span>VENDE-IA</span> – <span>Equipo VENDE-IA</span></li>
-          <li><strong>Fecha:</strong> <time datetime="2026-10-09">9 de octubre de 2026</time></li>
-        </ul>
+      <div class="contenedor contenedor--canvas canvas-cabecera__fila">
+        <h1 id="canvas-titulo">BMC Canvas: VENDE-IA</h1>
+        <svg class="canvas-cabecera__logo" width="64" height="64" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <path class="logo__burbuja"
+            d="M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z" />
+          <path class="logo__trazo" d="M7 19l4-4 3 3 6-6M16 12h4v4" />
+          <path class="logo__chispa" d="M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z" />
+        </svg>
       </div>
     </section>
 
-    <!-- Canvas. El orden del HTML es el orden de lectura en celular;
-         en escritorio cada bloque se ubica con grid-template-areas. -->
+    <!-- Business Model Canvas. El orden del HTML es el orden de lectura en
+         celular; en escritorio cada bloque se ubica con grid-template-areas. -->
     <section class="seccion canvas-seccion" aria-label="Business Model Canvas de VENDE-IA">
       <div class="contenedor contenedor--canvas">
         <div class="canvas">
 
-          <article class="bloque bloque--verde bloque--propuesta revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.8l-5.3 2.6 1.2-6-4.5-4.1 6-.7z" />
-                </svg></span>
-              <h2>Propuesta de Valor</h2>
-            </div>
-            <p>Tu tienda vende por WhatsApp las 24 horas, sin contratar más personal. VENDE-IA es un agente de IA que atiende como un vendedor de verdad: asesora al cliente, ofrece solo lo que hay en stock, cobra con QR, coordina el envío y recuerda a cada cliente en su próxima compra. Funciona sin tienda online, se carga con Excel y está listo en 24 horas.</p>
+          <article class="bloque bloque--propuesta revelar">
+            <h2>Propuesta de Valor</h2>
+            <ul>
+              <li>Tu tienda vende por WhatsApp las 24 h, sin contratar más personal</li>
+              <li>Vende de punta a punta: responde, recomienda, cobra con QR y coordina el envío</li>
+              <li>Solo ofrece productos en stock y recuerda a cada comprador (CRM)</li>
+              <li>Sin tienda online: se activa en 24 h cargando el catálogo por Excel</li>
+            </ul>
           </article>
 
-          <article class="bloque bloque--azul bloque--segmento revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <circle cx="9" cy="8" r="3.5" />
-                  <path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6" />
-                </svg></span>
-              <h2>Segmento de Clientes</h2>
-            </div>
-            <p>Pymes comerciales de Santa Cruz, de 1 a 20 empleados, que venden productos por WhatsApp sin tener una tienda online: tiendas de ropa, calzado, tecnología, cosméticos, accesorios y artículos para el hogar, unas 12.300 empresas. Los primeros clientes serán tiendas de ropa y calzado que reciben más de 30 mensajes diarios y ya cobran por QR.</p>
+          <article class="bloque bloque--segmento revelar">
+            <h2>Segmento Cliente</h2>
+            <ul>
+              <li>Pymes comerciales de Santa Cruz que venden por WhatsApp, cobran con QR y no tienen tienda online (12.300)</li>
+              <li>Primero: tiendas de ropa y calzado con más de 30 mensajes al día</li>
+              <li>Cliente: dueña de tienda (Carla); usuario: vendedora (Daniela); consumidor final: comprador por WhatsApp (Juan)</li>
+            </ul>
           </article>
 
-          <article class="bloque bloque--celeste bloque--canales revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M3 10v4h4l6 4V6l-6 4zM16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12" />
-                </svg></span>
-              <h2>Canales</h2>
-            </div>
-            <p>Landing page con prueba gratis, redes sociales (Instagram, Facebook y TikTok @vende.ia) y nuestro propio WhatsApp atendido por el agente como demostración. Además, venta directa en tiendas y centros comerciales de Santa Cruz, alianzas con asociaciones de comerciantes y un programa de referidos.</p>
+          <article class="bloque bloque--canales revelar">
+            <h2>Canales</h2>
+            <h3 class="bloque__subtitulo">Comunicación</h3>
+            <ul>
+              <li>Redes sociales @vende.ia (Facebook, Instagram y TikTok) y anuncios pagados</li>
+              <li>Landing page con prueba gratis</li>
+            </ul>
+            <h3 class="bloque__subtitulo">Ventas</h3>
+            <ul>
+              <li>Demostraciones por WhatsApp y visitas a tiendas y galerías</li>
+              <li>Alianzas con asociaciones de comerciantes y referidos</li>
+            </ul>
+            <h3 class="bloque__subtitulo">Distribución</h3>
+            <ul>
+              <li>Activación en línea en 24 h con la API oficial de WhatsApp</li>
+              <li>Panel web desde el navegador</li>
+            </ul>
           </article>
 
-          <article class="bloque bloque--rosa bloque--relacion revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" />
-                </svg></span>
-              <h2>Relación con Clientes</h2>
-            </div>
-            <p>Prueba gratis de 15 días para generar confianza. Acompañamiento personalizado en la configuración inicial y luego autoservicio desde el panel. Soporte por WhatsApp. Una relación de largo plazo, porque la comisión hace que ganemos solo cuando la tienda vende.</p>
+          <article class="bloque bloque--relaciones revelar">
+            <h2>Relaciones Clave</h2>
+            <ul>
+              <li>Asistencia personal: prueba gratis de 15 días y activación acompañada</li>
+              <li>Autoservicio desde el panel web</li>
+              <li>Soporte y capacitación por WhatsApp</li>
+              <li>Comunidad de clientes y programa de referidos</li>
+            </ul>
           </article>
 
-          <article class="bloque bloque--amarillo bloque--ingresos revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M3 17l6-6 4 4 8-8M15 7h6v6" />
-                </svg></span>
-              <h2>Fuente de Ingresos</h2>
-            </div>
-            <p>Una suscripción mensual de 350 Bs por empresa más una comisión del 2 % sobre cada venta cerrada por el agente, después de una prueba gratis de 15 días. El ingreso promedio estimado es de 650 Bs al mes por empresa (7.800 Bs al año). A futuro: planes premium, cobro por integraciones con sistemas propios y agentes para Instagram y Facebook.</p>
+          <article class="bloque bloque--ingresos revelar">
+            <h2>Fuentes de Ingreso</h2>
+            <ul>
+              <li>Suscripción (SaaS): 350 Bs al mes, ingreso fijo y recurrente</li>
+              <li>Pago por uso: 2 % de las ventas que cierra el agente (cobro por resultados)</li>
+              <li>Cebo y anzuelo: 15 días de prueba gratis</li>
+              <li>Ticket de 650 Bs por tienda al mes; margen de 530 Bs (650 − 120 de costo variable)</li>
+              <li>38 tiendas × 530 Bs cubren los 20.000 Bs fijos; 50 tiendas = 390.000 Bs/año; 123 tiendas = 959.400 Bs/año</li>
+            </ul>
           </article>
 
-          <article class="bloque bloque--celeste bloque--actividades revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M10 6h10M10 12h10M10 18h10M4 6l1.2 1.2L7.5 5M4 12l1.2 1.2L7.5 11M4 18l1.2 1.2L7.5 17" />
-                </svg></span>
-              <h2>Actividades Clave</h2>
-            </div>
-            <p>Desarrollar y mantener la plataforma: el agente, el panel y el CRM. Configurar el agente de cada tienda y acompañarla en la carga de sus productos. Brindar soporte técnico. Hacer marketing y venta directa a tiendas. Mejorar las respuestas del agente con lo que aprende de las conversaciones.</p>
+          <article class="bloque bloque--actividad revelar">
+            <h2>Actividad Clave</h2>
+            <ul>
+              <li>Desarrollar y mejorar el agente de IA y el panel</li>
+              <li>Marketing digital y programa de referidos</li>
+              <li>Venta directa: demostraciones y visitas a tiendas</li>
+              <li>Activar tiendas nuevas en 24 horas</li>
+              <li>Soporte y capacitación a las tiendas</li>
+              <li>Gestionar alianzas con los socios</li>
+            </ul>
           </article>
 
-          <article class="bloque bloque--lila bloque--recursos revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z" />
-                  <path d="M3 7.5l9 4.5 9-4.5M12 12v9" />
-                </svg></span>
-              <h2>Recursos Clave</h2>
-            </div>
-            <p>La plataforma tecnológica con el agente de IA, el panel y el CRM. El acceso a la API de WhatsApp Business y a los modelos de IA. La infraestructura en la nube. El equipo de desarrollo, soporte y ventas. La marca VENDE-IA y los datos de catálogos e historial de clientes de cada tienda.</p>
+          <article class="bloque bloque--recursos revelar">
+            <h2>Recursos Clave</h2>
+            <ul>
+              <li>Plataforma: agente de IA, panel web, CRM y reportes</li>
+              <li>Cuenta verificada de WhatsApp Business API</li>
+              <li>Equipo de desarrollo, ventas y soporte</li>
+              <li>Marca VENDE-IA, landing page y redes sociales</li>
+              <li>Datos e historial de clientes de cada tienda</li>
+            </ul>
           </article>
 
-          <article class="bloque bloque--azul bloque--alianzas revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" />
-                </svg></span>
-              <h2>Alianzas Clave</h2>
-            </div>
-            <p>Meta y un proveedor oficial de la API de WhatsApp Business, para conectar el agente al WhatsApp de cada tienda. Proveedores de modelos de inteligencia artificial y de servidores en la nube. Bancos y pasarelas de pago con QR, para cobrar dentro del chat. Empresas de delivery de Santa Cruz, para los envíos. Cámaras de comercio y asociaciones de comerciantes, para llegar a más tiendas.</p>
+          <article class="bloque bloque--socio revelar">
+            <h2>Socio Clave</h2>
+            <ul>
+              <li>Meta: API oficial de WhatsApp Business y anuncios en Facebook e Instagram</li>
+              <li>Proveedores de modelos de IA (dos o más)</li>
+              <li>Proveedor de nube: servidores y panel web</li>
+              <li>Bancos: cobro con QR interoperable</li>
+              <li>Empresas de delivery: envíos que coordina el agente</li>
+              <li>Asociaciones de comerciantes y galerías: alianzas de venta</li>
+            </ul>
           </article>
 
-          <article class="bloque bloque--rojo bloque--costos revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" />
-                  <path d="M9 8h6M9 12h6M9 16h3" />
-                </svg></span>
-              <h2>Estructura de Costos</h2>
-            </div>
-            <p>Costos fijos de unos 20.000 Bs al mes: equipo de desarrollo, soporte y ventas; marketing digital; hosting, dominio y herramientas. Costos variables de unos 120 Bs al mes por cliente: uso del modelo de IA, mensajes de la API de WhatsApp, servidores y comisiones de las pasarelas de pago. El punto de equilibrio es de 38 empresas clientes.</p>
+          <article class="bloque bloque--costos revelar">
+            <h2>Estructura Costos</h2>
+            <ul>
+              <li>Costos fijos: 20.000 Bs/mes (sueldos del equipo de desarrollo, ventas y soporte; marketing digital y anuncios; coworking, herramientas y dominio)</li>
+              <li>Costos variables: 120 Bs por tienda al mes (modelos de IA, mensajes de la API de Meta, nube, comisiones del cobro QR y soporte)</li>
+              <li>Inversión inicial: 63.600 Bs (desarrollo de la plataforma, marca y landing page)</li>
+              <li>Punto de equilibrio: 38 tiendas (margen de 530 Bs por tienda)</li>
+            </ul>
           </article>
 
-          <article class="bloque bloque--amarillo bloque--innovacion revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z" />
-                </svg></span>
-              <h2>Innovación</h2>
-            </div>
-            <p>Es el primer agente en Bolivia que vende de punta a punta por WhatsApp sin requerir tienda online: conversa de forma natural, trabaja con el stock real, cobra con QR en bolivianos y recuerda a cada cliente. Además, cobra en parte por resultados mediante una comisión por venta.</p>
+          <article class="bloque bloque--pvm revelar">
+            <h2>PVM</h2>
+            <p>Agente de IA en WhatsApp + panel web: stock, cobro QR, carga por Excel, CRM y pedidos; se valida con 4 tiendas piloto de ropa y calzado</p>
+            <h2>Innovación</h2>
+            <p>Primer agente en Bolivia que vende de punta a punta por WhatsApp sin tienda online; cobra por resultados (2 % de lo que vende)</p>
           </article>
 
-          <article class="bloque bloque--durazno bloque--pmv revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M9 3h6M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3M7 15h10" />
-                </svg></span>
-              <h2>Producto Viable Mínimo</h2>
-            </div>
-            <p>Un agente conectado al WhatsApp de la tienda que responde, ofrece productos en stock y cobra con QR, con carga de productos por Excel, CRM básico y un panel de pedidos. Se probará con 4 tiendas piloto de ropa y calzado durante 15 días.</p>
+          <article class="bloque bloque--competidores revelar">
+            <h2>Competidores</h2>
+            <ul>
+              <li>Atención manual (sustituto): no responde de noche ni controla el stock</li>
+              <li>Bots con menús fijos (ManyChat, Wati): no asesoran ni cierran la venta</li>
+              <li>Agentes de IA para WhatsApp (TailorTalk, yavendió!): sin cobro QR en bolivianos</li>
+              <li>Agentes de e-commerce (Zipchat): exigen tienda en Shopify y cobran en dólares</li>
+            </ul>
           </article>
 
-          <article class="bloque bloque--lila bloque--competidores revelar">
-            <div class="bloque__cabecera">
-              <span class="bloque__icono"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <circle cx="12" cy="12" r="9" />
-                  <circle cx="12" cy="12" r="5" />
-                  <circle cx="12" cy="12" r="1.2" />
-                </svg></span>
-              <h2>Competidores</h2>
-            </div>
-            <p>Agentes de IA internacionales como Zipchat, Alhena AI, TailorTalk y yavendió!. Chatbots con menús fijos como ManyChat y Wati. Herramientas para tiendas online como Shopify Inbox, Tidio y Gorgias. Y el competidor más grande: la atención manual con la app de WhatsApp Business.</p>
-          </article>
+          <!-- Tarjeta decorativa solo con el logo (solo en escritorio) -->
+          <div class="bloque bloque--logo" aria-hidden="true">
+            <span class="logo">
+              <svg class="logo__icono" width="32" height="32" viewBox="0 0 32 32" focusable="false">
+                <path class="logo__burbuja"
+                  d="M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z" />
+                <path class="logo__trazo" d="M7 19l4-4 3 3 6-6M16 12h4v4" />
+                <path class="logo__chispa" d="M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z" />
+              </svg>
+              <span class="logo__texto">VENDE-IA</span>
+            </span>
+          </div>
 
         </div>
       </div>

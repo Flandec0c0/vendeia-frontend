@@ -806,6 +806,13 @@ function core(raw) {
       break;
     case 'browsing':
       if (isNo && !hasShop(e) && !refP && !closing) { S.stage = 'idle'; return [{text: '¡Sin problema! 😊 ¿Te muestro otra opción o algo diferente?'}, {chips: S.cart.length ? ['Pagar ahora', 'Ver catálogo'] : CAT_CHIPS}]; }
+      if (isYes && !hasShop(e) && !refP && S.lastShown.length === 1) {
+        const p1 = prod(S.lastShown[0]);
+        if (p1) {
+          if (RX.done.test(t) || wantsPay) { const r = addToCart(p1, sizeFor(p1), true); return S.stage === 'ask_size_product' ? r : r.concat(checkout()); }
+          return addToCart(p1, sizeFor(p1));
+        }
+      }
       if (isYes && !hasShop(e) && !refP && S.lastShown.length > 1) {
         const ps = S.lastShown.map(prod).filter(Boolean);
         return [{text: `¡Genial! 😊 ¿Cuál te llevas? ${ps.map(p => `${art(p)} *${p.corto}*`).join(', ')}`}, {chips: ps.map(p => `Quiero ${art(p)} ${p.corto}`)}];

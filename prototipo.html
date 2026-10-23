@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <title>Prototipo VENDE-IA | Agente de IA que vende por WhatsApp</title>
 <meta name="description" content="Prototipo demostrativo de VENDE-IA: escribe como cliente en un WhatsApp simulado y mira cómo el agente de IA asesora, vende, cobra con QR y coordina el envío, con el panel de la tienda en vivo.">
 <meta name="theme-color" content="#0F2E22">
@@ -16,9 +16,11 @@
   --alerta:#c2410c; --alerta-bg:#fff4ec;
 }
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
+html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button,a,input,.chip{touch-action:manipulation}
 body{font-family:"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;background:var(--v-sec);color:var(--v-texto);
-  display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+  display:flex;flex-direction:column;height:100vh;height:100dvh;height:var(--app-h,100dvh);overflow:hidden;position:fixed;top:0;left:0;right:0}
 button{font:inherit;cursor:pointer}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--v-primario);outline-offset:2px}
 
@@ -37,10 +39,10 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .vtabs .dot.show{display:block}
 
 /* ---------- Distribución ---------- */
-.app{flex:1;min-height:0;display:grid;grid-template-columns:minmax(360px,440px) 1fr;background:var(--v-fondo)}
+.app{flex:1;min-height:0;display:grid;grid-template-columns:minmax(360px,440px) minmax(0,1fr);background:var(--v-fondo)}
 
 /* ---------- WhatsApp ---------- */
-.wa{display:flex;flex-direction:column;min-height:0;background:var(--wa-bg);border-right:1px solid #d1d7db}
+.wa{display:flex;flex-direction:column;min-height:0;min-width:0;background:var(--wa-bg);border-right:1px solid #d1d7db}
 .wa-head{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--wa-head);color:#fff}
 .wa-head .back{width:22px;height:22px;opacity:.9}
 .avatar{width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:hidden}
@@ -126,7 +128,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .send svg{width:22px;height:22px}
 
 /* ---------- Panel ---------- */
-.panel{min-height:0;overflow-y:auto;background:var(--v-fondo)}
+.panel{min-height:0;min-width:0;overflow-y:auto;overflow-x:hidden;background:var(--v-fondo)}
 .p-head{position:sticky;top:0;z-index:5;background:var(--v-fondo);border-bottom:1px solid var(--v-borde);padding:14px 20px 0}
 .p-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .p-title h1{font-size:19px;margin:0;color:var(--v-sec)}
@@ -162,7 +164,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .alert{border:1px solid #f3c9ad;background:var(--alerta-bg);border-radius:12px;padding:10px 12px;margin-bottom:10px}
 .alert .at{font-size:12px;font-weight:700;color:var(--alerta);text-transform:uppercase;letter-spacing:.03em}
 .alert .aq{font-size:14px;margin:4px 0 8px}
-.alert textarea{width:100%;min-height:58px;border:1px solid var(--v-borde);border-radius:8px;padding:8px;font:inherit;font-size:13.5px;resize:vertical}
+.alert textarea{width:100%;min-height:58px;border:1px solid var(--v-borde);border-radius:8px;padding:8px;font:inherit;font-size:16px;resize:vertical}
 .empty{font-size:13.5px;color:var(--v-suave);padding:6px 0}
 .log{max-height:280px;overflow-y:auto;font-size:13px;display:flex;flex-direction:column;gap:5px}
 .log div{padding:5px 8px;border-radius:8px;background:#f6f5f0;line-height:1.35}
@@ -171,7 +173,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .log .l-encargada{background:var(--alerta-bg)}
 .log .l-sistema{background:transparent;color:var(--v-suave);font-style:italic;text-align:center}
 .owner{display:flex;gap:8px;margin-top:10px}
-.owner input{flex:1;border:1px solid var(--v-borde);border-radius:999px;padding:9px 14px;font-size:15px;min-width:0}
+.owner input{flex:1;border:1px solid var(--v-borde);border-radius:999px;padding:9px 14px;font-size:16px;min-width:0}
 .owner input:disabled{background:#f3f2ee}
 .cartl{list-style:none;margin:0;padding:0;font-size:13.5px}
 .cartl li{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed var(--v-borde)}
@@ -232,7 +234,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 /* Configuración */
 .form{display:grid;gap:12px}
 .form label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--v-sec)}
-.form input,.form select{border:1px solid var(--v-borde);border-radius:10px;padding:9px 11px;font-size:15px;font-weight:400;background:#fff}
+.form input,.form select{border:1px solid var(--v-borde);border-radius:10px;padding:9px 11px;font-size:16px;font-weight:400;background:#fff}
 .faql{font-size:13px;margin:0;padding-left:18px}
 
 /* Aviso */
@@ -241,7 +243,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 
 /* ---------- Celular ---------- */
 @media (max-width:900px){
-  .app{grid-template-columns:1fr}
+  .app{grid-template-columns:minmax(0,1fr)}
   .vtabs{display:flex}
   .top{padding:6px 10px;gap:8px}
   .top .tag,.top .hide-m{display:none}
@@ -251,6 +253,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   .p-head{padding:12px 14px 0}
   .ptab{padding:14px 14px 40px}
   .toast{bottom:84px}
+  body.kb .top{display:none}
+  body.kb .chips{padding-top:4px}
+  .msgs{padding-left:3%;padding-right:3%}
 }
 @media (max-width:380px){ .top .logo span{display:none} }
 @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important;scroll-behavior:auto!important} }
@@ -557,7 +562,7 @@ const RX = {
   checkout: /\b(pagar|pago ya|finalizar|confirmar pedido|confirmo|eso es todo|nada mas|cerrar pedido|quiero comprar|proceder)\b/,
   status: /\b(mi pedido|donde esta|estado del pedido|cuando llega|seguimiento|ya salio|ya viene|llega hoy)\b/,
   discount: /\b(descuento|rebaja|oferta|promo|promocion|mas barato|muy caro|esta caro|cupon)\b/,
-  catalog: /\b(catalogo|que (tienen|venden|hay|ofrecen)|productos|ver todo|todo lo que tienen|ver mas productos|ver otra cosa|otra cosa|novedades|lo nuevo|que hay de nuevo|que hay nuevo)\b/,
+  catalog: /\b(catalogo|que (tienen|venden|hay|ofrecen)|productos|ver todo|todo lo que tienen|ver mas productos|ver otra cosa|otra cosa|seguir comprando|seguir viendo|seguir mirando|novedades|lo nuevo|que hay de nuevo|que hay nuevo)\b/,
   envio: /\b(envio|envios|delivery|domicilio|mandan|envian|hacen entregas|llevan)\b/,
   horario: /\b(horario|horarios|a que hora|que hora abren|atienden|abierto|abren|cierran)\b/,
   ubic: /\b(donde estan|direccion|ubicacion|ubicados|tienda fisica|como llego|donde queda)\b/,
@@ -567,7 +572,10 @@ const RX = {
   guia: /\b(guia de tallas|que talla me queda|medidas|tabla de tallas)\b/,
   addVerb: /\b(quiero|me llevo|llevo|lo llevo|la llevo|agrega|agregame|agregala|agregalo|anade|dame|compro|la compro|lo compro|me gusta|me quedo|esa|ese|carrito)\b/,
   yes: /\b(si|claro|dale|ok|okey|okay|bueno|perfecto|de una|obvio|porfa|por favor|listo|correcto|exacto|va|agregala|agregalo|sip)\b/,
-  no: /\b(no|nop|nel|mejor no|ahora no|despues|luego|otra)\b/,
+  no: /\b(no|nop|nel|mejor no|ahora no|despues|luego|otra|otro)\b/,
+  done: /\b(solo eso|solamente eso|nada mas|eso es todo|es todo|seria todo|eso seria|eso nomas|nomas eso|eso no mas|con eso (esta bien|basta|nomas)|con eso|asi esta bien|asi nomas|ya esta bien|ya tengo todo|termine|ya termine|no necesito nada mas|no quiero nada mas|no gracias|nada gracias|estoy bien asi)\b/,
+  payish: /\b(pagar|pago|cobra|cobrame|cobrar|cuanto es|cuanto seria|cuanto sale|cuanto te debo|cuanto le debo|total|me lo llevo|me la llevo|me los llevo|quiero comprar|confirmo|confirmar|finalizar|cerrar|proceder|comprar ya)\b/,
+  strongYes: /\b(si|sip|claro|dale|agregala|agregalo|agregalas|agregalos|de una|obvio|por favor|porfa|tambien|ponla|ponlo)\b/,
   any: /\b(muestrame todo|todo|cualquiera|da igual|lo que sea|no importa|no se|ninguna|sin ocasion|solo mirar)\b/
 };
 const CATS = [
@@ -622,6 +630,8 @@ function entities(t) {
   if (b) e.budget = Number(b[1]);
   const sr = parseSize(t, 'ropa', false); if (sr) e.size = sr;
   const sc = parseSize(t, 'calzado', false); if (sc) e.shoe = sc;
+  if (e.cat && TIPO[e.cat] === 'ropa' && !e.size) { const m = t.match(/\b(xs|xl|s|m|l)\b/); if (m) e.size = m[1].toUpperCase(); }
+  if (e.cat && TIPO[e.cat] === 'calzado' && !e.shoe) { const m = t.match(/\b(3[4-9]|4[0-6])\b/); if (m) e.shoe = m[1]; }
   return e;
 }
 const hasShop = e => !!(e.cat || e.occasion || e.color || e.budget || e.size || e.shoe);
@@ -653,6 +663,10 @@ function extractName(raw, t) {
     const w = raw.trim().replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').split(/\s+/).filter(Boolean);
     const bad = /^(hola|holi|buenas|si|no|ok|quiero|busco|necesito|tienen|hay|ver|catalogo|gracias|que|como|cuanto|donde|me|mi|una|un|el|la|claro|dale)$/;
     if (w.length >= 1 && w.length <= 3 && w[0].length >= 2 && !bad.test(norm(w[0])) && !hasShop(entities(t))) n = w.slice(0, 2).join(' ');
+  }
+  if (n) {
+    const parts = n.split(/\s+/);
+    if (parts[1] && /^(y|e|de|que|busco|quiero|necesito|para|aqui|nomas|no|si|por|tengo|estoy|soy)$/.test(norm(parts[1]))) n = parts[0];
   }
   if (!n) return null;
   if (/^(un|una|el|la)\s/i.test(n)) return null;
@@ -710,6 +724,7 @@ function brain(raw) {
     S.stage = 'idle';
     const res = [{text: `¡Mucho gusto, *${firstName(nc)}*! 🙌 Ya te registré como cliente, así la próxima vez te atiendo más rápido.`}];
     if (S.pendingText) { const p = S.pendingText; S.pendingText = null; return res.concat(core(p)); }
+    if (hasShop(entities(t)) || RX.catalog.test(t) || RX.envio.test(t) || RX.pago.test(t)) return res.concat(core(raw));
     return res.concat(menu());
   }
   return core(raw);
@@ -719,64 +734,119 @@ function menu() {
     {chips: ['Busco una camisa para una boda', 'Ver catálogo', '¿Hacen envíos?', '¿Cómo pago?']}];
 }
 
+const PURCHASE = ['ask_delivery', 'confirm_address', 'ask_address', 'await_payment'];
+const ADDR = /\b(calle|av|avenida|barrio|zona|anillo|condominio|edificio|urbanizacion|villa|equipetrol|plan 3000|radial|km|casa nro|nro)\b/;
 function core(raw) {
   const t = norm(raw);
   const c = cust();
   const cfg = C();
   const e = entities(t);
+  const words = t.split(' ').length;
   const isYes = RX.yes.test(t) && !/\bno\b/.test(t);
   const isNo = RX.no.test(t) && !isYes;
+  const strongYes = RX.strongYes.test(t) && !/\bno\b/.test(t);
+  const pool = S.pendingSuggestion ? [S.pendingSuggestion, ...S.lastShown] : S.lastShown;
+  const refP = pool.length ? resolveProduct(t, pool) : null;
+  const tieIds = S.lastTie.slice();
+  /* El cliente da por terminada la compra o quiere pagar */
+  const closing = S.cart.length > 0 && !hasShop(e) && !RX.remove.test(t) && !refP &&
+    (RX.done.test(t) || (RX.thanks.test(t) && words <= 5) || RX.bye.test(t));
+  const wantsPay = S.cart.length > 0 && !refP && !RX.remove.test(t) && RX.payish.test(t);
+  const cerrar = (pre) => (pre ? [{text: pre}] : []).concat(checkout());
 
   /* --- Respuestas según la etapa --- */
   switch (S.stage) {
     case 'confirm_size':
       if (isYes) { if (S.sizeTipo === 'ropa') S.need.size = S.confirmVal; else S.need.shoe = S.confirmVal; S.stage = 'idle'; return advise(); }
       { const sz = parseSize(t, S.sizeTipo, true); if (sz) { if (S.sizeTipo === 'ropa') S.need.size = sz; else S.need.shoe = sz; S.stage = 'idle'; return advise(); } }
-      if (isNo) { S.stage = 'ask_size'; return askSize(S.sizeTipo, '¿Qué talla necesitas esta vez?'); }
+      if (isNo && !closing) { S.stage = 'ask_size'; return askSize(S.sizeTipo, '¿Qué talla necesitas esta vez?'); }
       break;
     case 'ask_size': {
       const sz = parseSize(t, S.sizeTipo, true);
       if (sz) { if (S.sizeTipo === 'ropa') S.need.size = sz; else S.need.shoe = sz; S.stage = 'idle'; return advise(); }
+      if ((isNo || RX.any.test(t)) && !closing && !hasShop(e)) { S.stage = 'idle'; return [{text: '¡Sin problema! 😊 ¿Te muestro otra cosa?'}, {chips: S.cart.length ? ['Pagar ahora', 'Ver catálogo'] : CAT_CHIPS}]; }
       break;
     }
     case 'ask_size_product': {
       const p = prod(S.pendingProduct);
       const sz = p && parseSize(t, p.tipo, true);
       if (sz) { S.stage = 'idle'; if (p.tipo === 'ropa') S.need.size = sz; else S.need.shoe = sz; return addToCart(p, sz); }
+      if (isNo && !closing && !hasShop(e)) { S.stage = 'idle'; S.pendingProduct = null; return [{text: '¡Sin problema! 😊 ¿Te muestro otra cosa?'}, {chips: S.cart.length ? ['Pagar ahora', 'Ver catálogo'] : CAT_CHIPS}]; }
       break;
     }
-    case 'ask_occasion':
-      if (e.occasion || RX.any.test(t) || isNo) { S.askedOccasion = true; S.stage = 'idle'; if (e.occasion) S.need.occasion = e.occasion; if (e.color) S.need.color = e.color; return advise(); }
+    case 'ask_cat':
+      if ((RX.any.test(t) || isNo) && !hasShop(e) && !closing) { S.stage = 'idle'; return [{text: 'Te cuento lo que tenemos 😊 ¿Qué te gustaría ver?'}, {chips: CAT_CHIPS}]; }
       break;
-    case 'suggest':
-      if (isYes) { const q = prod(S.pendingSuggestion); S.pendingSuggestion = null; S.stage = 'idle'; if (q) return addToCart(q, sizeFor(q)); }
-      if (isNo && !RX.checkout.test(t)) { S.pendingSuggestion = null; S.stage = 'idle'; return [{text: '¡Sin problema! 👌 ¿Pasamos a pagar o quieres ver algo más?'}, {chips: ['Pagar ahora', 'Ver más productos', 'Ver carrito']}]; }
+    case 'ask_occasion':
+      if (e.occasion || RX.any.test(t) || (isNo && !closing)) { S.askedOccasion = true; S.stage = 'idle'; if (e.occasion) S.need.occasion = e.occasion; if (e.color) S.need.color = e.color; return advise(); }
+      break;
+    case 'suggest': {
+      const q = prod(S.pendingSuggestion);
+      if (strongYes && q && !refP) {
+        S.pendingSuggestion = null; S.stage = 'idle';
+        if (closing || wantsPay || RX.done.test(t)) {
+          const r = addToCart(q, sizeFor(q), true);
+          return S.stage === 'ask_size_product' ? r : r.concat(checkout());
+        }
+        return addToCart(q, sizeFor(q));
+      }
+      if (closing || wantsPay || (isNo && !hasShop(e) && !RX.catalog.test(t))) {
+        S.pendingSuggestion = null; S.stage = 'idle';
+        return cerrar(closing || wantsPay ? '¡Perfecto! 👌 Entonces cerramos tu pedido.' : '¡Sin problema! 👌 Cerramos tu pedido entonces.');
+      }
+      if (isYes && q && !refP && !hasShop(e)) { S.pendingSuggestion = null; S.stage = 'idle'; return addToCart(q, sizeFor(q)); }
+      break;
+    }
+    case 'more_or_pay':
+      if (closing || wantsPay) return cerrar(closing ? '¡Perfecto! 👌' : null);
+      if (!hasShop(e) && !refP && !RX.catalog.test(t)) {
+        if (isNo) return cerrar('¡Listo! 👌');
+        if (isYes && !/\b(ver|mas|otra|otro|mostrar|muestra|muestrame|seguir)\b/.test(t)) return cerrar(null);
+      }
+      break;
+    case 'browsing':
+      if (isNo && !hasShop(e) && !refP && !closing) { S.stage = 'idle'; return [{text: '¡Sin problema! 😊 ¿Te muestro otra opción o algo diferente?'}, {chips: S.cart.length ? ['Pagar ahora', 'Ver catálogo'] : CAT_CHIPS}]; }
+      if (isYes && !hasShop(e) && !refP && S.lastShown.length > 1) {
+        const ps = S.lastShown.map(prod).filter(Boolean);
+        return [{text: `¡Genial! 😊 ¿Cuál te llevas? ${ps.map(p => `${art(p)} *${p.corto}*`).join(', ')}`}, {chips: ps.map(p => `Quiero ${art(p)} ${p.corto}`)}];
+      }
       break;
     case 'ask_delivery':
-      if (/\b(domicilio|envio|enviar|enviame|envien|delivery|casa|mandar|manden|mandalo|a mi casa|traer|traigan)\b/.test(t)) {
+      if (/\b(domicilio|envio|enviar|enviame|enviamelo|envien|envienmelo|delivery|casa|mandar|manden|mandalo|mandamelo|traer|traigan|traemelo|llevamelo|lleven)\b/.test(t)) {
         S.entrega = 'domicilio';
         if (c && c.direccion) { S.stage = 'confirm_address'; return [{text: `¿Te lo enviamos a *${c.direccion}* como la última vez? 📍`}, {chips: ['Sí, a esa dirección', 'Otra dirección']}]; }
         S.stage = 'ask_address'; return [{text: '¿A qué dirección te lo enviamos? Escríbeme la zona, la calle y una referencia 📍'}];
       }
-      if (/\b(recojo|recoger|recogerlo|tienda|paso|local|retiro|retirar|busco yo|voy yo)\b/.test(t)) { S.entrega = 'recojo'; S.direccion = ''; return payment(); }
+      if (/\b(recojo|recoger|recogerlo|recogerla|tienda|paso|local|retiro|retirar|busco yo|voy yo|lo busco|la busco)\b/.test(t)) { S.entrega = 'recojo'; S.direccion = ''; return payment(); }
+      if (ADDR.test(t) || /#\s*\d/.test(raw)) { S.entrega = 'domicilio'; S.direccion = raw.trim().slice(0, 80); return [{text: `Perfecto, te lo enviamos a *${S.direccion}* 🚚`}].concat(payment()); }
       break;
     case 'confirm_address':
-      if (isYes) { S.direccion = c.direccion; return payment(); }
+      if (isYes || /\b(la misma|esa|ahi)\b/.test(t)) { S.direccion = c.direccion; return payment(); }
       if (isNo) { S.stage = 'ask_address'; return [{text: 'Perfecto, ¿a qué dirección te lo enviamos? 📍'}]; }
+      if (ADDR.test(t) || /#\s*\d/.test(raw)) { S.direccion = raw.trim().slice(0, 80); return [{text: `Anotado: *${S.direccion}* ✍️`}].concat(payment()); }
       break;
     case 'ask_address':
-      if (raw.trim().length >= 4 && !raw.includes('?')) { S.direccion = raw.trim().slice(0, 80); return [{text: `Anotado: *${S.direccion}* ✍️`}].concat(payment()); }
+      if (/\b(la misma|la de siempre|la anterior)\b/.test(t) && c && c.direccion) { S.direccion = c.direccion; return [{text: `Anotado: *${S.direccion}* ✍️`}].concat(payment()); }
+      if (/\b(recojo|recoger|mejor paso|mejor lo busco|en tienda)\b/.test(t)) { S.entrega = 'recojo'; S.direccion = ''; return payment(); }
+      if (raw.trim().length >= 4 && !raw.includes('?') && !RX.cart.test(t) && !hasShop(e)) { S.direccion = raw.trim().slice(0, 80); return [{text: `Anotado: *${S.direccion}* ✍️`}].concat(payment()); }
       break;
     case 'await_payment':
-      if (/\b(ya pague|listo|pagado|ya esta|transferi|ya transferi|hecho)\b/.test(t)) return confirmPayment('QR');
+      if (/\b(ya pague|pague|listo|pagado|ya esta|transferi|ya transferi|hecho|ya lo hice)\b/.test(t) && !/\b(no|cancel)/.test(t) && words <= 6) return confirmPayment('QR');
+      if (RX.discount.test(t)) { const before = S.discount; const r = discount(); return S.discount !== before ? r.slice(0, 1).concat(payment()) : r; }
+      if (/\b(cancelar|cancela|ya no quiero|mejor no|no quiero)\b/.test(t)) { S.stage = 'idle'; return [{text: 'Sin problema, cancelé el cobro 👌 Tu carrito sigue guardado por si cambias de opinión.'}, {chips: ['Pagar ahora', 'Ver carrito', 'Ver catálogo']}]; }
+      if (/\b(recojo|recoger|en tienda|mejor paso)\b/.test(t)) { S.entrega = 'recojo'; S.direccion = ''; return [{text: 'Listo, lo recoges en tienda (sin costo de envío) 🏬'}].concat(payment()); }
+      if (/\b(domicilio|envio|enviar|delivery)\b/.test(t) && S.entrega !== 'domicilio') { S.stage = 'ask_delivery'; return core('envío a domicilio'); }
+      if (/\befectivo\b/.test(t)) return [{text: 'Por el chat cobramos con *QR* o *tarjeta* 😊 Si prefieres efectivo, elige *recojo en tienda* y pagas allá.'}, {chips: ['Ya pagué', '🏬 Recojo en tienda']}];
+      if (RX.pago.test(t) || wantsPay || /\b(no (me )?(llego|aparece|sale|carga|funciona|abre)|otra vez|de nuevo|reenvia|reenviame|manda|mandame)\b/.test(t)) return [{text: '¡Claro! Te reenvío el cobro 👇 Puedes pagar con QR o con tarjeta.'}, {qr: S.total}, {chips: ['Ya pagué']}];
       break;
     case 'ask_rating': {
-      const stars = (raw.match(/⭐/g) || []).length || Number((t.match(/\b[1-5]\b/) || [])[0]) || 0;
+      const stars = (raw.match(/⭐/g) || []).length || (words <= 3 ? Number((t.match(/\b[1-5]\b/) || [])[0]) || 0 : 0);
       if (stars) {
         const o = D.orders.find(x => x.id === S.ratingOrder); if (o) { o.rating = stars; save(); renderAll(); }
         S.stage = 'idle';
         return [{text: stars >= 4 ? `¡Muchas gracias! 💚 Me alegra mucho. Aquí estoy 24/7 cuando necesites algo.` : `Gracias por contarme 🙏 Le paso tu comentario a ${cfg.encargada} para mejorar.`}];
       }
+      S.stage = 'idle';
       break;
     }
   }
@@ -790,32 +860,35 @@ function core(raw) {
     addAlert('humano', raw);
     return [{text: `¡Claro! 🙌 Ya le avisé a *${cfg.encargada}*, la encargada, para que te escriba por aquí. Mientras tanto sigo atenta por si necesitas algo.`}];
   }
+  /* Cierre de la compra: nunca dejar un carrito con productos sin cobrar */
+  if ((closing || wantsPay) && !PURCHASE.includes(S.stage)) {
+    S.pendingSuggestion = null;
+    return cerrar(RX.bye.test(t) ? `¡Antes de irte${c ? `, ${firstName(c)}` : ''}! Tienes productos en tu carrito 🛒` : closing ? '¡Perfecto! 👌 Entonces cerramos tu pedido.' : null);
+  }
   if (RX.bot.test(t)) return [{text: `Soy *${cfg.agente}*, la asistente virtual con inteligencia artificial de *${cfg.tienda}* 🤖💚 Conozco todo el catálogo y el stock en tiempo real, cobro con QR y coordino tu envío. Si prefieres hablar con ${cfg.encargada}, solo dime "quiero hablar con una persona".`}];
   if (RX.cart.test(t)) return showCart();
   if (RX.remove.test(t) && S.cart.length) return removeItem(t);
-  if (RX.checkout.test(t) && !RX.pago.test(t)) return checkout();
+  if (RX.checkout.test(t) && (!RX.pago.test(t) || S.cart.length)) return checkout();
   if (RX.discount.test(t)) return discount();
   if (RX.status.test(t) && !S.cart.length) return orderStatus();
-  if (RX.pago.test(t)) return [{text: `💳 Puedes pagar con *QR* desde la app de cualquier banco o con *tarjeta*, aquí mismo en el chat. Te envío el cobro apenas confirmes tu pedido.`}];
-  if (RX.envio.test(t) && !hasShop(e)) return [{text: `¡Sí! 🚚 Hacemos envíos a domicilio en Santa Cruz por *${bs(cfg.envio)}*. Si pagas antes de las 16:00, te llega hoy mismo. También puedes recoger gratis en la tienda.`}];
+  if (RX.pago.test(t)) return [{text: `💳 Puedes pagar con *QR* desde la app de cualquier banco o con *tarjeta*, aquí mismo en el chat. Te envío el cobro apenas confirmes tu pedido.${/\befectivo\b/.test(t) ? ' En *efectivo* puedes pagar si eliges recojo en tienda 😉' : ''}`}].concat(S.cart.length ? [{chips: ['Pagar ahora', 'Ver carrito']}] : []);
+  if (RX.envio.test(t) && !hasShop(e)) return [{text: `¡Sí! 🚚 Hacemos envíos a domicilio en Santa Cruz por *${bs(cfg.envio)}*. Si pagas antes de las 16:00, te llega hoy mismo. También puedes recoger gratis en la tienda.`}].concat(S.cart.length && !PURCHASE.includes(S.stage) ? [{chips: ['Pagar ahora', 'Ver carrito']}] : []);
   if (RX.horario.test(t)) return [{text: `🕘 La tienda atiende ${cfg.horario}. Pero yo te respondo por aquí *las 24 horas, todos los días* 😉`}];
   if (RX.ubic.test(t)) return [{text: `📍 Estamos en *${cfg.direccion}*. ¿Prefieres que te enviemos tu pedido a domicilio? 🚚`}];
   if (RX.cambios.test(t)) return [{text: `🔄 Tienes *7 días* para cambios con la etiqueta puesta y tu comprobante. Si la talla no te queda, te la cambiamos sin costo 😊`}];
   if (RX.guia.test(t)) return [{text: `📏 Guía rápida:\n• *S*: pecho 88–94 cm\n• *M*: 95–101 cm\n• *L*: 102–108 cm\n• *XL*: 109–115 cm\nSi me dices tu talla habitual, te recomiendo la mejor 😉`}, {chips: ['S', 'M', 'L', 'XL']}];
-  if (RX.catalog.test(t) && !e.cat) { S.need = {}; S.askedOccasion = false; return [{text: `Esto es lo que tenemos hoy en *${cfg.tienda}* 🛍️\n👔 Camisas · 👕 Poleras · 👖 Pantalones\n👗 Vestidos · 👞 Zapatos · 👟 Zapatillas\n👜 Accesorios (corbatas, cinturones, carteras)\n\n¿Qué te gustaría ver?`}, {chips: CAT_CHIPS}]; }
+  if (RX.catalog.test(t) && !e.cat) { S.need = {}; S.askedOccasion = false; S.stage = 'idle'; S.pendingSuggestion = null; return [{text: `Esto es lo que tenemos hoy en *${cfg.tienda}* 🛍️\n👔 Camisas · 👕 Poleras · 👖 Pantalones\n👗 Vestidos · 👞 Zapatos · 👟 Zapatillas\n👜 Accesorios (corbatas, cinturones, carteras)\n\n¿Qué te gustaría ver?`}, {chips: CAT_CHIPS}]; }
 
   /* --- Elegir un producto ya mostrado --- */
-  const pool = S.pendingSuggestion ? [S.pendingSuggestion, ...S.lastShown] : S.lastShown;
-  const short = t.split(' ').length <= 5;
-  if (pool.length && (RX.addVerb.test(t) || short)) {
-    const p = resolveProduct(t, pool);
+  if (pool.length && (RX.addVerb.test(t) || words <= 5)) {
+    const p = refP;
     if (p) {
       if (p.id === S.pendingSuggestion) S.pendingSuggestion = null;
       const sz = p.tipo === 'unica' ? 'U' : p.tipo === 'ropa' ? (e.size || S.need.size) : (e.shoe || S.need.shoe);
       return addToCart(p, sz);
     }
-    if (S.lastTie.length > 1 && RX.addVerb.test(t) && !e.color) {
-      const ps = S.lastTie.map(prod);
+    if (tieIds.length > 1 && RX.addVerb.test(t) && !e.color) {
+      const ps = tieIds.map(prod);
       return [{text: `¿Cuál te gustó más? 😊 ${ps.map(p => `${art(p)} *${p.corto}*`).join(' o ')}`}, {chips: ps.map(p => `Quiero ${art(p)} ${p.corto}`)}];
     }
   }
@@ -832,36 +905,46 @@ function core(raw) {
     if (e.budget) S.need.budget = e.budget;
     if (e.size) S.need.size = e.size;
     if (e.shoe) S.need.shoe = e.shoe;
-    S.stage = 'idle';
+    S.stage = 'idle'; S.pendingSuggestion = null;
     rememberPrefs();
     return advise();
   }
 
-  if (RX.greet.test(t)) return [{text: `¡Hola${c ? `, ${firstName(c)}` : ''}! 😊 ¿En qué te ayudo?`}, {chips: ['Ver catálogo', 'Ver carrito', '¿Hacen envíos?']}];
-  if (RX.thanks.test(t) || RX.bye.test(t)) {
-    if (S.cart.length && /\b(nada mas|eso es todo)\b/.test(t)) return checkout();
+  if (RX.greet.test(t) && !PURCHASE.includes(S.stage)) return [{text: `¡Hola${c ? `, ${firstName(c)}` : ''}! 😊 ¿En qué te ayudo?`}, {chips: S.cart.length ? ['Pagar ahora', 'Ver carrito', 'Ver catálogo'] : ['Ver catálogo', 'Ver carrito', '¿Hacen envíos?']}];
+  if ((RX.thanks.test(t) || RX.bye.test(t)) && !(S.cart.length && PURCHASE.includes(S.stage))) {
     return [{text: RX.bye.test(t) ? `¡Hasta pronto${c ? `, ${firstName(c)}` : ''}! 👋 Aquí estaré cuando me necesites.` : `¡A ti! 💚 Aquí estoy 24/7 si necesitas algo más.`}];
   }
 
-  /* --- Repreguntas según la etapa --- */
+  if (/\b(ya pague|pague|transferi)\b/.test(t) && S.stage !== 'await_payment') {
+    const o = D.orders.find(x => x.id === S.lastOrderId);
+    return [{text: o ? `Tu pago del pedido *#${o.id}* ya está registrado ✅` : 'No tengo ningún cobro pendiente a tu nombre 🤔 ¿Te ayudo a armar tu pedido?'}, {chips: o ? ['¿Dónde está mi pedido?', 'Ver catálogo'] : CAT_CHIPS}];
+  }
+  if (/\b(recojo|recoger|domicilio|delivery)\b/.test(t) && !S.cart.length) return [{text: '¡Claro! Primero elijamos tus productos 😊 ¿Qué te gustaría ver?'}, {chips: CAT_CHIPS}];
+
+  /* --- Repreguntas según la etapa (nunca dejar al cliente sin un siguiente paso) --- */
   if (S.stage === 'ask_size' || S.stage === 'confirm_size') return askSize(S.sizeTipo, 'Perdón, no entendí la talla 😅 ¿Cuál usas?');
-  if (S.stage === 'ask_size_product') { const p = prod(S.pendingProduct); const sz = availSizes(p); return [{text: `¿En qué talla? Tengo disponible: *${sz.join(', ')}*`}, {chips: sz.map(s => `Talla ${s}`)}]; }
+  if (S.stage === 'ask_size_product') { const p = prod(S.pendingProduct); const sz = p ? availSizes(p) : []; return [{text: `¿En qué talla? Tengo disponible: *${sz.join(', ')}*`}, {chips: sz.map(s => p.tipo === 'calzado' ? s : `Talla ${s}`).concat(['Ver otra cosa'])}]; }
   if (S.stage === 'ask_delivery') return [{text: '¿Lo quieres con *envío a domicilio* o prefieres *recoger en tienda*? 😊'}, {chips: ['🚚 Envío a domicilio', '🏬 Recojo en tienda']}];
-  if (S.stage === 'await_payment') return [{text: 'Cuando quieras, toca *Simular pago con QR* en el cobro de arriba y lo confirmo al instante ✅'}, {chips: ['Ya pagué']}];
+  if (S.stage === 'confirm_address') return [{text: `¿Lo enviamos a *${c ? c.direccion : ''}*? Responde *sí* o escríbeme otra dirección 📍`}, {chips: ['Sí, a esa dirección', 'Otra dirección']}];
+  if (S.stage === 'ask_address') return [{text: 'Escríbeme la dirección de entrega (zona, calle y una referencia) 📍 O si prefieres, puedes recoger en tienda.'}, {chips: ['🏬 Mejor recojo en tienda']}];
+  if (S.stage === 'await_payment') return [{text: 'Cuando quieras, toca *Simular pago con QR* o *Pagar con tarjeta* en el cobro de arriba y lo confirmo al instante ✅'}, {chips: ['Ya pagué', 'Reenviar el QR']}];
   if (S.stage === 'ask_occasion') { S.askedOccasion = true; S.stage = 'idle'; return advise(); }
+  if (S.stage === 'ask_cat') return [{text: '¿Qué te gustaría ver? 😊'}, {chips: CAT_CHIPS}];
+  if (S.stage === 'more_or_pay') return [{text: '¿Pasamos a pagar o quieres ver algo más? 😊'}, {chips: ['Pagar ahora', 'Ver más productos', 'Ver carrito']}];
   if (S.stage === 'suggest' || (pool.length && isYes)) {
     if (isYes && S.lastShown.length === 1) { const p = prod(S.lastShown[0]); return addToCart(p, sizeFor(p)); }
   }
 
   /* --- No entendió: avisa a la encargada --- */
+  const nextChips = S.cart.length ? ['Pagar ahora', 'Ver carrito', 'Ver catálogo'] : ['Ver catálogo', 'Busco un vestido para una fiesta', '¿Hacen envíos?'];
   const isQuestion = raw.includes('?') || /^(que|como|cuando|donde|tienen|hay|cuanto|puedo|pueden|hacen|venden|aceptan|por que)\b/.test(t);
   S.fallbacks++;
   if (isQuestion || S.fallbacks >= 2) {
     S.fallbacks = 0;
     addAlert('pregunta', raw);
-    return [{text: `Mmm, esa no me la sé todavía 🤔 Ya le pasé tu consulta a *${cfg.encargada}* para que te responda por aquí. Y la próxima vez ya lo sabré 💡`}, {chips: ['Ver catálogo', 'Ver carrito']}];
+    return [{text: `Mmm, esa no me la sé todavía 🤔 Ya le pasé tu consulta a *${cfg.encargada}* para que te responda por aquí. Y la próxima vez ya lo sabré 💡${S.cart.length ? `\nMientras tanto, tu carrito sigue listo (${bs(cartTotal() - discountAmt())}) 🛒` : ''}`}, {chips: nextChips}];
   }
-  return [{text: `Disculpa, no te entendí bien 😅 Puedo ayudarte a:\n• Buscar productos (ej: "camisa blanca talla M")\n• Ver tu carrito y pagar con QR\n• Consultar envíos, horarios o cambios`}, {chips: ['Ver catálogo', 'Busco un vestido para una fiesta', '¿Hacen envíos?']}];
+  return [{text: `Disculpa, no te entendí bien 😅 Puedo ayudarte a:\n• Buscar productos (ej: "camisa blanca talla M")\n• Ver tu carrito y pagar con QR\n• Consultar envíos, horarios o cambios`}, {chips: nextChips}];
 }
 
 function rememberPrefs() {
@@ -939,7 +1022,7 @@ function search(intro = '') {
   return out;
 }
 
-function addToCart(p, size) {
+function addToCart(p, size, quiet) {
   if (!p) return [];
   if (p.tipo !== 'unica' && !size) {
     const sizes = availSizes(p);
@@ -957,6 +1040,7 @@ function addToCart(p, size) {
   S.cart.push({id: p.id, nombre: p.nombre, talla: sz, precio: p.precio});
   S.stage = 'idle';
   renderLive();
+  if (quiet) return [{text: `¡Listo! ✅ Agregué *${p.nombre}*${tallaTxt(sz)} a tu carrito.`}];
   const out = [{text: `¡Listo! ✅ Agregué *${p.nombre}*${tallaTxt(sz)} a tu carrito.\nTotal: *${bs(cartTotal() - discountAmt())}* 🛒`}];
   const comp = S.suggestions < 2 ? p.comps.map(prod).find(q => q && !S.cart.some(i => i.id === q.id) && (q.tipo === 'unica' ? stockOf(q, 'U') > 0 : sizeFor(q) ? stockOf(q, sizeFor(q)) > 0 : anyStock(q))) : null;
   if (comp) {
@@ -965,6 +1049,7 @@ function addToCart(p, size) {
     out.push({cards: [comp.id], size: sizeFor(comp), mini: true});
     out.push({chips: [`Sí, agrégal${comp.gen === 'f' ? 'a' : 'o'}`, 'No, gracias', 'Pagar ahora']});
   } else {
+    S.stage = 'more_or_pay';
     out.push({text: '¿Quieres ver algo más o pasamos a pagar? 😊'}, {chips: ['Pagar ahora', 'Ver más productos', 'Ver carrito']});
   }
   return out;
@@ -997,7 +1082,7 @@ function checkout() {
   S.stage = 'ask_delivery'; S.pendingSuggestion = null;
   return [{text: `Este es tu pedido 🧾\n${lines}${S.discount ? `\nDescuento ${S.discount}%: −${bs(discountAmt())}` : ''}\n*Subtotal: ${bs(cartTotal() - discountAmt())}*`},
     {text: `¿Cómo prefieres recibirlo?\n🚚 *Envío a domicilio* (+${bs(C().envio)}, llega hoy)\n🏬 *Recojo en tienda* (gratis)`},
-    {chips: ['🚚 Envío a domicilio', '🏬 Recojo en tienda']}];
+    {chips: ['🚚 Envío a domicilio', '🏬 Recojo en tienda', '🛍️ Seguir comprando']}];
 }
 function payment() {
   S.stage = 'await_payment';
@@ -1149,6 +1234,25 @@ msgs.addEventListener('click', ev => {
     enqueue(() => bot(confirmPayment(m)));
   }
 });
+/* Ajuste a la pantalla del celular: sin zoom y con el teclado abierto */
+const vv = window.visualViewport;
+let baseH = window.innerHeight;
+function fitViewport() {
+  const h = vv ? vv.height : window.innerHeight;
+  document.documentElement.style.setProperty('--app-h', Math.round(h) + 'px');
+  document.body.classList.toggle('kb', window.innerWidth <= 900 && h < baseH * 0.78 && document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName));
+  if (window.scrollY || (vv && vv.offsetTop)) window.scrollTo(0, 0);
+}
+if (vv) { vv.addEventListener('resize', fitViewport); vv.addEventListener('scroll', fitViewport); }
+window.addEventListener('resize', fitViewport);
+window.addEventListener('orientationchange', () => setTimeout(() => { baseH = window.innerHeight; fitViewport(); }, 400));
+window.addEventListener('resize', () => { if (!document.activeElement || !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) baseH = Math.max(window.innerHeight, vv ? vv.height : 0); });
+document.addEventListener('focusin', () => setTimeout(() => { fitViewport(); scrollDown(); }, 60));
+document.addEventListener('focusout', () => setTimeout(fitViewport, 120));
+fitViewport();
+/* Mantener el teclado abierto al tocar Enviar o una sugerencia */
+['#composer .send', '#chips'].forEach(sel => $(sel).addEventListener('mousedown', ev => { if (document.activeElement === $('#inp')) ev.preventDefault(); }));
+$('#inp').addEventListener('focus', () => setTimeout(scrollDown, 300));
 $('#composer').addEventListener('submit', ev => { ev.preventDefault(); const i = $('#inp'); sendUser(i.value); i.value = ''; i.focus(); });
 
 /* ================= Panel: registro y avisos ================= */

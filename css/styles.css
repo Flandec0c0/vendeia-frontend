@@ -482,27 +482,28 @@ footer[id] {
   opacity: 0;
 }
 
-/* "Modelo de negocio": secundario, se rellena de verde al pasar el cursor
-   y queda rellenado en canvas.html (página actual). */
-.nav__boton--canvas {
+/* Botones secundarios ("Probar demo", "Modelo de negocio"): se rellenan
+   de verde al pasar el cursor; "Modelo de negocio" queda relleno en
+   canvas.html (página actual). */
+.nav__boton--secundario {
   color: var(--color-secundario);
   background: var(--color-primario-claro);
   border: 2px solid var(--color-primario);
 }
 
-.nav__boton--canvas .nav__boton-icono {
+.nav__boton--secundario .nav__boton-icono {
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
 }
 
-.nav__boton--canvas::before {
+.nav__boton--secundario::before {
   inset: -2px;
   background: var(--color-primario);
 }
 
-.nav__boton--canvas:hover::before,
-.nav__boton--canvas[aria-current="page"]::before {
+.nav__boton--secundario:hover::before,
+.nav__boton--secundario[aria-current="page"]::before {
   opacity: 1;
 }
 
@@ -645,7 +646,22 @@ footer[id] {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin: 1.75rem 0 1.25rem;
+  margin: 1.75rem 0 0.75rem;
+}
+
+/* "Ver cómo funciona" como enlace de texto pequeño bajo los botones */
+.hero__enlace {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  padding: 0.35rem 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-texto-claro);
+  text-underline-offset: 3px;
+}
+
+.hero__enlace:hover {
+  color: var(--color-primario);
 }
 
 .hero .boton--secundario {
@@ -2136,68 +2152,6 @@ footer[id] {
     padding: 0 2rem;
   }
 
-  .nav__barra {
-    gap: 1rem; /* 1.5rem desde 1200px */
-  }
-
-  .nav__toggle {
-    display: none;
-  }
-
-  .nav__menu {
-    position: static;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.75rem; /* compacto hasta 1200px, ver abajo */
-    padding: 0;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-  }
-
-  .nav__enlaces {
-    display: flex;
-    gap: 0.7rem;
-  }
-
-  .nav__enlaces a {
-    padding: 0.5rem 0;
-    border-bottom: 2px solid transparent;
-    font-size: 0.85rem;
-    white-space: nowrap;
-  }
-
-  .nav__boton--compacto {
-    display: none;
-  }
-
-  .nav__acciones {
-    flex-direction: row;
-    align-items: center;
-    flex-shrink: 0;
-    gap: 0.5rem;
-  }
-
-  .nav__boton {
-    min-height: 42px;
-    padding: 0.45rem 0.75rem;
-    font-size: 0.85rem;
-  }
-
-  .nav__boton-icono {
-    width: 15px;
-    height: 15px;
-  }
-
-  .nav__boton--prueba {
-    order: 0;
-  }
-
-  .nav__enlaces a:hover {
-    border-bottom-color: var(--color-primario);
-  }
-
   /* Canvas: 5 columnas arriba y 2 abajo (10 pistas para partir al medio) */
   .canvas-cabecera__logo {
     width: 64px;
@@ -2311,6 +2265,14 @@ footer[id] {
     color: var(--color-texto-claro);
   }
 
+  .hero__enlace {
+    color: var(--color-primario-oscuro);
+  }
+
+  .hero__enlace:hover {
+    color: var(--color-secundario);
+  }
+
   .hero :focus-visible {
     outline-color: var(--color-primario-oscuro);
   }
@@ -2391,31 +2353,68 @@ footer[id] {
   }
 }
 
-/* Pantallas anchas: el menú recupera su espaciado completo */
+/* Menú de escritorio desde 1200px (con tres botones no entra antes; por
+   debajo se usa el menú hamburguesa). */
 @media (min-width: 1200px) {
   .nav__barra {
-    gap: 1.5rem;
+    gap: 1rem;
+  }
+
+  .nav__toggle {
+    display: none;
   }
 
   .nav__menu {
-    gap: 1.5rem;
+    position: static;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
   }
 
   .nav__enlaces {
-    gap: 1.5rem;
+    display: flex;
+    gap: 0.9rem;
   }
 
   .nav__enlaces a {
-    font-size: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+
+  .nav__enlaces a:hover {
+    border-bottom-color: var(--color-primario);
+  }
+
+  .nav__boton--compacto {
+    display: none;
+  }
+
+  .nav__acciones {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 0.5rem;
   }
 
   .nav__boton {
-    padding: 0.55rem 1.2rem;
-    font-size: 0.95rem;
+    min-height: 42px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.85rem;
   }
 
   .nav__boton-icono {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
+  }
+
+  .nav__boton--prueba {
+    order: 0;
   }
 }

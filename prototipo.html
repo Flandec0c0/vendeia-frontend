@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prototipo VENDE-IA | Agente de IA que vende por WhatsApp</title>
+<meta name="description" content="Prototipo demostrativo de VENDE-IA: escribe como cliente en un WhatsApp simulado y mira cómo el agente de IA asesora, vende, cobra con QR y coordina el envío, con el panel de la tienda en vivo.">
+<meta name="theme-color" content="#0F2E22">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -0.5 33 33'%3E%3Cpath fill='%231FA855' d='M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z'/%3E%3Cpath fill='none' stroke='%230F2E22' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' d='M7 19l4-4 3 3 6-6M16 12h4v4'/%3E%3Cpath fill='%231FA855' d='M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z'/%3E%3C/svg%3E">
+<style>
+:root{
+  --v-primario:#1FA855; --v-oscuro:#157A3D; --v-claro:#E3F5EA; --v-sec:#0F2E22;
+  --v-texto:#1A1F1C; --v-suave:#55605A; --v-crema:#F7F5EF; --v-fondo:#FBFAF6; --v-borde:#E2DED3;
+  --wa-head:#008069; --wa-bg:#efeae2; --wa-in:#ffffff; --wa-out:#d9fdd3; --wa-text:#111b21;
+  --wa-meta:#667781; --wa-bar:#f0f2f5; --wa-btn:#00a884; --wa-blue:#53bdeb; --wa-link:#027eb5;
+  --alerta:#c2410c; --alerta-bg:#fff4ec;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;background:var(--v-sec);color:var(--v-texto);
+  display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--v-primario);outline-offset:2px}
+
+/* ---------- Barra superior ---------- */
+.top{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:8px 16px;background:var(--v-sec);color:var(--v-crema);min-height:52px}
+.top .logo{display:flex;align-items:center;gap:8px;color:var(--v-crema);text-decoration:none;font-weight:700;letter-spacing:.02em}
+.top .logo svg{width:28px;height:28px}
+.top .tag{font-size:12px;background:rgba(31,168,85,.18);color:#9ee6b8;border:1px solid rgba(31,168,85,.45);padding:3px 9px;border-radius:999px;white-space:nowrap}
+.top .sp{flex:1}
+.top .tbtn{background:transparent;color:var(--v-crema);border:1px solid rgba(247,245,239,.3);border-radius:999px;padding:6px 12px;font-size:13px;text-decoration:none;white-space:nowrap}
+.top .tbtn:hover{background:rgba(247,245,239,.1)}
+.vtabs{display:none;background:rgba(247,245,239,.08);border-radius:999px;padding:3px}
+.vtabs button{border:0;background:transparent;color:var(--v-crema);padding:6px 14px;border-radius:999px;font-size:13.5px;font-weight:600;position:relative}
+.vtabs button.on{background:var(--v-primario);color:#06210f}
+.vtabs .dot{position:absolute;top:3px;right:5px;width:9px;height:9px;border-radius:50%;background:#ff5a36;border:2px solid var(--v-sec);display:none}
+.vtabs .dot.show{display:block}
+
+/* ---------- Distribución ---------- */
+.app{flex:1;min-height:0;display:grid;grid-template-columns:minmax(360px,440px) 1fr;background:var(--v-fondo)}
+
+/* ---------- WhatsApp ---------- */
+.wa{display:flex;flex-direction:column;min-height:0;background:var(--wa-bg);border-right:1px solid #d1d7db}
+.wa-head{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--wa-head);color:#fff}
+.wa-head .back{width:22px;height:22px;opacity:.9}
+.avatar{width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:hidden}
+.avatar span{font-weight:700;color:var(--wa-head);font-size:15px}
+.wa-head .who{flex:1;min-width:0}
+.wa-head .name{font-weight:600;font-size:16px;display:flex;align-items:center;gap:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-head .name svg{width:16px;height:16px;flex:0 0 auto}
+.wa-head .sub{font-size:12.5px;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-head .icons{display:flex;gap:16px}
+.wa-head .icons svg{width:22px;height:22px;opacity:.95}
+.msgs{flex:1;min-height:0;overflow-y:auto;padding:10px 4% 14px;
+  background-color:var(--wa-bg);
+  background-image:radial-gradient(rgba(84,101,111,.09) 1.2px,transparent 1.3px),radial-gradient(rgba(84,101,111,.06) 1.2px,transparent 1.3px);
+  background-size:22px 22px,22px 22px;background-position:0 0,11px 11px;scroll-behavior:smooth}
+.row{display:flex;margin:3px 0}
+.row.out{justify-content:flex-end}
+.row.c{justify-content:center}
+.bubble{max-width:84%;padding:6px 8px 7px 9px;border-radius:8px;font-size:14.2px;line-height:1.38;color:var(--wa-text);
+  box-shadow:0 1px .5px rgba(11,20,26,.13);word-wrap:break-word;overflow-wrap:anywhere;animation:pop .18s ease-out}
+.bubble.in{background:var(--wa-in);border-top-left-radius:2px}
+.bubble.out{background:var(--wa-out);border-top-right-radius:2px}
+.bubble.wide{max-width:94%;padding:4px 4px 6px}
+.bubble b{font-weight:600}
+.b-label{font-size:12.5px;font-weight:700;color:var(--alerta);margin-bottom:2px}
+.meta{float:right;margin:7px 0 -5px 10px;font-size:11px;color:var(--wa-meta);display:inline-flex;align-items:center;gap:3px;line-height:1}
+.ticks{width:16px;height:11px;color:#8696a0}
+.ticks.read{color:var(--wa-blue)}
+.sys{background:#ffffffeb;color:#54656f;font-size:12.5px;padding:6px 12px;border-radius:8px;text-align:center;max-width:88%;box-shadow:0 1px .5px rgba(11,20,26,.1);margin:6px 0;line-height:1.4}
+.sys.date{background:#fff;font-weight:500;text-transform:uppercase;font-size:12px}
+.sys.enc{background:#ffeecd;color:#54656f}
+.typing{display:inline-flex;gap:4px;padding:12px 14px}
+.typing i{width:7px;height:7px;border-radius:50%;background:#8696a0;animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Tarjetas de producto */
+.pcards{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 6px}
+.pcard{flex:0 0 172px;scroll-snap-align:start;border-radius:8px;overflow:hidden;background:#fff;border:1px solid #e9edef;display:flex;flex-direction:column}
+.pimg{height:118px;display:flex;align-items:center;justify-content:center;padding:8px}
+.pimg svg{width:100%;height:100%}
+.pbody{padding:7px 9px 0;flex:1;display:flex;flex-direction:column}
+.pname{font-weight:600;font-size:13.5px;line-height:1.25}
+.pdesc{font-size:12px;color:var(--wa-meta);margin-top:2px;line-height:1.3}
+.pprice{font-weight:700;font-size:15px;color:var(--wa-text);margin-top:5px}
+.pstock{font-size:11.5px;color:#0f7a3a;margin-top:2px}
+.pbtn{margin-top:auto;border:0;border-top:1px solid #e9edef;background:#fff;color:var(--wa-link);font-weight:600;padding:9px 6px;font-size:13.5px;width:100%}
+.pbtn:hover{background:#f5f6f6}
+.pbtn:disabled{color:#aab3b8;cursor:default}
+.pcard.mini{flex-direction:row;flex:1 1 auto;max-width:300px}
+.pcard.mini .pimg{width:84px;height:auto;flex:0 0 84px}
+.pcard.mini .pbody{padding:8px 9px}
+.pcard.mini .pbtn{border-top:0;text-align:left;padding:6px 0 2px;background:transparent}
+
+/* QR y pedido */
+.qrbox{padding:10px;text-align:center;min-width:230px}
+.qrhead{font-weight:600;font-size:13.5px;margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:6px}
+.qr{width:170px;height:170px;display:block;margin:4px auto;border:6px solid #fff;outline:1px solid #e9edef;border-radius:6px}
+.qramt{font-size:20px;font-weight:700;margin-top:4px}
+.qrnote{font-size:11.5px;color:var(--wa-meta);margin-bottom:8px}
+.qrbtns{display:flex;flex-direction:column;gap:6px}
+.qrbtns button{border:0;border-radius:20px;padding:9px 12px;font-weight:600;font-size:13.5px;background:var(--wa-btn);color:#fff}
+.qrbtns button.sec{background:#fff;color:var(--wa-head);border:1px solid #c5d0d5}
+.qrbtns button:disabled{opacity:.5;cursor:default}
+.ostatus{padding:8px 10px;min-width:220px}
+.ohead{font-weight:700;font-size:13.5px;margin-bottom:6px}
+.ostep{display:flex;align-items:center;gap:8px;font-size:13px;color:#8696a0;padding:3px 0}
+.ostep span{width:14px;height:14px;border-radius:50%;border:2px solid #c5d0d5;flex:0 0 auto}
+.ostep.done{color:var(--wa-text)}
+.ostep.done span{background:var(--wa-btn);border-color:var(--wa-btn)}
+
+/* Chips y caja de texto */
+.chips{flex:0 0 auto;display:flex;gap:6px;overflow-x:auto;padding:6px 10px 2px;background:transparent;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips:empty{display:none}
+.chip{white-space:nowrap;border:1px solid #d1d7db;background:#fff;color:var(--wa-head);border-radius:18px;padding:7px 13px;font-size:13.5px;font-weight:500;box-shadow:0 1px .5px rgba(11,20,26,.08)}
+.chip:hover{background:#f5f6f6}
+.composer{flex:0 0 auto;display:flex;gap:8px;align-items:center;padding:7px 10px;padding-bottom:calc(7px + env(safe-area-inset-bottom));background:var(--wa-bar)}
+.composer .field{flex:1;display:flex;align-items:center;gap:8px;background:#fff;border-radius:24px;padding:0 12px}
+.composer .field svg{width:22px;height:22px;color:#54656f;flex:0 0 auto}
+.composer input{flex:1;border:0;outline:none;font-size:16px;padding:11px 0;background:transparent;min-width:0;color:var(--wa-text)}
+.send{width:46px;height:46px;border-radius:50%;border:0;background:var(--wa-btn);color:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.send svg{width:22px;height:22px}
+
+/* ---------- Panel ---------- */
+.panel{min-height:0;overflow-y:auto;background:var(--v-fondo)}
+.p-head{position:sticky;top:0;z-index:5;background:var(--v-fondo);border-bottom:1px solid var(--v-borde);padding:14px 20px 0}
+.p-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.p-title h1{font-size:19px;margin:0;color:var(--v-sec)}
+.status-pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--v-claro);color:var(--v-oscuro)}
+.status-pill i{width:8px;height:8px;border-radius:50%;background:var(--v-primario);box-shadow:0 0 0 3px rgba(31,168,85,.2)}
+.status-pill.human{background:var(--alerta-bg);color:var(--alerta)}
+.status-pill.human i{background:var(--alerta);box-shadow:0 0 0 3px rgba(194,65,12,.2)}
+.p-sub{font-size:13px;color:var(--v-suave);margin:4px 0 10px}
+.ptabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.ptabs::-webkit-scrollbar{display:none}
+.ptabs button{border:0;background:transparent;padding:9px 12px;font-size:14px;font-weight:600;color:var(--v-suave);border-bottom:3px solid transparent;white-space:nowrap;position:relative}
+.ptabs button.on{color:var(--v-sec);border-bottom-color:var(--v-primario)}
+.ptabs .cnt[hidden]{display:none}
+.ptabs .cnt{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:var(--alerta);color:#fff;font-size:11px;margin-left:4px;line-height:18px}
+.ptab{display:none;padding:18px 20px 40px}
+.ptab.on{display:block}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--v-borde);border-radius:14px;padding:14px 16px;box-shadow:0 6px 18px rgba(15,46,34,.05)}
+.card h3{margin:0 0 10px;font-size:15px;color:var(--v-sec);display:flex;align-items:center;gap:8px}
+.muted{color:var(--v-suave);font-size:13px}
+.btn{border:0;border-radius:999px;padding:8px 14px;font-weight:600;font-size:13.5px;background:var(--v-primario);color:#06210f}
+.btn:hover{background:#25c063}
+.btn.dark{background:var(--v-sec);color:var(--v-crema)}
+.btn.out{background:#fff;color:var(--v-sec);border:1.5px solid var(--v-borde)}
+.btn.warn{background:var(--alerta);color:#fff}
+.btn.sm{padding:5px 10px;font-size:12.5px}
+.btn:disabled{opacity:.45;cursor:default}
+.row-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13.5px}
+.kv dt{color:var(--v-suave)}
+.kv dd{margin:0;font-weight:600}
+.tagl{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:999px;background:var(--v-claro);color:var(--v-oscuro);margin:2px 4px 2px 0;font-weight:600}
+.alert{border:1px solid #f3c9ad;background:var(--alerta-bg);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+.alert .at{font-size:12px;font-weight:700;color:var(--alerta);text-transform:uppercase;letter-spacing:.03em}
+.alert .aq{font-size:14px;margin:4px 0 8px}
+.alert textarea{width:100%;min-height:58px;border:1px solid var(--v-borde);border-radius:8px;padding:8px;font:inherit;font-size:13.5px;resize:vertical}
+.empty{font-size:13.5px;color:var(--v-suave);padding:6px 0}
+.log{max-height:280px;overflow-y:auto;font-size:13px;display:flex;flex-direction:column;gap:5px}
+.log div{padding:5px 8px;border-radius:8px;background:#f6f5f0;line-height:1.35}
+.log div b{font-weight:700}
+.log .l-cliente{background:#e9f8ee}
+.log .l-encargada{background:var(--alerta-bg)}
+.log .l-sistema{background:transparent;color:var(--v-suave);font-style:italic;text-align:center}
+.owner{display:flex;gap:8px;margin-top:10px}
+.owner input{flex:1;border:1px solid var(--v-borde);border-radius:999px;padding:9px 14px;font-size:15px;min-width:0}
+.owner input:disabled{background:#f3f2ee}
+.cartl{list-style:none;margin:0;padding:0;font-size:13.5px}
+.cartl li{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed var(--v-borde)}
+.cartl li:last-child{border-bottom:0;font-weight:700}
+
+/* Pedidos */
+.olist{display:flex;flex-direction:column;gap:10px}
+.oitem{background:#fff;border:1px solid var(--v-borde);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center}
+.oitem .oid{font-weight:700;color:var(--v-sec)}
+.oitem .odet{font-size:13px;color:var(--v-suave);grid-column:1/-1}
+.oitem.new{animation:flash 1.6s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 4px rgba(31,168,85,.5)}100%{box-shadow:0 0 0 0 rgba(31,168,85,0)}}
+.badge{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.b-pagado{background:#e0f2fe;color:#075985}.b-preparando{background:#fef3c7;color:#92400e}
+.b-enviado{background:#ede9fe;color:#5b21b6}.b-entregado{background:var(--v-claro);color:var(--v-oscuro)}
+.b-agente{background:var(--v-sec);color:var(--v-crema)}.b-local{background:#eee;color:#555}
+
+/* Catálogo */
+.plist{display:flex;flex-direction:column;gap:10px}
+.pitem{background:#fff;border:1px solid var(--v-borde);border-radius:12px;padding:10px 12px;display:flex;gap:12px;align-items:center}
+.pitem .th{width:56px;height:56px;border-radius:10px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;padding:4px}
+.pitem .th svg{width:100%;height:100%}
+.pitem .info{flex:1;min-width:0}
+.pitem .nm{font-weight:700;font-size:14px}
+.pitem .pr{font-size:13px;color:var(--v-suave)}
+.sizes{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.sz{display:inline-flex;align-items:center;border:1px solid var(--v-borde);border-radius:999px;font-size:12.5px;overflow:hidden;background:#fff}
+.sz b{padding:3px 6px 3px 9px;font-weight:700}
+.sz em{font-style:normal;padding:3px 4px;min-width:20px;text-align:center}
+.sz.zero{border-color:#f3c9ad;background:var(--alerta-bg)}
+.sz.zero em{color:var(--alerta);font-weight:700}
+.sz button{border:0;background:#f3f2ee;width:24px;height:24px;font-weight:700;color:var(--v-sec)}
+.sz button:hover{background:#e6e4dc}
+.sz.flash{animation:flash 1.6s ease-out}
+
+/* Clientes */
+.clist{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.cl{background:#fff;border:1px solid var(--v-borde);border-radius:14px;padding:12px 14px}
+.cl.now{border-color:var(--v-primario);box-shadow:0 0 0 3px rgba(31,168,85,.15)}
+.cl .ch{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.cl .ci{width:38px;height:38px;border-radius:50%;background:var(--v-claro);color:var(--v-oscuro);display:flex;align-items:center;justify-content:center;font-weight:700}
+.cl .cn{font-weight:700}
+.cl .ct{font-size:12.5px;color:var(--v-suave)}
+
+/* Reportes */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px}
+.kpi{background:#fff;border:1px solid var(--v-borde);border-radius:14px;padding:12px 14px}
+.kpi .kl{font-size:12.5px;color:var(--v-suave);font-weight:600}
+.kpi .kv2{font-size:22px;font-weight:800;color:var(--v-sec);margin-top:4px}
+.kpi .ks{font-size:12px;color:var(--v-suave);margin-top:2px}
+.kpi.hl{background:var(--v-sec);border-color:var(--v-sec)}
+.kpi.hl .kl,.kpi.hl .ks{color:#b9d6c6}.kpi.hl .kv2{color:#fff}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar{display:grid;grid-template-columns:minmax(120px,190px) 1fr 40px;gap:10px;align-items:center;font-size:13px}
+.bar .tr{display:block;height:12px;background:#eeece5;border-radius:6px;overflow:hidden}
+.bar .tr i{display:block;height:100%;background:var(--v-primario);border-radius:6px}
+
+/* Configuración */
+.form{display:grid;gap:12px}
+.form label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--v-sec)}
+.form input,.form select{border:1px solid var(--v-borde);border-radius:10px;padding:9px 11px;font-size:15px;font-weight:400;background:#fff}
+.faql{font-size:13px;margin:0;padding-left:18px}
+
+/* Aviso */
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(30px);background:var(--v-sec);color:var(--v-crema);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:.25s;z-index:50;max-width:92vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- Celular ---------- */
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .vtabs{display:flex}
+  .top{padding:6px 10px;gap:8px}
+  .top .tag,.top .hide-m{display:none}
+  .app[data-view="chat"] .panel{display:none}
+  .app[data-view="panel"] .wa{display:none}
+  .wa{border-right:0}
+  .p-head{padding:12px 14px 0}
+  .ptab{padding:14px 14px 40px}
+  .toast{bottom:84px}
+}
+@media (max-width:380px){ .top .logo span{display:none} }
+@media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important;scroll-behavior:auto!important} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="logo" href="index.html" aria-label="VENDE-IA, volver al sitio">
+    <svg viewBox="0 -0.5 33 33" aria-hidden="true"><path fill="#1FA855" d="M9 7h10a7 7 0 0 1 7 7v4a7 7 0 0 1-7 7h-7l-5.5 4.3v-5A7 7 0 0 1 2 18v-4a7 7 0 0 1 7-7z"/><path fill="none" stroke="#F7F5EF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M7 19l4-4 3 3 6-6M16 12h4v4"/><path fill="#1FA855" d="M27.5.5q.5 3.5 4 4-3.5.5-4 4-.5-3.5-4-4 3.5-.5 4-4z"/></svg>
+    <span>VENDE-IA</span>
+  </a>
+  <span class="tag">Prototipo demostrativo</span>
+  <div class="vtabs" role="tablist" aria-label="Vista">
+    <button id="vChat" class="on" role="tab" aria-selected="true">💬 Chat</button>
+    <button id="vPanel" role="tab" aria-selected="false">📊 Panel<span class="dot" id="panelDot"></span></button>
+  </div>
+  <div class="sp"></div>
+  <button class="tbtn" id="resetAll" title="Borra todo y vuelve a empezar">↺ <span class="hide-m">Reiniciar demo</span></button>
+  <a class="tbtn hide-m" href="index.html">← Volver al sitio</a>
+</header>
+
+<main class="app" id="app" data-view="chat">
+  <!-- ======== WhatsApp del cliente ======== -->
+  <section class="wa" aria-label="Chat de WhatsApp simulado">
+    <div class="wa-head">
+      <svg class="back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      <div class="avatar" aria-hidden="true"><span id="avIni">MU</span></div>
+      <div class="who">
+        <div class="name"><span id="hdrName">Moda Urbana</span>
+          <svg viewBox="0 0 24 24" aria-label="Cuenta de empresa verificada"><path fill="#25D366" d="M12 1l2.6 2.1 3.3-.4 1.1 3.2 3 1.5-.6 3.3 1.6 2.9-2.4 2.3.1 3.4-3.3.7-1.8 2.9-3.1-1.3L9.4 23l-2-2.7-3.3-.4-.2-3.4L1.4 14l1.4-3L1.9 7.7l3-1.3.9-3.3 3.3.2z"/><path d="M7.5 12.3l3 3 6-6.2" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="sub" id="hdrSub">Cuenta de empresa · en línea</div>
+      </div>
+      <div class="icons" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="2" y="6" width="13" height="12" rx="2"/><path d="M15 10l6-3v10l-6-3z"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>
+      </div>
+    </div>
+    <div class="msgs" id="msgs" aria-live="polite"></div>
+    <div class="chips" id="chips" aria-label="Respuestas sugeridas"></div>
+    <form class="composer" id="composer" autocomplete="off">
+      <div class="field">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0" stroke-linecap="round"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+        <input id="inp" type="text" placeholder="Escribe un mensaje" aria-label="Escribe un mensaje" enterkeyhint="send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/></svg>
+      </div>
+      <button class="send" type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4l17.5-7.5a1 1 0 0 0 0-1.8L3.4 3.6a.9.9 0 0 0-1.3 1l2 6.4 9 1-9 1-2 6.4a.9.9 0 0 0 1.3 1z"/></svg></button>
+    </form>
+  </section>
+
+  <!-- ======== Panel de la tienda ======== -->
+  <section class="panel" aria-label="Panel de la tienda">
+    <div class="p-head">
+      <div class="p-title">
+        <h1 id="pTitle">Panel de Moda Urbana</h1>
+        <span class="status-pill" id="pStatus"><i></i><span>Agente activo 24/7</span></span>
+      </div>
+      <p class="p-sub">Así ve la dueña de la tienda lo que hace el agente, en tiempo real. Datos de ejemplo para la demostración.</p>
+      <nav class="ptabs" id="ptabs">
+        <button data-tab="live" class="on">En vivo<span class="cnt" id="alertCnt" hidden>0</span></button>
+        <button data-tab="orders">Pedidos</button>
+        <button data-tab="catalog">Catálogo y stock</button>
+        <button data-tab="clients">Clientes (CRM)</button>
+        <button data-tab="reports">Reportes</button>
+        <button data-tab="agent">Configurar agente</button>
+      </nav>
+    </div>
+
+    <div class="ptab on" id="tab-live">
+      <div class="grid2">
+        <div class="card">
+          <h3>💬 Conversación en vivo</h3>
+          <div id="liveCtl"></div>
+          <div class="log" id="liveLog" aria-live="polite"></div>
+          <form class="owner" id="ownerForm" autocomplete="off">
+            <input id="ownerInp" type="text" placeholder="Toma el control para responder tú" disabled aria-label="Responder como encargada">
+            <button class="btn dark" id="ownerSend" disabled>Enviar</button>
+          </form>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:14px"><h3>🔔 Avisos del agente</h3><div id="liveAlerts"></div></div>
+          <div class="card" style="margin-bottom:14px"><h3>👤 Cliente en el chat</h3><div id="liveCust"></div></div>
+          <div class="card"><h3>🛒 Carrito actual</h3><div id="liveCart"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ptab" id="tab-orders"><div class="olist" id="orders"></div></div>
+
+    <div class="ptab" id="tab-catalog">
+      <div class="card" style="margin-bottom:14px">
+        <h3>📦 Stock en tiempo real</h3>
+        <p class="muted" style="margin:0 0 10px">El agente consulta este stock antes de ofrecer algo: si una talla llega a 0, deja de ofrecerla. Cuando se confirma un pago, se descuenta solo. Prueba bajar una talla a 0 y pídela en el chat.</p>
+        <div class="row-btns" style="margin-top:0">
+          <button class="btn" id="importXls">📥 Importar plantilla de Excel</button>
+        </div>
+      </div>
+      <div class="plist" id="plist"></div>
+    </div>
+
+    <div class="ptab" id="tab-clients"><div class="clist" id="clist"></div></div>
+
+    <div class="ptab" id="tab-reports"><div id="reports"></div></div>
+
+    <div class="ptab" id="tab-agent">
+      <div class="grid2">
+        <div class="card">
+          <h3>🤖 Personalidad y políticas</h3>
+          <form class="form" id="cfgForm">
+            <label>Nombre del agente <input name="agente" maxlength="20"></label>
+            <label>Nombre de la tienda <input name="tienda" maxlength="28"></label>
+            <label>Nombre de la encargada <input name="encargada" maxlength="20"></label>
+            <label>Tono
+              <select name="tono"><option value="cercano">Cercano, con emojis</option><option value="formal">Formal, sin emojis</option></select>
+            </label>
+            <label>Descuento máximo que puede ofrecer (%) <input name="descuento" type="number" min="0" max="30"></label>
+            <label>Costo de envío en Santa Cruz (Bs) <input name="envio" type="number" min="0" max="100"></label>
+            <label>Dirección de la tienda <input name="direccion" maxlength="60"></label>
+            <label>Horario de la tienda <input name="horario" maxlength="60"></label>
+            <button class="btn" type="submit">Guardar cambios</button>
+          </form>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:14px">
+            <h3>🧠 Respuestas que aprendió</h3>
+            <p class="muted" style="margin:0 0 8px">Cuando el agente no sabe algo, te avisa. Lo que respondas desde "En vivo" se guarda aquí y la próxima vez lo responde solo.</p>
+            <div id="faqs"></div>
+          </div>
+          <div class="card">
+            <h3>🧪 Herramientas de la demo</h3>
+            <p class="muted" style="margin:0">Úsalas para mostrar cómo el agente recuerda a cada cliente.</p>
+            <div class="row-btns">
+              <button class="btn dark" id="simReturn">🔁 Simular que el cliente vuelve</button>
+              <button class="btn out" id="simNew">👤 Simular un cliente nuevo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+'use strict';
+
+/* ================= Utilidades ================= */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+const bs = n => `${Math.round(n).toLocaleString('es-BO')} Bs`;
+const hora = (d = new Date()) => `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+const fmt = t => esc(t).replace(/\*(.+?)\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+const fechaCorta = iso => { try { const d = new Date(iso); return d.toLocaleDateString('es-BO', {day:'2-digit', month:'short'}) + ' ' + hora(d); } catch(e) { return ''; } };
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function shade(hex, pct) {
+  const n = parseInt(hex.slice(1), 16);
+  const f = v => Math.max(0, Math.min(255, Math.round(v + (pct / 100) * 255)));
+  return '#' + [f(n >> 16), f((n >> 8) & 255), f(n & 255)].map(v => v.toString(16).padStart(2, '0')).join('');
+}
+
+/* ================= Catálogo inicial ================= */
+const CATALOGO = [
+  {id:'c1', nombre:'Camisa blanca slim fit', corto:'camisa blanca', gen:'f', cat:'camisa', color:'blanco', hex:'#ffffff', bg:'#eef2f1', precio:180, tags:['formal','boda','trabajo'], tipo:'ropa', stock:{S:2,M:3,L:1,XL:1}, comps:['a1','p2'], svg:'shirt', desc:'Algodón, corte entallado'},
+  {id:'c2', nombre:'Camisa celeste de lino', corto:'camisa celeste', gen:'f', cat:'camisa', color:'celeste', hex:'#a9d4f2', bg:'#eaf4fb', precio:210, tags:['boda','casual','formal'], tipo:'ropa', stock:{S:1,M:2,L:2,XL:0}, comps:['a1','p2'], svg:'shirt', desc:'Lino fresco, ideal para el calor'},
+  {id:'c3', nombre:'Camisa negra formal', corto:'camisa negra', gen:'f', cat:'camisa', color:'negro', hex:'#2b2f33', bg:'#eceeef', precio:190, tags:['fiesta','formal','trabajo'], tipo:'ropa', stock:{S:1,M:0,L:2,XL:1}, comps:['a2','p1'], svg:'shirt', desc:'Satinada, para la noche'},
+  {id:'t1', nombre:'Polera básica blanca', corto:'polera blanca', gen:'f', cat:'polera', color:'blanco', hex:'#ffffff', bg:'#eef2f1', precio:80, tags:['casual'], tipo:'ropa', stock:{S:5,M:6,L:4,XL:2}, comps:['p1','z2'], svg:'tshirt', desc:'100 % algodón'},
+  {id:'t2', nombre:'Polera estampada verde', corto:'polera verde', gen:'f', cat:'polera', color:'verde', hex:'#2f9e5b', bg:'#e6f5ec', precio:95, tags:['casual','fiesta'], tipo:'ropa', stock:{S:2,M:0,L:3,XL:1}, comps:['p1','z2'], svg:'tshirt', estampado:true, desc:'Estampado de edición limitada'},
+  {id:'p1', nombre:'Jean slim azul', corto:'jean slim', gen:'m', cat:'pantalon', color:'azul', hex:'#3b5f9a', bg:'#e8eef8', precio:250, tags:['casual','fiesta'], tipo:'ropa', stock:{S:2,M:3,L:2,XL:1}, comps:['t1','z2'], svg:'pants', desc:'Denim elástico'},
+  {id:'p2', nombre:'Pantalón chino beige', corto:'chino beige', gen:'m', cat:'pantalon', color:'beige', hex:'#d8c3a0', bg:'#f6f0e6', precio:230, tags:['formal','trabajo','boda','casual'], tipo:'ropa', stock:{S:1,M:2,L:0,XL:1}, comps:['c1','a2'], svg:'pants', desc:'Gabardina, corte recto'},
+  {id:'v1', nombre:'Vestido floral de verano', corto:'vestido floral', gen:'m', cat:'vestido', color:'floral', hex:'#f2a7b8', bg:'#fdecef', precio:280, tags:['casual','fiesta'], tipo:'ropa', stock:{S:2,M:1,L:0}, comps:['z2','a3'], svg:'dress', floral:true, desc:'Tela liviana, largo midi'},
+  {id:'v2', nombre:'Vestido negro elegante', corto:'vestido negro', gen:'m', cat:'vestido', color:'negro', hex:'#25282c', bg:'#eceeef', precio:320, tags:['boda','fiesta','formal'], tipo:'ropa', stock:{S:0,M:2,L:1}, comps:['a3'], svg:'dress', desc:'Corte clásico, para eventos'},
+  {id:'z1', nombre:'Mocasín de cuero café', corto:'mocasín café', gen:'m', cat:'zapato', color:'cafe', hex:'#7a4a2a', bg:'#f4ece5', precio:350, tags:['formal','boda','trabajo'], tipo:'calzado', stock:{'39':1,'40':2,'41':0,'42':2,'43':1}, comps:['a2'], svg:'shoe', desc:'Cuero genuino'},
+  {id:'z2', nombre:'Zapatilla urbana blanca', corto:'zapatilla blanca', gen:'f', cat:'zapatilla', color:'blanco', hex:'#fafafa', bg:'#eef2f1', precio:290, tags:['casual'], tipo:'calzado', stock:{'38':2,'39':1,'40':3,'41':2,'42':0,'43':1}, comps:['t1','p1'], svg:'sneaker', desc:'Cómoda para todo el día'},
+  {id:'a1', nombre:'Corbata azul marino', corto:'corbata azul', gen:'f', cat:'corbata', color:'azul', hex:'#1f2f57', bg:'#e8ebf3', precio:70, tags:['formal','boda','trabajo'], tipo:'unica', stock:{U:8}, comps:[], svg:'tie', desc:'Seda, combina con todo'},
+  {id:'a2', nombre:'Cinturón de cuero café', corto:'cinturón café', gen:'m', cat:'cinturon', color:'cafe', hex:'#6b3f22', bg:'#f4ece5', precio:90, tags:['formal','casual','trabajo'], tipo:'unica', stock:{U:5}, comps:[], svg:'belt', desc:'Hebilla metálica'},
+  {id:'a3', nombre:'Cartera de mano dorada', corto:'cartera dorada', gen:'f', cat:'cartera', color:'dorado', hex:'#d9b45a', bg:'#fbf4e2', precio:150, tags:['fiesta','boda'], tipo:'unica', stock:{U:3}, comps:[], svg:'bag', desc:'Ideal para eventos'}
+];
+const EXCEL = [
+  {id:'t3', nombre:'Polera polo azul marino', corto:'polo azul', gen:'m', cat:'polera', color:'azul', hex:'#22345e', bg:'#e8ebf3', precio:130, tags:['casual','trabajo'], tipo:'ropa', stock:{S:2,M:4,L:3,XL:2}, comps:['p2','a2'], svg:'tshirt', desc:'Piqué con cuello'},
+  {id:'z3', nombre:'Zapato formal negro', corto:'zapato negro', gen:'m', cat:'zapato', color:'negro', hex:'#202326', bg:'#eceeef', precio:380, tags:['formal','boda','fiesta','trabajo'], tipo:'calzado', stock:{'39':1,'40':2,'41':3,'42':2,'43':1}, comps:['a2'], svg:'shoe', desc:'Cuero liso, suela de goma'}
+];
+const CAT_CHIPS = ['👔 Camisas', '👕 Poleras', '👖 Pantalones', '👗 Vestidos', '👞 Zapatos', '👟 Zapatillas', '👜 Accesorios'];
+const PLURAL = {camisa:'camisas', polera:'poleras', pantalon:'pantalones', vestido:'vestidos', zapato:'zapatos', zapatilla:'zapatillas', corbata:'corbatas', cinturon:'cinturones', cartera:'carteras', accesorio:'accesorios'};
+const TIPO = {camisa:'ropa', polera:'ropa', pantalon:'ropa', vestido:'ropa', zapato:'calzado', zapatilla:'calzado', corbata:'unica', cinturon:'unica', cartera:'unica', accesorio:'unica'};
+const ESTADOS = ['pagado', 'preparando', 'enviado', 'entregado'];
+
+/* ================= Datos guardados ================= */
+const KEY = 'vendeia_prototipo_v1';
+function seed() {
+  const d0 = new Date();
+  const t = (h, m) => { const d = new Date(d0); d.setHours(h, m, 0, 0); if (d > d0) d.setDate(d.getDate() - 1); return d.toISOString(); };
+  return {
+    config: {agente:'Sofía', tienda:'Moda Urbana', encargada:'Carla', tono:'cercano', descuento:10, envio:15,
+      direccion:'Equipetrol, calle Demo #123, Santa Cruz', horario:'lunes a sábado de 9:00 a 20:00', faqs:[]},
+    catalog: JSON.parse(JSON.stringify(CATALOGO)),
+    customers: [
+      {id:'cl1', nombre:'María López', tel:'+591 7•• ••• 214', talla:'S', tallaCalzado:'37', direccion:'Barrio Las Palmas, calle 3', prefs:['fiesta','vestido'],
+        compras:[{orderId:1019, resumen:'Vestido negro elegante (S)', total:320, fecha:t(9,40)}], total:320, ultima:t(9,40)},
+      {id:'cl2', nombre:'Luis Rojas', tel:'+591 6•• ••• 871', talla:'L', tallaCalzado:'42', direccion:'Av. Banzer, 5.º anillo', prefs:['casual','pantalon'],
+        compras:[{orderId:1020, resumen:'Jean slim azul (L), Polera básica blanca (L)', total:345, fecha:t(11,5)}], total:345, ultima:t(11,5)}
+    ],
+    orders: [
+      {id:1020, clienteId:'cl2', cliente:'Luis Rojas', items:[{id:'p1',nombre:'Jean slim azul',talla:'L',precio:250},{id:'t1',nombre:'Polera básica blanca',talla:'L',precio:80}], subtotal:330, descuento:0, envio:15, total:345, entrega:'domicilio', direccion:'Av. Banzer, 5.º anillo', estado:'enviado', porAgente:true, metodo:'QR', fecha:t(11,5)},
+      {id:1019, clienteId:'cl1', cliente:'María López', items:[{id:'v2',nombre:'Vestido negro elegante',talla:'S',precio:320}], subtotal:320, descuento:0, envio:0, total:320, entrega:'recojo', direccion:'', estado:'entregado', porAgente:true, metodo:'QR', fecha:t(9,40)},
+      {id:1018, clienteId:null, cliente:'Venta en el local', items:[{id:'z1',nombre:'Mocasín de cuero café',talla:'41',precio:350}], subtotal:350, descuento:0, envio:0, total:350, entrega:'local', direccion:'', estado:'entregado', porAgente:false, metodo:'Efectivo', fecha:t(10,15)}
+    ],
+    alerts: [], nextOrder: 1021, currentCustomerId: null, excel: false, convos: 2
+  };
+}
+const store = {
+  load() { try { return JSON.parse(localStorage.getItem(KEY)); } catch(e) { return null; } },
+  save(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e) {} },
+  clear() { try { localStorage.removeItem(KEY); } catch(e) {} }
+};
+let D = store.load();
+if (!D || !D.config || !Array.isArray(D.catalog) || !Array.isArray(D.orders)) D = seed();
+const save = () => store.save(D);
+const C = () => D.config;
+const prod = id => D.catalog.find(p => p.id === id);
+const cust = () => D.customers.find(c => c.id === D.currentCustomerId) || null;
+const firstName = c => c ? c.nombre.split(' ')[0] : '';
+
+/* ================= Estado de la conversación ================= */
+let S, LOG = [], sessionId = 0, chain = Promise.resolve();
+const fresh = () => ({stage:'idle', need:{}, lastShown:[], lastTie:[], cart:[], discount:0, entrega:null, direccion:'',
+  pendingSuggestion:null, pendingProduct:null, askedOccasion:false, introDone:false, human:false, fallbacks:0,
+  greeted:false, pendingText:null, nameTries:0, suggestions:0, total:0, ratingOrder:null, confirmVal:null, sizeTipo:'ropa'});
+
+/* ================= Dibujos de producto ================= */
+function svgProd(p) {
+  const c = p.hex, d = shade(c, c === '#ffffff' || c === '#fafafa' ? -30 : -22);
+  const sw = 'stroke-width="2" stroke-linejoin="round"';
+  let s = '';
+  switch (p.svg) {
+    case 'shirt':
+      s = `<path d="M34 20 L44 13 Q50 21 56 13 L66 20 L85 32 L78 45 L68 39 L68 87 L32 87 L32 39 L22 45 L15 32 Z" fill="${c}" stroke="${d}" ${sw}/>
+        <path d="M44 13 L50 25 L56 13" fill="none" stroke="${d}" stroke-width="2"/><line x1="50" y1="25" x2="50" y2="87" stroke="${d}" stroke-width="1.4"/>
+        <circle cx="50" cy="37" r="1.7" fill="${d}"/><circle cx="50" cy="51" r="1.7" fill="${d}"/><circle cx="50" cy="65" r="1.7" fill="${d}"/>`; break;
+    case 'tshirt':
+      s = `<path d="M37 17 Q50 27 63 17 L85 30 L78 44 L68 39 L68 87 L32 87 L32 39 L22 44 L15 30 Z" fill="${c}" stroke="${d}" ${sw}/>
+        <path d="M40 19 Q50 28 60 19" fill="none" stroke="${d}" stroke-width="2"/>` +
+        (p.estampado ? `<circle cx="50" cy="56" r="10" fill="#fff" opacity=".9"/><path d="M44 56 l4 4 l8 -9" stroke="${d}" stroke-width="2.4" fill="none" stroke-linecap="round"/>` : ''); break;
+    case 'pants':
+      s = `<path d="M31 13 H69 L73 89 H55 L50 40 L45 89 H27 Z" fill="${c}" stroke="${d}" ${sw}/><line x1="31" y1="21" x2="69" y2="21" stroke="${d}" stroke-width="1.6"/>
+        <path d="M37 21 Q38 30 44 31 M63 21 Q62 30 56 31" fill="none" stroke="${d}" stroke-width="1.4"/>`; break;
+    case 'dress':
+      s = `<path d="M42 11 H58 L60 30 Q55 36 58 40 L81 89 H19 L42 40 Q45 36 40 30 Z" fill="${c}" stroke="${d}" ${sw}/><line x1="41" y1="40" x2="59" y2="40" stroke="${d}" stroke-width="2"/>` +
+        (p.floral ? [[40,55],[58,60],[48,72],[32,78],[66,80],[52,50]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="3.2" fill="#fff" opacity=".85"/><circle cx="${x}" cy="${y}" r="1.3" fill="#e0567a"/>`).join('') : ''); break;
+    case 'shoe':
+      s = `<path d="M11 64 Q13 47 28 49 L46 52 Q56 41 68 47 L87 60 Q91 66 87 71 L13 71 Z" fill="${c}" stroke="${d}" ${sw}/><rect x="11" y="71" width="78" height="6" rx="3" fill="${shade(c,-35)}"/>
+        <path d="M48 53 Q58 50 64 55" fill="none" stroke="${shade(c,25)}" stroke-width="2"/>`; break;
+    case 'sneaker':
+      s = `<path d="M11 62 Q13 45 30 48 L48 50 Q58 39 70 45 L87 58 Q91 64 87 68 L13 68 Z" fill="${c}" stroke="#9aa5a0" ${sw}/><rect x="11" y="68" width="78" height="9" rx="4.5" fill="#e6e9e7" stroke="#9aa5a0" stroke-width="1.5"/>
+        <path d="M50 52 l7 -4 M54 56 l7 -4 M58 60 l7 -4" stroke="#7d8a84" stroke-width="2" stroke-linecap="round"/><path d="M22 60 Q40 58 52 64" fill="none" stroke="#1FA855" stroke-width="3" stroke-linecap="round"/>`; break;
+    case 'tie':
+      s = `<path d="M44 11 H56 L58 22 L52 27 L62 79 L50 91 L38 79 L48 27 L42 22 Z" fill="${c}" stroke="${d}" ${sw}/><path d="M45 40 L57 52 M43 56 L58 70" stroke="${shade(c,18)}" stroke-width="2.5"/>`; break;
+    case 'belt':
+      s = `<rect x="7" y="42" width="86" height="16" rx="4" fill="${c}" stroke="${d}" stroke-width="2"/><rect x="58" y="37" width="20" height="26" rx="3" fill="none" stroke="#c9a227" stroke-width="4"/>
+        <circle cx="20" cy="50" r="2" fill="${d}"/><circle cx="31" cy="50" r="2" fill="${d}"/><circle cx="42" cy="50" r="2" fill="${d}"/>`; break;
+    case 'bag':
+      s = `<path d="M18 40 H82 L77 83 H23 Z" fill="${c}" stroke="${d}" ${sw}/><path d="M35 40 Q35 21 50 21 Q65 21 65 40" fill="none" stroke="${d}" stroke-width="3"/><rect x="43" y="48" width="14" height="9" rx="2" fill="${d}"/>`; break;
+  }
+  return `<svg viewBox="0 0 100 100" aria-hidden="true">${s}</svg>`;
+}
+function qrSVG(seedN) {
+  let s = seedN % 233280 || 7;
+  const rnd = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+  const N = 25; let r = '';
+  const inF = (x, y) => (x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9);
+  const finder = (x, y) => `<rect x="${x}" y="${y}" width="7" height="7" fill="#111"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fff"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="#111"/>`;
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) { if (!inF(x, y) && rnd() > .52) r += `<rect x="${x}" y="${y}" width="1" height="1"/>`; }
+  return `<svg class="qr" viewBox="0 0 ${N} ${N}" shape-rendering="crispEdges" role="img" aria-label="Código QR de pago (simulado)"><rect width="${N}" height="${N}" fill="#fff"/><g fill="#111">${r}</g>${finder(0,0)}${finder(N-7,0)}${finder(0,N-7)}<rect x="10" y="10" width="5" height="5" rx="1" fill="#1FA855"/></svg>`;
+}
+
+/* ================= Stock y carrito ================= */
+const inCart = (id, size) => S.cart.filter(i => i.id === id && i.talla === size).length;
+const stockOf = (p, size) => p.tipo === 'unica' ? (p.stock.U || 0) - inCart(p.id, 'U') : (p.stock[size] || 0) - inCart(p.id, size);
+const availSizes = p => p.tipo === 'unica' ? (stockOf(p, 'U') > 0 ? ['U'] : []) : Object.keys(p.stock).filter(k => stockOf(p, k) > 0);
+const anyStock = p => availSizes(p).length > 0;
+const sizeFor = p => p.tipo === 'unica' ? 'U' : p.tipo === 'ropa' ? S.need.size : S.need.shoe;
+const cartTotal = () => S.cart.reduce((a, i) => a + i.precio, 0);
+const discountAmt = () => Math.round(cartTotal() * (S.discount || 0) / 100);
+const matchCat = (p, cat) => cat === 'accesorio' ? ['corbata','cinturon','cartera'].includes(p.cat) : p.cat === cat;
+const art = p => p.gen === 'f' ? 'la' : 'el';
+const pron = p => p.gen === 'f' ? 'la' : 'lo';
+const tallaTxt = s => s && s !== 'U' ? ` (talla ${s})` : '';
+
+/* ================= Comprensión del mensaje ================= */
+const RX = {
+  greet: /^(hola+|holi|buenas|buen dia|buenos dias|buenas tardes|buenas noches|hey|que tal|alo|hi|hello)\b/,
+  human: /\b(persona|humano|humana|asesor|asesora|encargad[oa]|alguien real|hablar con alguien|operador|operadora|duena|dueno|atencion personal)\b/,
+  thanks: /\b(gracias|grax|genial|excelente|muy amable|buenisimo)\b/,
+  bye: /\b(chau|chao|adios|hasta luego|nos vemos|bye|hasta pronto)\b/,
+  cart: /\b(carrito|que llevo|mi compra actual|ver pedido|que tengo agregado)\b/,
+  remove: /\b(quita|quitar|quitale|saca|sacar|elimina|eliminar|borra|borrar|ya no quiero|vacia|vaciar)\b/,
+  checkout: /\b(pagar|pago ya|finalizar|confirmar pedido|confirmo|eso es todo|nada mas|cerrar pedido|quiero comprar|proceder)\b/,
+  status: /\b(mi pedido|donde esta|estado del pedido|cuando llega|seguimiento|ya salio|ya viene|llega hoy)\b/,
+  discount: /\b(descuento|rebaja|oferta|promo|promocion|mas barato|muy caro|esta caro|cupon)\b/,
+  catalog: /\b(catalogo|que (tienen|venden|hay|ofrecen)|productos|ver todo|todo lo que tienen|ver mas productos|ver otra cosa|otra cosa|novedades|lo nuevo|que hay de nuevo|que hay nuevo)\b/,
+  envio: /\b(envio|envios|delivery|domicilio|mandan|envian|hacen entregas|llevan)\b/,
+  horario: /\b(horario|horarios|a que hora|que hora abren|atienden|abierto|abren|cierran)\b/,
+  ubic: /\b(donde estan|direccion|ubicacion|ubicados|tienda fisica|como llego|donde queda)\b/,
+  cambios: /\b(cambio|cambios|cambiar|devolucion|devolver|garantia)\b/,
+  pago: /\b(como (pago|se paga|puedo pagar|pagar)|metodos? de pago|formas? de pago|aceptan|tarjeta|transferencia|efectivo|qr)\b/,
+  bot: /\b(eres (un |una )?(bot|robot|ia|humano|persona|maquina)|inteligencia artificial|hablo con una maquina|eres real)\b/,
+  guia: /\b(guia de tallas|que talla me queda|medidas|tabla de tallas)\b/,
+  addVerb: /\b(quiero|me llevo|llevo|lo llevo|la llevo|agrega|agregame|agregala|agregalo|anade|dame|compro|la compro|lo compro|me gusta|me quedo|esa|ese|carrito)\b/,
+  yes: /\b(si|claro|dale|ok|okey|okay|bueno|perfecto|de una|obvio|porfa|por favor|listo|correcto|exacto|va|agregala|agregalo|sip)\b/,
+  no: /\b(no|nop|nel|mejor no|ahora no|despues|luego|otra)\b/,
+  any: /\b(muestrame todo|todo|cualquiera|da igual|lo que sea|no importa|no se|ninguna|sin ocasion|solo mirar)\b/
+};
+const CATS = [
+  [/\bcamis(a|as|ita|itas)\b/, 'camisa'],
+  [/\b(polera|poleras|remera|remeras|playera|playeras|camiseta|camisetas|polo|polos)\b/, 'polera'],
+  [/\b(pantalon|pantalones|jean|jeans|vaquero|vaqueros|chino|chinos)\b/, 'pantalon'],
+  [/\b(vestido|vestidos)\b/, 'vestido'],
+  [/\b(zapato|zapatos|mocasin|mocasines|calzado)\b/, 'zapato'],
+  [/\b(zapatilla|zapatillas|tenis|deportiva|deportivas|sneaker|sneakers)\b/, 'zapatilla'],
+  [/\b(corbata|corbatas)\b/, 'corbata'],
+  [/\b(cinturon|cinturones|correa)\b/, 'cinturon'],
+  [/\b(cartera|carteras|bolso|bolsos)\b/, 'cartera'],
+  [/\b(accesorio|accesorios)\b/, 'accesorio']
+];
+const OCAS = [
+  [/\b(boda|bodas|matrimonio|casamiento|novia|novio)\b/, 'boda'],
+  [/\b(fiesta|fiestas|cumple\w*|farra|discoteca|boliche|cena|noche|graduacion|promocion)\b/, 'fiesta'],
+  [/\b(trabajo|oficina|reunion|entrevista|laboral)\b/, 'trabajo'],
+  [/\b(formal|elegante|evento)\b/, 'formal'],
+  [/\b(casual|diario|dia a dia|salir|universidad|paseo|playa|verano|calor|comodo|comoda)\b/, 'casual']
+];
+const COLS = [[/\bblanc/, 'blanco'], [/\bnegr/, 'negro'], [/\bceleste/, 'celeste'], [/\bazul/, 'azul'], [/\bbeige/, 'beige'],
+  [/\b(cafe|marron)/, 'cafe'], [/\bverde/, 'verde'], [/\b(floral|flores|florcitas)/, 'floral'], [/\bdorad/, 'dorado']];
+const COLOR_TXT = {blanco:'blanco', negro:'negro', celeste:'celeste', azul:'azul', beige:'beige', cafe:'café', verde:'verde', floral:'floral', dorado:'dorado'};
+const OCC_TXT = {boda:'¡Qué lindo, una boda! 🎉', fiesta:'¡Uy, fiesta! 🥳', trabajo:'Perfecto, algo para el trabajo 💼', formal:'Algo elegante, me encanta ✨', casual:'Algo cómodo para el día a día 😎'};
+
+function parseSize(t, tipo, loose) {
+  if (tipo !== 'calzado') {
+    let m = t.match(/\btalla\s*(xs|s|m|l|xl|xxl)\b/) || t.match(/\ben (s|m|l|xl)\b/);
+    if (m) return m[1].toUpperCase();
+    if (loose) {
+      m = t.match(/^(?:si |la |en |talla |una )*(xs|s|m|l|xl)$/); if (m) return m[1].toUpperCase();
+      if (/\bextra grande\b/.test(t)) return 'XL';
+      if (/\bmedian[ao]\b/.test(t)) return 'M';
+      if (/\bgrande\b/.test(t)) return 'L';
+      if (/\b(pequen[ao]|chic[ao]|small)\b/.test(t)) return 'S';
+    }
+  }
+  if (tipo !== 'ropa') {
+    let m = t.match(/\b(?:talla|numero|nro|calzo|n)\s*(3[4-9]|4[0-6])\b/);
+    if (m) return m[1];
+    if (loose) { m = t.match(/\b(3[4-9]|4[0-6])\b/); if (m) return m[1]; }
+  }
+  return null;
+}
+function entities(t) {
+  const e = {};
+  for (const [re, v] of CATS) if (re.test(t)) { e.cat = v; break; }
+  for (const [re, v] of OCAS) if (re.test(t)) { e.occasion = v; break; }
+  for (const [re, v] of COLS) if (re.test(t)) { e.color = v; break; }
+  const b = t.match(/\b(?:hasta|menos de|maximo|max|no mas de|presupuesto(?: de)?|tengo)\s*(\d{2,4})\b/) || t.match(/\b(\d{2,4})\s*(?:bs|bolivianos)\b/);
+  if (b) e.budget = Number(b[1]);
+  const sr = parseSize(t, 'ropa', false); if (sr) e.size = sr;
+  const sc = parseSize(t, 'calzado', false); if (sc) e.shoe = sc;
+  return e;
+}
+const hasShop = e => !!(e.cat || e.occasion || e.color || e.budget || e.size || e.shoe);
+
+const STOP = new Set(['para','de','la','el','con','fit']);
+function resolveProduct(t, ids, minScore = 1) {
+  const pool = ids.map(prod).filter(Boolean);
+  S.lastTie = [];
+  if (!pool.length) return null;
+  const ords = [[/\b(primer[ao]?|1ra|1ro|opcion 1|la 1|el 1|numero 1)\b/, 0], [/\b(segund[ao]|2da|2do|opcion 2|la 2|el 2|numero 2)\b/, 1], [/\b(tercer[ao]?|3ra|3ro|opcion 3|la 3|el 3|numero 3)\b/, 2]];
+  for (const [re, i] of ords) if (re.test(t) && pool[i]) return pool[i];
+  const words = new Set(t.split(' '));
+  let best = null, bestScore = 0, ties = [];
+  for (const p of pool) {
+    const stems = new Set(norm(`${p.nombre} ${p.corto} ${p.color}`).split(' ').filter(w => w.length >= 3 && !STOP.has(w)).map(w => w.slice(0, Math.max(4, w.length - 2))));
+    let sc = 0;
+    for (const st of stems) if ([...words].some(w => w.startsWith(st) || (st.length <= 4 && w === st))) sc++;
+    if (sc > bestScore) { best = p; bestScore = sc; ties = [p]; }
+    else if (sc === bestScore && sc > 0) ties.push(p);
+  }
+  if (bestScore >= minScore && ties.length === 1) return best;
+  if (ties.length > 1) S.lastTie = ties.map(p => p.id);
+  return null;
+}
+function extractName(raw, t) {
+  const m = raw.match(/(?:me llamo|mi nombre es|soy|habla)\s+([A-Za-zÁÉÍÓÚáéíóúÑñ]+(?:\s+[A-Za-zÁÉÍÓÚáéíóúÑñ]+)?)/i);
+  let n = m ? m[1] : null;
+  if (!n) {
+    const w = raw.trim().replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '').split(/\s+/).filter(Boolean);
+    const bad = /^(hola|holi|buenas|si|no|ok|quiero|busco|necesito|tienen|hay|ver|catalogo|gracias|que|como|cuanto|donde|me|mi|una|un|el|la|claro|dale)$/;
+    if (w.length >= 1 && w.length <= 3 && w[0].length >= 2 && !bad.test(norm(w[0])) && !hasShop(entities(t))) n = w.slice(0, 2).join(' ');
+  }
+  if (!n) return null;
+  if (/^(un|una|el|la)\s/i.test(n)) return null;
+  return n.split(' ').map(x => cap(x.toLowerCase())).join(' ');
+}
+function keywords(q) {
+  const STOPQ = new Set(['que','como','cuando','donde','tienen','puedo','para','esta','estan','hacen','quiero','saber','tiene','hay','cual','cuales','ustedes','pueden','tambien','alguna','algun','sobre','esto','eso','hola','buenas']);
+  return [...new Set(norm(q).split(' ').filter(w => w.length > 3 && !STOPQ.has(w)))].slice(0, 4);
+}
+function learnedFaq(t) {
+  const words = t.split(' ');
+  for (const f of C().faqs || []) {
+    const hits = f.keys.filter(k => words.some(w => w.startsWith(k.slice(0, 5)))).length;
+    if (f.keys.length && hits >= Math.ceil(f.keys.length / 2)) return f;
+  }
+  return null;
+}
+
+/* ================= Cerebro del agente ================= */
+function brain(raw) {
+  const t = norm(raw);
+  if (S.human) { notifyPanel('💬 El cliente escribió. Estás atendiendo tú.'); return []; }
+  if (!S.greeted) {
+    S.greeted = true; D.convos++; save();
+    const c = cust();
+    const onlyGreet = RX.greet.test(t) && t.split(' ').length <= 3;
+    if (c) {
+      const last = c.compras && c.compras[0];
+      const first = last ? last.resumen.split(',')[0].replace(/\s*\(.*\)/, '') : null;
+      let txt = `¡Hola de nuevo, *${firstName(c)}*! 👋 Qué gusto tenerte por aquí otra vez.`;
+      if (first) txt += ` ¿Qué tal te fue con tu *${first.toLowerCase()}*? 😊`;
+      if (onlyGreet) {
+        return [{text: txt}, {text: first ? '¿Buscas algo para combinarla o te muestro lo nuevo? 🛍️' : '¿En qué te ayudo hoy? 🛍️'},
+          {chips: ['Muéstrame lo nuevo', 'Busco un pantalón', '¿Dónde está mi pedido?', 'Ver catálogo']}];
+      }
+      return [{text: txt}].concat(core(raw));
+    }
+    S.stage = 'ask_name';
+    S.pendingText = onlyGreet ? null : raw;
+    return [{text: `¡Hola! 👋 Soy *${C().agente}*, la asistente virtual de *${C().tienda}*. ${S.pendingText ? 'Con gusto te ayudo con eso. ' : ''}¿Con quién tengo el gusto? 😊`}];
+  }
+  if (S.stage === 'ask_name') {
+    const name = extractName(raw, t);
+    if (!name) {
+      S.nameTries++;
+      if (!S.pendingText && !RX.greet.test(t)) S.pendingText = raw;
+      if (S.nameTries < 2) return [{text: '¿Me dices tu nombre, por favor? Así te atiendo mejor 😊'}];
+      S.stage = 'idle';
+      const p = S.pendingText; S.pendingText = null;
+      return [{text: '¡Sin problema! Sigamos 🙌'}].concat(p ? core(p) : menu());
+    }
+    const nc = {id: 'c' + Date.now(), nombre: name, tel: `+591 7${Math.floor(Math.random() * 9)}• ••• ${String(Math.floor(Math.random() * 900) + 100)}`,
+      talla: '', tallaCalzado: '', direccion: '', prefs: [], compras: [], total: 0, ultima: new Date().toISOString()};
+    D.customers.unshift(nc); D.currentCustomerId = nc.id; save(); renderAll();
+    S.stage = 'idle';
+    const res = [{text: `¡Mucho gusto, *${firstName(nc)}*! 🙌 Ya te registré como cliente, así la próxima vez te atiendo más rápido.`}];
+    if (S.pendingText) { const p = S.pendingText; S.pendingText = null; return res.concat(core(p)); }
+    return res.concat(menu());
+  }
+  return core(raw);
+}
+function menu() {
+  return [{text: '¿En qué te puedo ayudar hoy? Te muestro camisas, poleras, pantalones, vestidos, zapatos y accesorios 🛍️'},
+    {chips: ['Busco una camisa para una boda', 'Ver catálogo', '¿Hacen envíos?', '¿Cómo pago?']}];
+}
+
+function core(raw) {
+  const t = norm(raw);
+  const c = cust();
+  const cfg = C();
+  const e = entities(t);
+  const isYes = RX.yes.test(t) && !/\bno\b/.test(t);
+  const isNo = RX.no.test(t) && !isYes;
+
+  /* --- Respuestas según la etapa --- */
+  switch (S.stage) {
+    case 'confirm_size':
+      if (isYes) { if (S.sizeTipo === 'ropa') S.need.size = S.confirmVal; else S.need.shoe = S.confirmVal; S.stage = 'idle'; return advise(); }
+      { const sz = parseSize(t, S.sizeTipo, true); if (sz) { if (S.sizeTipo === 'ropa') S.need.size = sz; else S.need.shoe = sz; S.stage = 'idle'; return advise(); } }
+      if (isNo) { S.stage = 'ask_size'; return askSize(S.sizeTipo, '¿Qué talla necesitas esta vez?'); }
+      break;
+    case 'ask_size': {
+      const sz = parseSize(t, S.sizeTipo, true);
+      if (sz) { if (S.sizeTipo === 'ropa') S.need.size = sz; else S.need.shoe = sz; S.stage = 'idle'; return advise(); }
+      break;
+    }
+    case 'ask_size_product': {
+      const p = prod(S.pendingProduct);
+      const sz = p && parseSize(t, p.tipo, true);
+      if (sz) { S.stage = 'idle'; if (p.tipo === 'ropa') S.need.size = sz; else S.need.shoe = sz; return addToCart(p, sz); }
+      break;
+    }
+    case 'ask_occasion':
+      if (e.occasion || RX.any.test(t) || isNo) { S.askedOccasion = true; S.stage = 'idle'; if (e.occasion) S.need.occasion = e.occasion; if (e.color) S.need.color = e.color; return advise(); }
+      break;
+    case 'suggest':
+      if (isYes) { const q = prod(S.pendingSuggestion); S.pendingSuggestion = null; S.stage = 'idle'; if (q) return addToCart(q, sizeFor(q)); }
+      if (isNo && !RX.checkout.test(t)) { S.pendingSuggestion = null; S.stage = 'idle'; return [{text: '¡Sin problema! 👌 ¿Pasamos a pagar o quieres ver algo más?'}, {chips: ['Pagar ahora', 'Ver más productos', 'Ver carrito']}]; }
+      break;
+    case 'ask_delivery':
+      if (/\b(domicilio|envio|enviar|enviame|envien|delivery|casa|mandar|manden|mandalo|a mi casa|traer|traigan)\b/.test(t)) {
+        S.entrega = 'domicilio';
+        if (c && c.direccion) { S.stage = 'confirm_address'; return [{text: `¿Te lo enviamos a *${c.direccion}* como la última vez? 📍`}, {chips: ['Sí, a esa dirección', 'Otra dirección']}]; }
+        S.stage = 'ask_address'; return [{text: '¿A qué dirección te lo enviamos? Escríbeme la zona, la calle y una referencia 📍'}];
+      }
+      if (/\b(recojo|recoger|recogerlo|tienda|paso|local|retiro|retirar|busco yo|voy yo)\b/.test(t)) { S.entrega = 'recojo'; S.direccion = ''; return payment(); }
+      break;
+    case 'confirm_address':
+      if (isYes) { S.direccion = c.direccion; return payment(); }
+      if (isNo) { S.stage = 'ask_address'; return [{text: 'Perfecto, ¿a qué dirección te lo enviamos? 📍'}]; }
+      break;
+    case 'ask_address':
+      if (raw.trim().length >= 4 && !raw.includes('?')) { S.direccion = raw.trim().slice(0, 80); return [{text: `Anotado: *${S.direccion}* ✍️`}].concat(payment()); }
+      break;
+    case 'await_payment':
+      if (/\b(ya pague|listo|pagado|ya esta|transferi|ya transferi|hecho)\b/.test(t)) return confirmPayment('QR');
+      break;
+    case 'ask_rating': {
+      const stars = (raw.match(/⭐/g) || []).length || Number((t.match(/\b[1-5]\b/) || [])[0]) || 0;
+      if (stars) {
+        const o = D.orders.find(x => x.id === S.ratingOrder); if (o) { o.rating = stars; save(); renderAll(); }
+        S.stage = 'idle';
+        return [{text: stars >= 4 ? `¡Muchas gracias! 💚 Me alegra mucho. Aquí estoy 24/7 cuando necesites algo.` : `Gracias por contarme 🙏 Le paso tu comentario a ${cfg.encargada} para mejorar.`}];
+      }
+      break;
+    }
+  }
+
+  /* --- Respuestas que aprendió de la encargada --- */
+  const lf = learnedFaq(t);
+  if (lf) return [{text: lf.a}];
+
+  /* --- Intenciones generales --- */
+  if (RX.human.test(t)) {
+    addAlert('humano', raw);
+    return [{text: `¡Claro! 🙌 Ya le avisé a *${cfg.encargada}*, la encargada, para que te escriba por aquí. Mientras tanto sigo atenta por si necesitas algo.`}];
+  }
+  if (RX.bot.test(t)) return [{text: `Soy *${cfg.agente}*, la asistente virtual con inteligencia artificial de *${cfg.tienda}* 🤖💚 Conozco todo el catálogo y el stock en tiempo real, cobro con QR y coordino tu envío. Si prefieres hablar con ${cfg.encargada}, solo dime "quiero hablar con una persona".`}];
+  if (RX.cart.test(t)) return showCart();
+  if (RX.remove.test(t) && S.cart.length) return removeItem(t);
+  if (RX.checkout.test(t) && !RX.pago.test(t)) return checkout();
+  if (RX.discount.test(t)) return discount();
+  if (RX.status.test(t) && !S.cart.length) return orderStatus();
+  if (RX.pago.test(t)) return [{text: `💳 Puedes pagar con *QR* desde la app de cualquier banco o con *tarjeta*, aquí mismo en el chat. Te envío el cobro apenas confirmes tu pedido.`}];
+  if (RX.envio.test(t) && !hasShop(e)) return [{text: `¡Sí! 🚚 Hacemos envíos a domicilio en Santa Cruz por *${bs(cfg.envio)}*. Si pagas antes de las 16:00, te llega hoy mismo. También puedes recoger gratis en la tienda.`}];
+  if (RX.horario.test(t)) return [{text: `🕘 La tienda atiende ${cfg.horario}. Pero yo te respondo por aquí *las 24 horas, todos los días* 😉`}];
+  if (RX.ubic.test(t)) return [{text: `📍 Estamos en *${cfg.direccion}*. ¿Prefieres que te enviemos tu pedido a domicilio? 🚚`}];
+  if (RX.cambios.test(t)) return [{text: `🔄 Tienes *7 días* para cambios con la etiqueta puesta y tu comprobante. Si la talla no te queda, te la cambiamos sin costo 😊`}];
+  if (RX.guia.test(t)) return [{text: `📏 Guía rápida:\n• *S*: pecho 88–94 cm\n• *M*: 95–101 cm\n• *L*: 102–108 cm\n• *XL*: 109–115 cm\nSi me dices tu talla habitual, te recomiendo la mejor 😉`}, {chips: ['S', 'M', 'L', 'XL']}];
+  if (RX.catalog.test(t) && !e.cat) { S.need = {}; S.askedOccasion = false; return [{text: `Esto es lo que tenemos hoy en *${cfg.tienda}* 🛍️\n👔 Camisas · 👕 Poleras · 👖 Pantalones\n👗 Vestidos · 👞 Zapatos · 👟 Zapatillas\n👜 Accesorios (corbatas, cinturones, carteras)\n\n¿Qué te gustaría ver?`}, {chips: CAT_CHIPS}]; }
+
+  /* --- Elegir un producto ya mostrado --- */
+  const pool = S.pendingSuggestion ? [S.pendingSuggestion, ...S.lastShown] : S.lastShown;
+  const short = t.split(' ').length <= 5;
+  if (pool.length && (RX.addVerb.test(t) || short)) {
+    const p = resolveProduct(t, pool);
+    if (p) {
+      if (p.id === S.pendingSuggestion) S.pendingSuggestion = null;
+      const sz = p.tipo === 'unica' ? 'U' : p.tipo === 'ropa' ? (e.size || S.need.size) : (e.shoe || S.need.shoe);
+      return addToCart(p, sz);
+    }
+    if (S.lastTie.length > 1 && RX.addVerb.test(t) && !e.color) {
+      const ps = S.lastTie.map(prod);
+      return [{text: `¿Cuál te gustó más? 😊 ${ps.map(p => `${art(p)} *${p.corto}*`).join(' o ')}`}, {chips: ps.map(p => `Quiero ${art(p)} ${p.corto}`)}];
+    }
+  }
+  if (RX.addVerb.test(t) && !pool.length) {
+    const p = resolveProduct(t, D.catalog.map(x => x.id), 2);
+    if (p) { const sz = p.tipo === 'unica' ? 'U' : p.tipo === 'ropa' ? (e.size || S.need.size) : (e.shoe || S.need.shoe); return addToCart(p, sz); }
+  }
+
+  /* --- Búsqueda y asesoría --- */
+  if (hasShop(e)) {
+    if (e.cat && e.cat !== S.need.cat) { S.need.cat = e.cat; S.lastShown = []; if (TIPO[e.cat] !== 'unica' && !e.occasion && !S.need.occasion) S.askedOccasion = false; }
+    if (e.occasion) S.need.occasion = e.occasion;
+    if (e.color) S.need.color = e.color;
+    if (e.budget) S.need.budget = e.budget;
+    if (e.size) S.need.size = e.size;
+    if (e.shoe) S.need.shoe = e.shoe;
+    S.stage = 'idle';
+    rememberPrefs();
+    return advise();
+  }
+
+  if (RX.greet.test(t)) return [{text: `¡Hola${c ? `, ${firstName(c)}` : ''}! 😊 ¿En qué te ayudo?`}, {chips: ['Ver catálogo', 'Ver carrito', '¿Hacen envíos?']}];
+  if (RX.thanks.test(t) || RX.bye.test(t)) {
+    if (S.cart.length && /\b(nada mas|eso es todo)\b/.test(t)) return checkout();
+    return [{text: RX.bye.test(t) ? `¡Hasta pronto${c ? `, ${firstName(c)}` : ''}! 👋 Aquí estaré cuando me necesites.` : `¡A ti! 💚 Aquí estoy 24/7 si necesitas algo más.`}];
+  }
+
+  /* --- Repreguntas según la etapa --- */
+  if (S.stage === 'ask_size' || S.stage === 'confirm_size') return askSize(S.sizeTipo, 'Perdón, no entendí la talla 😅 ¿Cuál usas?');
+  if (S.stage === 'ask_size_product') { const p = prod(S.pendingProduct); const sz = availSizes(p); return [{text: `¿En qué talla? Tengo disponible: *${sz.join(', ')}*`}, {chips: sz.map(s => `Talla ${s}`)}]; }
+  if (S.stage === 'ask_delivery') return [{text: '¿Lo quieres con *envío a domicilio* o prefieres *recoger en tienda*? 😊'}, {chips: ['🚚 Envío a domicilio', '🏬 Recojo en tienda']}];
+  if (S.stage === 'await_payment') return [{text: 'Cuando quieras, toca *Simular pago con QR* en el cobro de arriba y lo confirmo al instante ✅'}, {chips: ['Ya pagué']}];
+  if (S.stage === 'ask_occasion') { S.askedOccasion = true; S.stage = 'idle'; return advise(); }
+  if (S.stage === 'suggest' || (pool.length && isYes)) {
+    if (isYes && S.lastShown.length === 1) { const p = prod(S.lastShown[0]); return addToCart(p, sizeFor(p)); }
+  }
+
+  /* --- No entendió: avisa a la encargada --- */
+  const isQuestion = raw.includes('?') || /^(que|como|cuando|donde|tienen|hay|cuanto|puedo|pueden|hacen|venden|aceptan|por que)\b/.test(t);
+  S.fallbacks++;
+  if (isQuestion || S.fallbacks >= 2) {
+    S.fallbacks = 0;
+    addAlert('pregunta', raw);
+    return [{text: `Mmm, esa no me la sé todavía 🤔 Ya le pasé tu consulta a *${cfg.encargada}* para que te responda por aquí. Y la próxima vez ya lo sabré 💡`}, {chips: ['Ver catálogo', 'Ver carrito']}];
+  }
+  return [{text: `Disculpa, no te entendí bien 😅 Puedo ayudarte a:\n• Buscar productos (ej: "camisa blanca talla M")\n• Ver tu carrito y pagar con QR\n• Consultar envíos, horarios o cambios`}, {chips: ['Ver catálogo', 'Busco un vestido para una fiesta', '¿Hacen envíos?']}];
+}
+
+function rememberPrefs() {
+  const c = cust(); if (!c) return;
+  [S.need.occasion, S.need.cat].forEach(v => { if (v && !c.prefs.includes(v)) c.prefs.unshift(v); });
+  c.prefs = c.prefs.slice(0, 5); save(); renderClients(); renderLive();
+}
+function askSize(tipo, txt) {
+  S.stage = 'ask_size'; S.sizeTipo = tipo;
+  return [{text: txt}, {chips: tipo === 'ropa' ? ['S', 'M', 'L', 'XL'] : ['38', '39', '40', '41', '42', '43']}];
+}
+
+function advise() {
+  const n = S.need, c = cust();
+  const intro = (!S.introDone && n.occasion) ? (S.introDone = true, OCC_TXT[n.occasion] + ' ') : '';
+  if (!n.cat) {
+    if (!n.occasion && !n.color) return [{text: '¿Qué estás buscando? 😊'}, {chips: CAT_CHIPS}];
+    S.stage = 'ask_cat';
+    const sug = n.occasion === 'boda' || n.occasion === 'formal' || n.occasion === 'trabajo' ? ['👔 Camisas', '👖 Pantalones', '👗 Vestidos', '👞 Zapatos', '👜 Accesorios'] : ['👕 Poleras', '👖 Pantalones', '👗 Vestidos', '👟 Zapatillas'];
+    return [{text: `${intro}¿Qué te gustaría ver? Te puedo mostrar camisas, pantalones, vestidos, zapatos o accesorios.`}, {chips: sug}];
+  }
+  const tipo = TIPO[n.cat];
+  if (tipo === 'ropa' && !n.size) {
+    S.sizeTipo = 'ropa';
+    if (c && c.talla) { S.stage = 'confirm_size'; S.confirmVal = c.talla; return [{text: `${intro}La última vez llevaste talla *${c.talla}*, ¿seguimos con esa? 😉`}, {chips: [`Sí, talla ${c.talla}`, 'Otra talla']}]; }
+    return askSize('ropa', `${intro}¿Qué talla usas?`);
+  }
+  if (tipo === 'calzado' && !n.shoe) {
+    S.sizeTipo = 'calzado';
+    if (c && c.tallaCalzado) { S.stage = 'confirm_size'; S.confirmVal = c.tallaCalzado; return [{text: `${intro}La última vez calzaste *${c.tallaCalzado}*, ¿seguimos con ese número? 😉`}, {chips: [`Sí, ${c.tallaCalzado}`, 'Otro número']}]; }
+    return askSize('calzado', `${intro}¿Qué número calzas?`);
+  }
+  if (!n.occasion && !n.color && !S.askedOccasion && ['camisa', 'vestido', 'zapato', 'pantalon'].includes(n.cat)) {
+    S.askedOccasion = true; S.stage = 'ask_occasion';
+    return [{text: `${intro}¿Es para alguna ocasión especial o algo más casual? 🤔`}, {chips: ['Para una boda', 'Para el trabajo', 'Para una fiesta', 'Casual', 'Muéstrame todo']}];
+  }
+  return search(intro);
+}
+
+function search(intro = '') {
+  const n = S.need, tipo = TIPO[n.cat];
+  const size = tipo === 'ropa' ? n.size : tipo === 'calzado' ? n.shoe : 'U';
+  let pool = D.catalog.filter(p => matchCat(p, n.cat));
+  const notes = [];
+  if (n.occasion) { const r = pool.filter(p => p.tags.includes(n.occasion) || (n.occasion === 'boda' && p.tags.includes('formal'))); if (r.length) pool = r; }
+  if (n.color) { const r = pool.filter(p => p.color === n.color); if (r.length) pool = r; else notes.push(`Ahora no tengo ${PLURAL[n.cat]} en color ${COLOR_TXT[n.color]} 😕, pero mira estas opciones:`); n.color = r.length ? n.color : undefined; }
+  const avail = pool.filter(p => stockOf(p, size) > 0);
+  const agotados = pool.filter(p => stockOf(p, size) <= 0);
+  let list = avail;
+  if (n.budget && avail.length) {
+    const r = avail.filter(p => p.precio <= n.budget);
+    if (r.length) list = r;
+    else { list = [...avail].sort((a, b) => a.precio - b.precio).slice(0, 1); notes.push(`No tengo opciones por debajo de ${bs(n.budget)} en este momento 😕 La más accesible es esta:`); }
+  }
+  list = list.slice(0, 3);
+  if (!list.length) {
+    const otras = [...new Set(pool.flatMap(p => availSizes(p)))];
+    S.lastShown = [];
+    if (tipo === 'ropa') S.need.size = undefined; else if (tipo === 'calzado') S.need.shoe = undefined;
+    S.stage = otras.length ? 'ask_size' : 'idle'; S.sizeTipo = tipo === 'calzado' ? 'calzado' : 'ropa';
+    return [{text: `${intro}Uy, ahora mismo no tengo ${PLURAL[n.cat]} disponibles en ${tipo === 'calzado' ? 'número' : 'talla'} *${size}* 😕${otras.length ? `\nSí tengo en: *${otras.join(', ')}*. ¿Te sirve alguna?` : ''}\nSi quieres, le pido a ${C().encargada} que te avise cuando llegue 🙌`},
+      {chips: otras.slice(0, 4).map(s => tipo === 'calzado' ? s : `Talla ${s}`).concat(['Ver otra cosa'])}];
+  }
+  S.lastShown = list.map(p => p.id); S.stage = 'browsing';
+  const out = [];
+  const sizeTxt = tipo === 'unica' ? 'disponibles' : `disponibles en ${tipo === 'calzado' ? 'número' : 'talla'} *${size}*`;
+  if (notes.length) out.push({text: intro + notes.join('\n')});
+  out.push({text: `${notes.length ? '' : intro}${list.length === 1 ? `Tengo esta opción ${sizeTxt.replace('disponibles', 'disponible')}` : `Tengo estas ${list.length} opciones ${sizeTxt}`}${n.budget && !notes.length ? ' y dentro de tu presupuesto' : ''} 👇`});
+  out.push({cards: list.map(p => p.id), size});
+  const ag = agotados.find(p => !list.includes(p));
+  let tail = list.length > 1 ? `¿Cuál te gusta más? Toca *Agregar al carrito* o dime "quiero ${art(list[0])} ${list[0].corto}" 😉` : `¿Te ${pron(list[0])} agrego al carrito? 🛒`;
+  if (ag) tail = `(${cap(art(ag))} ${ag.corto} está agotad${ag.gen === 'f' ? 'a' : 'o'} en ${tipo === 'calzado' ? 'el' : 'talla'} ${size}, por eso no te ${pron(ag)} ofrezco.)\n` + tail;
+  out.push({text: tail});
+  out.push({chips: list.map(p => `Quiero ${art(p)} ${p.corto}`).concat(['Ver carrito'])});
+  return out;
+}
+
+function addToCart(p, size) {
+  if (!p) return [];
+  if (p.tipo !== 'unica' && !size) {
+    const sizes = availSizes(p);
+    if (!sizes.length) return [{text: `Uy, ${art(p)} ${p.corto} se agotó 😕 ¿Te muestro otra opción parecida?`}, {chips: CAT_CHIPS}];
+    S.stage = 'ask_size_product'; S.pendingProduct = p.id;
+    return [{text: `¿En qué ${p.tipo === 'calzado' ? 'número' : 'talla'} quieres ${art(p)} *${p.corto}*? Tengo disponible: *${sizes.join(', ')}*`}, {chips: sizes.map(s => p.tipo === 'calzado' ? s : `Talla ${s}`)}];
+  }
+  const sz = p.tipo === 'unica' ? 'U' : size;
+  if (stockOf(p, sz) <= 0) {
+    const sizes = availSizes(p);
+    S.pendingProduct = p.id; S.stage = sizes.length ? 'ask_size_product' : 'idle';
+    return [{text: sizes.length ? `${cap(art(p))} ${p.corto} ya no me queda en ${p.tipo === 'calzado' ? 'el' : 'talla'} *${sz}* 😕 Tengo en: *${sizes.join(', ')}*. ¿Te sirve alguna?` : `Uy, ${art(p)} ${p.corto} se acaba de agotar 😕 ¿Te muestro otra opción parecida?`},
+      {chips: sizes.length ? sizes.map(s => p.tipo === 'calzado' ? s : `Talla ${s}`) : CAT_CHIPS}];
+  }
+  S.cart.push({id: p.id, nombre: p.nombre, talla: sz, precio: p.precio});
+  S.stage = 'idle';
+  renderLive();
+  const out = [{text: `¡Listo! ✅ Agregué *${p.nombre}*${tallaTxt(sz)} a tu carrito.\nTotal: *${bs(cartTotal() - discountAmt())}* 🛒`}];
+  const comp = S.suggestions < 2 ? p.comps.map(prod).find(q => q && !S.cart.some(i => i.id === q.id) && (q.tipo === 'unica' ? stockOf(q, 'U') > 0 : sizeFor(q) ? stockOf(q, sizeFor(q)) > 0 : anyStock(q))) : null;
+  if (comp) {
+    S.suggestions++; S.pendingSuggestion = comp.id; S.stage = 'suggest';
+    out.push({text: `💡 ${cap(art(p))} ${p.corto} combina muy bien con ${art(comp)} *${comp.nombre}* (${bs(comp.precio)}). ¿Te ${pron(comp)} agrego?`});
+    out.push({cards: [comp.id], size: sizeFor(comp), mini: true});
+    out.push({chips: [`Sí, agrégal${comp.gen === 'f' ? 'a' : 'o'}`, 'No, gracias', 'Pagar ahora']});
+  } else {
+    out.push({text: '¿Quieres ver algo más o pasamos a pagar? 😊'}, {chips: ['Pagar ahora', 'Ver más productos', 'Ver carrito']});
+  }
+  return out;
+}
+
+function showCart() {
+  if (!S.cart.length) return [{text: 'Tu carrito está vacío por ahora 🛒 ¿Te muestro algo?'}, {chips: CAT_CHIPS}];
+  const lines = S.cart.map(i => `• ${i.nombre}${tallaTxt(i.talla)} — ${bs(i.precio)}`).join('\n');
+  return [{text: `🛒 *Tu carrito*\n${lines}${S.discount ? `\nDescuento ${S.discount}%: −${bs(discountAmt())}` : ''}\n*Total: ${bs(cartTotal() - discountAmt())}*`}, {chips: ['Pagar ahora', 'Ver más productos', 'Vaciar carrito']}];
+}
+function removeItem(t) {
+  if (/\b(vacia|vaciar|todo)\b/.test(t)) { S.cart = []; renderLive(); return [{text: 'Listo, vacié tu carrito 🗑️ ¿Te muestro algo más?'}, {chips: CAT_CHIPS}]; }
+  const p = resolveProduct(t, [...new Set(S.cart.map(i => i.id))]) || (S.cart.length === 1 ? prod(S.cart[0].id) : null);
+  if (!p) return [{text: '¿Qué producto quieres quitar? 😊'}, {chips: S.cart.map(i => `Quitar ${i.nombre.toLowerCase()}`)}];
+  const idx = S.cart.findIndex(i => i.id === p.id); S.cart.splice(idx, 1); renderLive();
+  return [{text: `Quité ${art(p)} *${p.nombre}* de tu carrito ✅${S.cart.length ? `\nTotal: *${bs(cartTotal() - discountAmt())}*` : ''}`}, {chips: S.cart.length ? ['Pagar ahora', 'Ver carrito'] : CAT_CHIPS}];
+}
+function discount() {
+  const d = Number(C().descuento) || 0;
+  if (!d) return [{text: 'Por ahora no tenemos descuentos activos 😕, pero el recojo en tienda es gratis 😉'}];
+  if (S.discount) return [{text: `Ya te apliqué el *${S.discount}%* de descuento 😉 Es lo máximo que puedo darte hoy.`}];
+  S.discount = d; renderLive();
+  const c = cust();
+  if (!S.cart.length) return [{text: `¡Te tengo una! 🎁 Te doy *${d}% de descuento* en esta compra. Se aplica solito cuando pagues. ¿Qué te muestro?`}, {chips: CAT_CHIPS}];
+  return [{text: `Como ${c && c.compras.length ? 'eres cliente frecuente' : 'regalo de bienvenida'} te doy *${d}% de descuento* 🎁\nNuevo total: *${bs(cartTotal() - discountAmt())}*`}, {chips: ['Pagar ahora', 'Ver más productos']}];
+}
+function checkout() {
+  if (!S.cart.length) return [{text: 'Tu carrito está vacío por ahora 🛒 ¿Te muestro algo?'}, {chips: CAT_CHIPS}];
+  const lines = S.cart.map(i => `• ${i.nombre}${tallaTxt(i.talla)} — ${bs(i.precio)}`).join('\n');
+  S.stage = 'ask_delivery'; S.pendingSuggestion = null;
+  return [{text: `Este es tu pedido 🧾\n${lines}${S.discount ? `\nDescuento ${S.discount}%: −${bs(discountAmt())}` : ''}\n*Subtotal: ${bs(cartTotal() - discountAmt())}*`},
+    {text: `¿Cómo prefieres recibirlo?\n🚚 *Envío a domicilio* (+${bs(C().envio)}, llega hoy)\n🏬 *Recojo en tienda* (gratis)`},
+    {chips: ['🚚 Envío a domicilio', '🏬 Recojo en tienda']}];
+}
+function payment() {
+  S.stage = 'await_payment';
+  const envio = S.entrega === 'domicilio' ? Number(C().envio) || 0 : 0;
+  S.total = cartTotal() - discountAmt() + envio;
+  return [{text: `Perfecto 🙌 Tu total es *${bs(S.total)}*${envio ? ' (incluye el envío)' : ''}.\nTe dejo el QR para que pagues desde la app de tu banco 👇`}, {qr: S.total}, {chips: ['Ya pagué']}];
+}
+function confirmPayment(method) {
+  if (S.stage !== 'await_payment' || !S.cart.length) return [];
+  S.stage = 'paid';
+  const c = cust(), cfg = C();
+  const id = D.nextOrder++;
+  S.cart.forEach(i => { const p = prod(i.id); if (p) p.stock[i.talla] = Math.max(0, (p.stock[i.talla] || 0) - 1); });
+  const envio = S.entrega === 'domicilio' ? Number(cfg.envio) || 0 : 0;
+  const order = {id, clienteId: c ? c.id : null, cliente: c ? c.nombre : 'Cliente de WhatsApp', items: S.cart.map(i => ({...i})), subtotal: cartTotal(),
+    descuento: discountAmt(), envio, total: S.total, entrega: S.entrega, direccion: S.direccion, estado: 'pagado', porAgente: true, metodo: method, fecha: new Date().toISOString(), nuevo: true};
+  D.orders.unshift(order);
+  if (c) {
+    c.compras.unshift({orderId: id, resumen: order.items.map(i => `${i.nombre}${i.talla !== 'U' ? ` (${i.talla})` : ''}`).join(', '), total: order.total, fecha: order.fecha});
+    c.total += order.total; c.ultima = order.fecha;
+    order.items.forEach(i => { const p = prod(i.id); if (p && p.tipo === 'ropa') c.talla = i.talla; if (p && p.tipo === 'calzado') c.tallaCalzado = i.talla; });
+    if (S.direccion) c.direccion = S.direccion;
+  }
+  const touched = order.items.map(i => i.id + '|' + i.talla);
+  S.lastOrderId = id; S.cart = []; S.discount = 0; S.suggestions = 0;
+  save(); renderAll(touched);
+  toast(`💰 Nueva venta cerrada por el agente: ${bs(order.total)}`); notifyPanel();
+  scheduleTracking(order);
+  const entregaTxt = order.entrega === 'domicilio'
+    ? `🛵 Nuestro delivery aliado lo llevará a *${order.direccion}* hoy mismo. Te aviso cuando salga.`
+    : `🏬 Podrás recogerlo en *${cfg.direccion}* en unos 30 minutos. Te aviso cuando esté listo.`;
+  return [{text: 'Verificando tu pago… ⏳'}, {text: `¡Pago recibido! ✅ Tu pedido *#${id}* está confirmado.`}, {status: id}, {text: entregaTxt},
+    {text: `¡Gracias por tu compra${c ? `, ${firstName(c)}` : ''}! 💚 Ya guardé tu talla y tus preferencias para la próxima.`}];
+}
+function orderStatus() {
+  const c = cust();
+  const o = D.orders.find(x => x.id === S.lastOrderId) || (c && D.orders.find(x => x.clienteId === c.id));
+  if (!o) return [{text: 'No encuentro pedidos a tu nombre todavía 🤔 ¿Te ayudo a hacer uno?'}, {chips: CAT_CHIPS}];
+  return [{text: `Este es el estado de tu pedido *#${o.id}* 👇`}, {status: o.id}];
+}
+function scheduleTracking(order) {
+  const sid = sessionId;
+  const pasos = order.entrega === 'domicilio'
+    ? [[9000, 'preparando', `📦 Tu pedido *#${order.id}* ya se está preparando.`], [19000, 'enviado', `🛵 ¡Tu pedido *#${order.id}* va en camino! Llega en unos 40 minutos.`], [32000, 'entregado', `✅ Tu pedido *#${order.id}* fue entregado. ¡Que lo disfrutes!`]]
+    : [[9000, 'preparando', `📦 Tu pedido *#${order.id}* ya se está preparando.`], [19000, 'enviado', `🏬 ¡Tu pedido *#${order.id}* está listo para recoger en tienda!`], [32000, 'entregado', `✅ Registramos que recogiste tu pedido *#${order.id}*. ¡Que lo disfrutes!`]];
+  pasos.forEach(([ms, estado, txt], i) => setTimeout(() => {
+    const o = D.orders.find(x => x.id === order.id);
+    if (!o || ESTADOS.indexOf(o.estado) >= ESTADOS.indexOf(estado)) return;
+    o.estado = estado; save(); renderOrders(); renderReports();
+    if (sid !== sessionId) return;
+    const items = [{text: txt}];
+    if (i === pasos.length - 1) items.push({fn: () => { if (['paid', 'idle', 'browsing'].includes(S.stage)) { S.stage = 'ask_rating'; S.ratingOrder = order.id; } }}, {text: '¿Cómo calificarías mi atención? ⭐'}, {chips: ['⭐⭐⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐']});
+    enqueue(() => bot(items));
+  }, reduceMotion ? ms / 3 : ms));
+}
+
+/* ================= Mostrar mensajes ================= */
+const msgs = $('#msgs');
+const TICKS = '<svg class="ticks" viewBox="0 0 16 11" aria-label="Leído"><path d="M11.1.6 4.8 7.4 2.1 4.6.9 5.8l3.9 4L12.3 1.8zM15.1.6 8.8 7.4l-.9-.9-1.2 1.2 2.1 2.1L16.3 1.8z" fill="currentColor"/></svg>';
+function scrollDown() { requestAnimationFrame(() => { msgs.scrollTop = msgs.scrollHeight; }); }
+function addRow(cls, inner) {
+  const row = document.createElement('div'); row.className = 'row ' + cls; row.innerHTML = inner;
+  msgs.appendChild(row); scrollDown(); return row;
+}
+function bubble(from, html, opt = {}) {
+  const meta = `<span class="meta">${hora()}${from === 'out' ? TICKS : ''}</span>`;
+  return addRow(from, `<div class="bubble ${from}${opt.wide ? ' wide' : ''}">${opt.label ? `<div class="b-label">${esc(opt.label)}</div>` : ''}${html}${meta}</div>`).firstElementChild;
+}
+function sys(text, cls = '') { addRow('c', `<div class="sys ${cls}">${text}</div>`); }
+const toneTxt = t => C().tono === 'formal' ? t.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B50}\u{2705}\u{23F3}\u{1F004}-\u{1F251}]\uFE0F?/gu, '').replace(/ {2,}/g, ' ').replace(/ \n/g, '\n').trim() : t;
+
+function cardHTML(p, size, mini) {
+  const sz = p.tipo !== 'unica' && size ? size : null;
+  const ok = p.tipo === 'unica' ? stockOf(p, 'U') : sz ? stockOf(p, sz) : availSizes(p).length;
+  const stockTxt = p.tipo === 'unica' ? `✅ ${p.stock.U} en stock` : sz ? `✅ ${p.tipo === 'calzado' ? 'N.º' : 'Talla'} ${sz} disponible` : `Tallas: ${availSizes(p).join(' · ')}`;
+  return `<div class="pcard${mini ? ' mini' : ''}"><div class="pimg" style="background:${p.bg}">${svgProd(p)}</div><div class="pbody"><div class="pname">${esc(p.nombre)}</div>
+    <div class="pdesc">${esc(p.desc)}</div><div class="pprice">${bs(p.precio)}</div><div class="pstock">${stockTxt}</div>
+    <button class="pbtn" data-act="add" data-id="${p.id}" data-size="${sz || ''}"${ok > 0 ? '' : ' disabled'}>${ok > 0 ? 'Agregar al carrito 🛒' : 'Agotado'}</button></div></div>`;
+}
+function statusHTML(o) {
+  const steps = o.entrega === 'domicilio' ? ['Pagado', 'En preparación', 'En camino', 'Entregado'] : ['Pagado', 'En preparación', 'Listo para recoger', 'Entregado'];
+  const idx = ESTADOS.indexOf(o.estado);
+  return `<div class="ostatus"><div class="ohead">🧾 Pedido #${o.id} · ${bs(o.total)}</div>${steps.map((s, i) => `<div class="ostep${i <= idx ? ' done' : ''}"><span></span>${s}</div>`).join('')}</div>`;
+}
+function renderBotItem(it) {
+  const cfg = C();
+  if (it.text) { const t = toneTxt(it.text); bubble('in', fmt(t)); log('agente', t); }
+  else if (it.cards) { bubble('in', `<div class="pcards">${it.cards.map(id => prod(id)).filter(Boolean).map(p => cardHTML(p, it.size, it.mini)).join('')}</div>`, {wide: true}); log('agente', '[Tarjetas: ' + it.cards.map(id => (prod(id) || {}).nombre).join(', ') + ']'); }
+  else if (it.qr) {
+    bubble('in', `<div class="qrbox"><div class="qrhead">🏦 Cobro QR · ${esc(cfg.tienda)}</div>${qrSVG(Date.now())}<div class="qramt">${bs(it.qr)}</div><div class="qrnote">Escanea con la app de tu banco · válido 15 min</div>
+      <div class="qrbtns"><button data-act="pay" data-method="QR">✅ Simular pago con QR</button><button class="sec" data-act="pay" data-method="Tarjeta">💳 Pagar con tarjeta</button></div></div>`, {wide: true});
+    log('agente', `[Cobro QR por ${bs(it.qr)}]`);
+  }
+  else if (it.status) { const o = D.orders.find(x => x.id === it.status); if (o) { bubble('in', statusHTML(o)); log('agente', `[Estado del pedido #${o.id}: ${o.estado}]`); } }
+}
+let typingRow = null;
+function typing(on) {
+  const sub = $('#hdrSub');
+  if (on && !typingRow) { typingRow = addRow('in', '<div class="bubble in"><span class="typing"><i></i><i></i><i></i></span></div>'); sub.textContent = 'escribiendo…'; }
+  if (!on && typingRow) { typingRow.remove(); typingRow = null; setSub(); }
+}
+function setSub() { $('#hdrSub').textContent = S && S.human ? `${C().encargada} (encargada) está atendiendo` : 'Cuenta de empresa · en línea'; }
+function enqueue(fn) { chain = chain.then(fn).catch(err => console.error(err)); return chain; }
+async function bot(items) {
+  const sid = sessionId;
+  for (const it of items) {
+    if (sid !== sessionId) return;
+    if (it.chips) { setChips(it.chips); continue; }
+    if (it.fn) { it.fn(); continue; }
+    const len = it.text ? it.text.length : 70;
+    typing(true);
+    await sleep(reduceMotion ? 250 : Math.min(1800, 500 + len * 13));
+    typing(false);
+    if (sid !== sessionId) return;
+    renderBotItem(it);
+  }
+}
+function setChips(list) {
+  const box = $('#chips'); box.innerHTML = '';
+  list.forEach(txt => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = txt; b.addEventListener('click', () => sendUser(txt)); box.appendChild(b); });
+}
+function sendUser(text) {
+  text = String(text).trim().slice(0, 300); if (!text) return;
+  const b = bubble('out', fmt(text));
+  log('cliente', text);
+  setChips([]);
+  setTimeout(() => { const tk = b.querySelector('.ticks'); if (tk) tk.classList.add('read'); }, 650);
+  enqueue(() => bot(brain(text)));
+}
+
+/* ================= Acciones de botones del chat ================= */
+msgs.addEventListener('click', ev => {
+  const btn = ev.target.closest('button[data-act]'); if (!btn || btn.disabled) return;
+  if (btn.dataset.act === 'add') {
+    const p = prod(btn.dataset.id); if (!p) return;
+    const size = btn.dataset.size || sizeFor(p);
+    const txt = `🛒 Agregar ${p.nombre}${tallaTxt(size)}`;
+    bubble('out', fmt(txt)); log('cliente', txt); setChips([]);
+    if (p.id === S.pendingSuggestion) S.pendingSuggestion = null;
+    if (S.human) return;
+    enqueue(() => bot(addToCart(p, size)));
+  }
+  if (btn.dataset.act === 'pay') {
+    if (S.stage !== 'await_payment') { toast('Este cobro ya no está vigente'); return; }
+    $$('.qrbtns button', msgs).forEach(b => b.disabled = true);
+    const m = btn.dataset.method;
+    const txt = m === 'QR' ? '📎 Comprobante_pago_QR.pdf' : '💳 Pago con tarjeta •••• 4242';
+    bubble('out', fmt(txt)); log('cliente', txt); setChips([]);
+    enqueue(() => bot(confirmPayment(m)));
+  }
+});
+$('#composer').addEventListener('submit', ev => { ev.preventDefault(); const i = $('#inp'); sendUser(i.value); i.value = ''; i.focus(); });
+
+/* ================= Panel: registro y avisos ================= */
+function log(who, text) {
+  LOG.push({who, text, time: hora()}); if (LOG.length > 80) LOG.shift();
+  const el = $('#liveLog');
+  const names = {cliente: (cust() && firstName(cust())) || 'Cliente', agente: `🤖 ${C().agente}`, encargada: `👩 ${C().encargada}`, sistema: ''};
+  const d = document.createElement('div'); d.className = 'l-' + who;
+  d.innerHTML = who === 'sistema' ? esc(text) : `<b>${esc(names[who])}:</b> ${esc(text).replace(/\*/g, '')} <span class="muted">· ${hora()}</span>`;
+  el.appendChild(d); el.scrollTop = el.scrollHeight;
+}
+function addAlert(type, text) {
+  D.alerts.unshift({id: 'al' + Date.now(), type, text, time: new Date().toISOString(), cliente: cust() ? cust().nombre : 'Cliente'});
+  save(); renderLive(); notifyPanel(type === 'humano' ? '🙋 El cliente pidió hablar con una persona' : '❓ El agente necesita tu ayuda con una pregunta');
+}
+function notifyPanel(msg) {
+  if (msg) toast(msg);
+  if ($('#app').dataset.view === 'chat' && window.innerWidth <= 900) $('#panelDot').classList.add('show');
+}
+let toastT;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3200); }
+
+/* ================= Panel: render ================= */
+function renderAll(touched) { renderHeader(); renderLive(); renderOrders(); renderCatalog(touched); renderClients(); renderReports(); renderAgent(); }
+function renderHeader() {
+  const cfg = C();
+  $('#hdrName').textContent = cfg.tienda;
+  $('#avIni').textContent = cfg.tienda.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  $('#pTitle').textContent = `Panel de ${cfg.tienda}`;
+  const ps = $('#pStatus');
+  ps.classList.toggle('human', !!(S && S.human));
+  ps.querySelector('span').textContent = S && S.human ? `${cfg.encargada} atendiendo` : 'Agente activo 24/7';
+  setSub();
+}
+function renderLive() {
+  const cfg = C(), c = cust();
+  $('#liveCtl').innerHTML = S.human
+    ? `<p class="muted" style="margin:0 0 8px">Estás atendiendo tú. El agente no responde hasta que se lo devuelvas.</p><div class="row-btns" style="margin:0 0 10px"><button class="btn" id="giveBack">🤖 Devolver al agente</button></div>`
+    : `<p class="muted" style="margin:0 0 8px">${esc(cfg.agente)} está atendiendo. Puedes tomar el control cuando quieras.</p><div class="row-btns" style="margin:0 0 10px"><button class="btn dark" id="takeCtl">👩 Tomar el control del chat</button></div>`;
+  $('#ownerInp').disabled = !S.human; $('#ownerSend').disabled = !S.human;
+  $('#ownerInp').placeholder = S.human ? `Escribe como ${cfg.encargada}…` : 'Toma el control para responder tú';
+  const tc = $('#takeCtl'); if (tc) tc.onclick = takeControl;
+  const gb = $('#giveBack'); if (gb) gb.onclick = giveBack;
+
+  const keep = {}; $$('#liveAlerts textarea').forEach(ta => keep[ta.dataset.id] = ta.value);
+  const pend = D.alerts.filter(a => !a.done);
+  $('#alertCnt').hidden = !pend.length; $('#alertCnt').textContent = pend.length;
+  $('#liveAlerts').innerHTML = pend.length ? pend.map(a => `<div class="alert"><div class="at">${a.type === 'humano' ? '🙋 Pide hablar con una persona' : '❓ Pregunta sin respuesta'} · ${esc(a.cliente)}</div>
+      <div class="aq">“${esc(a.text)}”</div>
+      ${a.type === 'pregunta' ? `<textarea data-id="${a.id}" placeholder="Escribe la respuesta. El agente la aprenderá para la próxima.">${esc(keep[a.id] || '')}</textarea>
+        <div class="row-btns"><button class="btn sm" data-al="teach" data-id="${a.id}">Responder y enseñar al agente</button><button class="btn sm out" data-al="done" data-id="${a.id}">Descartar</button></div>`
+      : `<div class="row-btns"><button class="btn sm dark" data-al="take" data-id="${a.id}">Tomar el control del chat</button><button class="btn sm out" data-al="done" data-id="${a.id}">Descartar</button></div>`}</div>`).join('')
+    : '<div class="empty">Sin avisos. Prueba preguntarle algo que no sepa o pedir hablar con una persona.</div>';
+
+  $('#liveCust').innerHTML = c ? `<dl class="kv"><dt>Nombre</dt><dd>${esc(c.nombre)}</dd><dt>WhatsApp</dt><dd>${esc(c.tel)}</dd><dt>Talla</dt><dd>${esc(c.talla || '—')}${c.tallaCalzado ? ` · Calzado ${esc(c.tallaCalzado)}` : ''}</dd>
+      <dt>Compras</dt><dd>${c.compras.length} · ${bs(c.total)}</dd>${c.direccion ? `<dt>Dirección</dt><dd>${esc(c.direccion)}</dd>` : ''}</dl>
+      ${c.prefs.length ? `<div style="margin-top:8px">${c.prefs.map(p => `<span class="tagl">${esc(p)}</span>`).join('')}</div>` : ''}`
+    : '<div class="empty">Cliente nuevo: el agente le preguntará su nombre y lo guardará en el CRM.</div>';
+
+  $('#liveCart').innerHTML = S.cart.length ? `<ul class="cartl">${S.cart.map(i => `<li><span>${esc(i.nombre)}${esc(tallaTxt(i.talla))}</span><span>${bs(i.precio)}</span></li>`).join('')}
+      ${S.discount ? `<li style="font-weight:400"><span>Descuento ${S.discount}%</span><span>−${bs(discountAmt())}</span></li>` : ''}<li><span>Total</span><span>${bs(cartTotal() - discountAmt())}</span></li></ul>`
+    : '<div class="empty">Vacío</div>';
+}
+$('#liveAlerts').addEventListener('click', ev => {
+  const b = ev.target.closest('button[data-al]'); if (!b) return;
+  const a = D.alerts.find(x => x.id === b.dataset.id); if (!a) return;
+  if (b.dataset.al === 'done') { a.done = true; save(); renderLive(); }
+  if (b.dataset.al === 'take') { a.done = true; save(); takeControl(); }
+  if (b.dataset.al === 'teach') {
+    const ta = $(`#liveAlerts textarea[data-id="${a.id}"]`); const ans = ta ? ta.value.trim() : '';
+    if (!ans) { toast('Escribe primero la respuesta'); if (ta) ta.focus(); return; }
+    const keys = keywords(a.text);
+    if (keys.length) C().faqs.push({q: a.text, keys, a: ans});
+    a.done = true; save();
+    ownerSay(ans);
+    renderLive(); renderAgent();
+    toast(keys.length ? '🧠 El agente aprendió esta respuesta' : 'Respuesta enviada');
+  }
+});
+function ownerSay(text) {
+  bubble('in', fmt(text), {label: `👩 ${C().encargada} · Encargada`});
+  log('encargada', text);
+}
+function takeControl() {
+  if (S.human) return;
+  S.human = true; typing(false);
+  sys(`👩 ${esc(C().encargada)} se unió a la conversación`); log('sistema', `${C().encargada} tomó el control`);
+  renderHeader(); renderLive();
+  if (window.innerWidth > 900 || $('#app').dataset.view === 'panel') setTimeout(() => $('#ownerInp').focus(), 50);
+}
+function giveBack() {
+  S.human = false;
+  sys(`🤖 ${esc(C().agente)} retomó la conversación`); log('sistema', `${C().agente} retomó la conversación`);
+  renderHeader(); renderLive();
+  enqueue(() => bot([{text: '¡Aquí estoy de nuevo! 😊 ¿Hay algo más en lo que te pueda ayudar?'}, {chips: ['Ver catálogo', 'Ver carrito', 'Pagar ahora']}]));
+}
+$('#ownerForm').addEventListener('submit', ev => { ev.preventDefault(); const i = $('#ownerInp'); const v = i.value.trim(); if (!v || !S.human) return; ownerSay(v); i.value = ''; });
+
+function renderOrders() {
+  const lbl = (o) => o.estado === 'enviado' ? (o.entrega === 'domicilio' ? 'En camino' : 'Listo para recoger') : {pagado: 'Pagado', preparando: 'En preparación', entregado: 'Entregado'}[o.estado];
+  $('#orders').innerHTML = D.orders.map(o => `<div class="oitem${o.nuevo ? ' new' : ''}">
+      <div><span class="oid">#${o.id}</span> · ${esc(o.cliente)} · <b>${bs(o.total)}</b></div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><span class="badge ${o.porAgente ? 'b-agente' : 'b-local'}">${o.porAgente ? '🤖 Agente' : '🏬 Local'}</span><span class="badge b-${o.estado}">${lbl(o)}</span>
+      ${o.estado !== 'entregado' ? `<button class="btn sm out" data-adv="${o.id}">Avanzar ›</button>` : ''}</div>
+      <div class="odet">${o.items.map(i => esc(i.nombre) + esc(tallaTxt(i.talla))).join(', ')} · ${o.entrega === 'domicilio' ? '🚚 ' + esc(o.direccion || 'Domicilio') : o.entrega === 'recojo' ? '🏬 Recojo en tienda' : 'Venta en el local'} · ${esc(o.metodo || '')} · ${fechaCorta(o.fecha)}${o.rating ? ' · ' + '⭐'.repeat(o.rating) : ''}</div></div>`).join('');
+  D.orders.forEach(o => { delete o.nuevo; });
+}
+$('#orders').addEventListener('click', ev => {
+  const b = ev.target.closest('button[data-adv]'); if (!b) return;
+  const o = D.orders.find(x => x.id === Number(b.dataset.adv)); if (!o) return;
+  const i = ESTADOS.indexOf(o.estado); if (i < ESTADOS.length - 1) o.estado = ESTADOS[i + 1];
+  save(); renderOrders(); renderReports();
+});
+
+function renderCatalog(touched = []) {
+  $('#plist').innerHTML = D.catalog.map(p => `<div class="pitem"><div class="th" style="background:${p.bg}">${svgProd(p)}</div><div class="info">
+      <div class="nm">${esc(p.nombre)}</div><div class="pr">${bs(p.precio)} · ${esc(PLURAL[p.cat] || p.cat)}${p.nuevo ? ' · <span class="tagl">Importado de Excel</span>' : ''}</div>
+      <div class="sizes">${Object.entries(p.stock).map(([k, v]) => `<span class="sz${v <= 0 ? ' zero' : ''}${touched.includes(p.id + '|' + k) ? ' flash' : ''}"><b>${k === 'U' ? 'Única' : k}</b><button aria-label="Restar" data-st="-1" data-id="${p.id}" data-k="${k}">−</button><em>${v}</em><button aria-label="Sumar" data-st="1" data-id="${p.id}" data-k="${k}">+</button></span>`).join('')}</div></div></div>`).join('');
+  $('#importXls').disabled = !!D.excel;
+  $('#importXls').textContent = D.excel ? '✅ Plantilla importada' : '📥 Importar plantilla de Excel';
+}
+$('#plist').addEventListener('click', ev => {
+  const b = ev.target.closest('button[data-st]'); if (!b) return;
+  const p = prod(b.dataset.id); if (!p) return;
+  p.stock[b.dataset.k] = Math.max(0, (p.stock[b.dataset.k] || 0) + Number(b.dataset.st));
+  save(); renderCatalog();
+});
+$('#importXls').addEventListener('click', () => {
+  if (D.excel) return;
+  EXCEL.forEach(p => { if (!prod(p.id)) D.catalog.push({...JSON.parse(JSON.stringify(p)), nuevo: true}); });
+  D.excel = true; save(); renderCatalog();
+  toast('📥 plantilla_productos.xlsx: 2 productos importados. El agente ya puede ofrecerlos.');
+});
+
+function renderClients() {
+  $('#clist').innerHTML = D.customers.map(c => `<div class="cl${c.id === D.currentCustomerId ? ' now' : ''}"><div class="ch"><div class="ci">${esc(c.nombre.split(' ').map(w => w[0]).join('').slice(0, 2))}</div>
+      <div><div class="cn">${esc(c.nombre)}${c.id === D.currentCustomerId ? ' <span class="tagl">En el chat</span>' : ''}</div><div class="ct">${esc(c.tel)}</div></div></div>
+      <dl class="kv"><dt>Talla</dt><dd>${esc(c.talla || '—')}${c.tallaCalzado ? ` · Calzado ${esc(c.tallaCalzado)}` : ''}</dd><dt>Compras</dt><dd>${c.compras.length} · ${bs(c.total)}</dd>
+      <dt>Última</dt><dd>${c.compras[0] ? esc(c.compras[0].resumen) : 'Sin compras aún'}</dd>${c.direccion ? `<dt>Dirección</dt><dd>${esc(c.direccion)}</dd>` : ''}</dl>
+      ${c.prefs.length ? `<div style="margin-top:8px">${c.prefs.map(p => `<span class="tagl">${esc(p)}</span>`).join('')}</div>` : ''}</div>`).join('');
+}
+
+function renderReports() {
+  const total = D.orders.reduce((a, o) => a + o.total, 0);
+  const ag = D.orders.filter(o => o.porAgente);
+  const agTotal = ag.reduce((a, o) => a + o.total, 0);
+  const com = Math.round(agTotal * 0.02);
+  const ticket = D.orders.length ? total / D.orders.length : 0;
+  const cnt = {};
+  D.orders.forEach(o => o.items.forEach(i => { cnt[i.nombre] = (cnt[i.nombre] || 0) + 1; }));
+  const top = Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  const max = top.length ? top[0][1] : 1;
+  const frec = [...D.customers].sort((a, b) => b.total - a.total).slice(0, 3);
+  $('#reports').innerHTML = `<div class="kpis">
+      <div class="kpi"><div class="kl">Ventas totales</div><div class="kv2">${bs(total)}</div><div class="ks">${D.orders.length} pedidos</div></div>
+      <div class="kpi hl"><div class="kl">Vendido por el agente</div><div class="kv2">${bs(agTotal)}</div><div class="ks">${ag.length} pedidos cerrados por IA</div></div>
+      <div class="kpi"><div class="kl">Ticket promedio</div><div class="kv2">${bs(ticket)}</div><div class="ks">por pedido</div></div>
+      <div class="kpi"><div class="kl">Conversaciones atendidas</div><div class="kv2">${D.convos}</div><div class="ks">24/7, sin esperas</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>🏆 Productos más vendidos</h3><div class="bars">${top.map(([n, v]) => `<div class="bar"><span>${esc(n)}</span><span class="tr"><i style="width:${Math.round(v / max * 100)}%"></i></span><b>${v}</b></div>`).join('') || '<div class="empty">Aún no hay ventas</div>'}</div></div>
+      <div class="card"><h3>💚 Lo que pagas a VENDE-IA</h3><dl class="kv">
+        <dt>Suscripción mensual</dt><dd>350 Bs</dd>
+        <dt>Comisión 2 % (solo ventas del agente)</dt><dd>${bs(com)}</dd>
+        <dt>Total este mes</dt><dd>${bs(350 + com)}</dd>
+        <dt>Ventas en el local</dt><dd>${bs(total - agTotal)} · sin comisión</dd></dl>
+        <p class="muted" style="margin:10px 0 0">Si el agente vende 10.000 Bs en un mes, pagas 350 Bs + 200 Bs de comisión.</p></div>
+      <div class="card"><h3>⭐ Clientes frecuentes</h3>${frec.map(c => `<div style="display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0;border-bottom:1px dashed var(--v-borde)"><span>${esc(c.nombre)}</span><b>${bs(c.total)}</b></div>`).join('')}</div>
+    </div>`;
+}
+
+function renderAgent() {
+  const f = $('#cfgForm'), cfg = C();
+  ['agente', 'tienda', 'encargada', 'tono', 'descuento', 'envio', 'direccion', 'horario'].forEach(k => { if (document.activeElement !== f.elements[k]) f.elements[k].value = cfg[k]; });
+  $('#faqs').innerHTML = cfg.faqs.length ? `<ul class="faql">${cfg.faqs.map(x => `<li><b>${esc(x.q)}</b><br>${esc(x.a)}</li>`).join('')}</ul>` : '<div class="empty">Todavía ninguna.</div>';
+}
+$('#cfgForm').addEventListener('submit', ev => {
+  ev.preventDefault();
+  const f = ev.target, cfg = C();
+  ['agente', 'tienda', 'encargada', 'direccion', 'horario'].forEach(k => { const v = f.elements[k].value.trim(); if (v) cfg[k] = v; });
+  cfg.tono = f.elements.tono.value;
+  cfg.descuento = Math.max(0, Math.min(30, Number(f.elements.descuento.value) || 0));
+  cfg.envio = Math.max(0, Math.min(100, Number(f.elements.envio.value) || 0));
+  save(); renderAll();
+  toast('✅ Configuración guardada. El agente ya responde con estos datos.');
+});
+
+/* ================= Navegación ================= */
+$('#ptabs').addEventListener('click', ev => {
+  const b = ev.target.closest('button[data-tab]'); if (!b) return;
+  $$('#ptabs button').forEach(x => x.classList.toggle('on', x === b));
+  $$('.ptab').forEach(x => x.classList.toggle('on', x.id === 'tab-' + b.dataset.tab));
+});
+function setView(v) {
+  $('#app').dataset.view = v;
+  $('#vChat').classList.toggle('on', v === 'chat'); $('#vPanel').classList.toggle('on', v === 'panel');
+  $('#vChat').setAttribute('aria-selected', v === 'chat'); $('#vPanel').setAttribute('aria-selected', v === 'panel');
+  if (v === 'panel') $('#panelDot').classList.remove('show'); else scrollDown();
+}
+$('#vChat').addEventListener('click', () => setView('chat'));
+$('#vPanel').addEventListener('click', () => setView('panel'));
+
+/* ================= Inicio y herramientas ================= */
+function startChat() {
+  sessionId++; chain = Promise.resolve(); typingRow = null;
+  S = fresh();
+  msgs.innerHTML = '';
+  $('#liveLog').innerHTML = ''; LOG = [];
+  sys('Hoy', 'date');
+  sys('🔒 Demostración: los mensajes se procesan solo en tu navegador.', 'enc');
+  sys(`🤖 ${esc(C().tienda)} usa <b>VENDE-IA</b> para atenderte las 24 horas.`);
+  const c = cust();
+  setChips(c ? ['Hola 👋', 'Muéstrame lo nuevo', '¿Dónde está mi pedido?'] : ['Hola 👋', 'Busco una camisa para una boda', 'Ver catálogo', '¿Hacen envíos?']);
+  log('sistema', c ? `Volvió ${c.nombre} (cliente registrado)` : 'Nuevo chat de un cliente');
+  renderAll();
+}
+$('#simReturn').addEventListener('click', () => {
+  if (!cust()) { toast('Primero escribe en el chat para que el agente registre al cliente'); return; }
+  startChat(); setView('chat'); toast(`🔁 ${firstName(cust())} vuelve a escribir. Salúdalo y mira cómo lo recuerda.`);
+});
+$('#simNew').addEventListener('click', () => { D.currentCustomerId = null; save(); startChat(); setView('chat'); toast('👤 Nuevo cliente: el agente le preguntará su nombre.'); });
+$('#resetAll').addEventListener('click', () => {
+  if (!confirm('¿Reiniciar la demo? Se borran pedidos, clientes y cambios de stock hechos en este navegador.')) return;
+  store.clear(); D = seed(); save(); startChat(); setView('chat'); toast('↺ Demo reiniciada');
+});
+
+startChat();
+})();
+</script>
+</body>
+</html>
